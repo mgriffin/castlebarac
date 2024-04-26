@@ -1,4 +1,15 @@
 <header>
-<%= image_tag("castlebarac.jpg") %>
-<h1>New website coming soon...</h1>
+  <%= image_tag("castlebarac.jpg") %>
+  <h1>New website coming soon...</h1>
 </header>
+<%- if Flipper.enabled?(:mailing_list) %>
+  <main>
+    <h2>Do you want to know when we launch?</h2>
+    <p>Add your email address here and we'll let you know when to come back</p>
+    <%= form_with model: @mailing_list do |form| %>
+      <%= form.label :address, "Your email address: " %>
+      <%= form.email_field :address, placeholder: "You@your-email.address" %>
+      <%= form.submit "Join the mailing list" %>
+    <% end %>
+  </main>
+<% end %>
