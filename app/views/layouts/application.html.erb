@@ -12,6 +12,15 @@
   </head>
 
   <body>
+    <%- if Flipper.enabled?(:banner) %>
+    <header>
+      <%= link_to "Castlebar A.C.", root_url, class: "name" %>
+      <span class="links">
+        <%= link_to "About", about_url %>
+      </span>
+      <%= link_to "Log in", "#", class: "login" %>
+    </header>
+    <% end %>
     <div class="flash">
       <%= render "layouts/flash" %>
     </div>
