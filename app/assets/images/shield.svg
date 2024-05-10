@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <clipPath id="stripe">
+      <path
+        d="
+          M 10 11
+          v 4
+          a 12 12 0 0 0 8 12
+          a 12 12 0 0 0 8 -12
+          v -4
+          a 12 12 0 0 1 -8 -2
+          a 12 12 0 0 1 -8 2
+          z"
+      />
+    </clipPath>
+  </defs>
+  <path
+    d="
+      M 8 9
+      v 6
+      a 14 14 0 0 0 10 14
+      a 14 14 0 0 0 10 -14
+      v -6
+      a 14 14 0 0 1 -10 -2
+      a 14 14 0 0 1 -10 2
+      z"
+    stroke="black"
+    stroke-width="4"
+    fill="green"
+  />
+  <path
+    d="M 10 11 l 20 20"
+    stroke="white"
+    stroke-width="4"
+    clip-path="url(#stripe)"
+  />
+  <circle cx="8" cy="9" r="1" fill="white" />
+  <circle cx="18" cy="7" r="1" fill="white" />
+  <circle cx="28" cy="9" r="1" fill="white" />
+  <circle cx="8" cy="17" r="1" fill="white" />
+  <circle cx="28" cy="17" r="1" fill="white" />
+  <circle cx="12" cy="25" r="1" fill="white" />
+  <circle cx="24" cy="25" r="1" fill="white" />
+  <circle cx="18" cy="29" r="1" fill="white" />
+</svg>
