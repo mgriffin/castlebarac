@@ -2,16 +2,31 @@ header {
   padding: 0 5px;
   background-color: #3c8538;
   color: #fff;
-}
-header a {
-  color: #fff;
-}
-header .name {
-  font-weight: bold;
-}
-header .links {
-  padding-left: 15px;
-}
-header .login {
-  float: right;
+  height: 40px;
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 24px;
+  }
+  svg {
+    position: relative;
+    top: 3px;
+    vertical-align: bottom;
+  }
+  a {
+    color: #fff;
+  }
+  .name {
+    font-weight: bold;
+  }
+  .link {
+    padding-left: 10px;
+  }
+  .login {
+    position: relative;
+    top: 3px;
+    padding-right: 10px;
+  }
 }
