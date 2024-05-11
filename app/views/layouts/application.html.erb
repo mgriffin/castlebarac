@@ -12,6 +12,22 @@
   </head>
 
   <body>
+    <%- if Flipper.enabled?(:banner) %>
+    <header>
+      <nav aria-label="Main Navigation">
+      <span class="links">
+        <%= link_to root_url, class: "name" do %>
+          <%= inline_svg_tag "shield.svg" %>
+          Castlebar A.C.
+        <%- end %>
+        <%= link_to "About", about_url, class: "link" %>
+      </span>
+      <%- if Flipper.enabled?(:login) %>
+      <%= link_to "Log in", "#", class: "login" %>
+      <%- end %>
+      </nav>
+    </header>
+    <% end %>
     <div class="flash">
       <%= render "layouts/flash" %>
     </div>
