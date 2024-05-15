@@ -23,10 +23,15 @@ module Castlebarac
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.delivery_method = :smtp
 
-    config.action_mailer.postmark_settings = {
-      api_token: Rails.application.credentials.postmark_api_token
+    config.action_mailer.smtp_settings = {
+      address:             'smtp.fastmail.com',
+      port:                 465,
+      user_name:            Rails.application.credentials.fastmail_username,
+      password:             Rails.application.credentials.fastmail_token,
+      authentication:       'plain',
+      enable_starttls_auto: false
     }
   end
 end
