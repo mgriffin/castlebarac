@@ -151,7 +151,6 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.3.0)
       railties (>= 6.0.0)
-    json (2.7.2)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -193,11 +192,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
-    postmark (1.25.0)
-      json
-    postmark-rails (0.22.1)
-      actionmailer (>= 3.0.0)
-      postmark (>= 1.21.3, < 2.0)
     psych (5.1.2)
       stringio
     public_suffix (5.0.5)
@@ -327,7 +321,6 @@ DEPENDENCIES
   inline_svg
   jbuilder
   jsbundling-rails
-  postmark-rails
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
   redis (>= 4.0.1)
