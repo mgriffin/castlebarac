@@ -6,8 +6,7 @@ set :repo_url, "git@github.com:mgriffin/castlebarac.git"
 
 set :branch, :main
 
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
-#append :linked_files, 'config/database.yml', 'db/production.sqlite3'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads', "storage"
 
 set :migration_role, :app
 
