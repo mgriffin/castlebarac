@@ -83,3 +83,4 @@ end
 gem "flipper-active_record", "~> 1.3"
 
 gem "inline_svg"
+gem "faraday"
