@@ -28,4 +28,10 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  mailing_lists:
+    create:
+      notice: "You've been added"
+      error: "Couldn't add your email address"
+  mailing_list_mailer:
+    welcome:
+      subject: "Thanks for signing up to the mailing list"
