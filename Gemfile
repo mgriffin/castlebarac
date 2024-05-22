@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 ruby "3.1.2"
@@ -39,7 +41,7 @@ gem "redis", ">= 4.0.1"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -49,7 +51,9 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]
+  gem "rubocop"
+  gem "rubocop-rails"
 end
 
 group :development do
@@ -65,22 +69,23 @@ group :development do
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 
   gem "capistrano", "~> 3.10", require: false
+  gem "capistrano3-puma", github: "seuros/capistrano-puma"
+  gem "capistrano-bundler", "~> 2.0"
   gem "capistrano-rails", "~> 1.3", require: false
   gem "capistrano-rbenv", "~> 2.2"
-  gem "capistrano-bundler", "~> 2.0"
-  gem "capistrano3-puma", github: "seuros/capistrano-puma"
 
-  gem 'ed25519', '>= 1.2', '< 2.0', require: false
-  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0', require: false
+  gem "bcrypt_pbkdf", ">= 1.0", "< 2.0", require: false
+  gem "ed25519", ">= 1.2", "< 2.0", require: false
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem "mocha"
   gem "selenium-webdriver"
 end
 
 gem "flipper-active_record", "~> 1.3"
 
-gem "inline_svg"
 gem "faraday"
+gem "inline_svg"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MailingListsController < ApplicationController
   def create
     email = MailingList.new(mailing_list_params)

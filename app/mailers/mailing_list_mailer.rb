@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MailingListMailer < ApplicationMailer
   def welcome_email
     @email = params[:email]

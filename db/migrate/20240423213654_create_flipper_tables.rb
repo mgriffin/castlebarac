@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateFlipperTables < ActiveRecord::Migration[7.1]
   def up
     create_table :flipper_features do |t|
@@ -12,7 +14,7 @@ class CreateFlipperTables < ActiveRecord::Migration[7.1]
       t.text :value
       t.timestamps null: false
     end
-    add_index :flipper_gates, [:feature_key, :key, :value], unique: true, length: { value: 255 }
+    add_index :flipper_gates, %i[feature_key key value], unique: true, length: { value: 255 }
   end
 
   def down
