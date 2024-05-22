@@ -1,3 +1,11 @@
-// Entry point for your Sass build
-@import "castlebarac";
+// Configuration
+@import "config/variables";
+@import "config/media";
+@import "config/animations";
+
+// Components
+@import "components/flash";
+@import "components/header";
+
+// Everything else
 @import "site";
