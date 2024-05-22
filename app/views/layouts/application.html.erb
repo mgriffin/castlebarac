@@ -28,9 +28,11 @@
       </nav>
     </header>
     <% end %>
-    <div class="flash">
-      <%= render "layouts/flash" %>
-    </div>
-    <%= yield %>
+    <main>
+      <div class="flash">
+        <%= render "layouts/flash" %>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>
