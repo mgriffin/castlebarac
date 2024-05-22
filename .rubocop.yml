@@ -1,0 +1,6 @@
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  StyleGuide: https://github.com/github/rubocop-github/blob/main/STYLEGUIDE.md#double-quotes
