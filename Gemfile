@@ -86,7 +86,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "flipper-active_record", "~> 1.3"
-
+gem "devise"
 gem "faraday"
+gem "flipper-active_record", "~> 1.3"
 gem "inline_svg"
