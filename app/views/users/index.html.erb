@@ -1,0 +1,35 @@
+<%- if @unapproved_users.present? %>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  <%- @unapproved_users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= link_to "Edit", "#" %></td>
+    </tr>
+  <%- end %>
+  </table>
+  <%- if @unapproved_pagy.count > @unapproved_pagy.items %>
+    <%== pagy_nav(@unapproved_pagy) %>
+  <%- end %>
+<%- end %>
+
+<%- if @approved_users.present? %>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  <%- @approved_users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= link_to "Edit", "#" %></td>
+    </tr>
+  <%- end %>
+  </table>
+  <%- if @approved_pagy.count > @approved_pagy.items %>
+    <%== pagy_nav(@approved_pagy) %>
+  <%- end %>
+<%- end %>
