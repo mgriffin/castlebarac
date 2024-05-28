@@ -1,11 +1,16 @@
+<h2>Unapproved Users</h2>
 <%- if @unapproved_users.present? %>
   <table>
-    <tr>
-      <th>Email</th>
-      <th></th>
-    </tr>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
   <%- @unapproved_users.each do |user| %>
     <tr>
+      <td><%= approve_link(user) %></td>
       <td><%= user.email %></td>
       <td><%= link_to "Edit", "#" %></td>
     </tr>
@@ -14,16 +19,23 @@
   <%- if @unapproved_pagy.count > @unapproved_pagy.items %>
     <%== pagy_nav(@unapproved_pagy) %>
   <%- end %>
+<%- else %>
+  <p>There are no unapproved users</p>
 <%- end %>
 
+<h2>Approved Users</h2>
 <%- if @approved_users.present? %>
   <table>
-    <tr>
-      <th>Email</th>
-      <th></th>
-    </tr>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
   <%- @approved_users.each do |user| %>
     <tr>
+      <td><%= unapprove_link(user) %></td>
       <td><%= user.email %></td>
       <td><%= link_to "Edit", "#" %></td>
     </tr>
@@ -32,4 +44,6 @@
   <%- if @approved_pagy.count > @approved_pagy.items %>
     <%== pagy_nav(@approved_pagy) %>
   <%- end %>
+<%- else %>
+  <p>There are no approved users</p>
 <%- end %>
