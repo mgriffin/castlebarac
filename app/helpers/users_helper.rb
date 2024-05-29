@@ -2,14 +2,14 @@ module UsersHelper
   include Pagy::Frontend
 
   def approve_link(user)
-    button_to user_path(user), method: :patch, params: { user: { approved: true } } do
-      image_tag("approve.png")
+    link_to user_path(user, user: { approved: true }), 'data-turbo-method': :patch do
+      image_tag("approve.png", alt: "Approve #{user.email}")
     end
   end
 
   def unapprove_link(user)
-    button_to user_path(user), method: :patch, params: { user: { approved: false } } do
-      image_tag("disapprove.png")
+    link_to user_path(user, user: { approved: false }), 'data-turbo-method': :patch do
+      image_tag("disapprove.png", alt: "Unapprove #{user.email}")
     end
   end
 end
