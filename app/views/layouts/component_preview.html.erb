@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Castlebarac</title>
+    <title>Castlebarac preview</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,14 +12,6 @@
   </head>
 
   <body>
-    <%- if Flipper.enabled?(:banner) %>
-      <%= render HeaderComponent.new(user_signed_in: user_signed_in?) %>
-    <% end %>
-    <main>
-      <div class="flash">
-        <%= render "layouts/flash" %>
-      </div>
-      <%= yield %>
-    </main>
+    <%= yield %>
   </body>
 </html>

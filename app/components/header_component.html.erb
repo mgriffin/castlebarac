@@ -1,0 +1,19 @@
+<header>
+  <nav aria-label="Main Navigation">
+    <span class="links">
+      <%= link_to root_path, class: "name" do %>
+        <%= inline_svg_tag "shield.svg" %>
+        Castlebar A.C.
+      <%- end %>
+      <%= link_to "About", about_path, class: "link" %>
+    </span>
+    <%- if Flipper.enabled?(:login) %>
+      <%- if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "login" %>
+      <%- else %>
+        <%= link_to "Log in", new_user_session_path, class: "login" %>
+      <%- end %>
+    <%- end %>
+  </nav>
+</header>
+

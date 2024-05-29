@@ -30,6 +30,8 @@ module Castlebarac
     # config.eager_load_paths << Rails.root.join("extras")
     # config.action_mailer.delivery_method = :smtp
 
+    config.view_component.default_preview_layout = "component_preview"
+
     config.action_mailer.smtp_settings = {
       address: "smtp.fastmail.com",
       port: 587,
