@@ -1,0 +1,3 @@
+bugs:
+  email: bugs@acme.fake
+  password_digest: <%= BCrypt::Password.create("carrots") %>
