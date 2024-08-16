@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_224056) do
     t.string "user_agent"
     t.string "ip_address"
     t.string "token", null: false
+    t.datetime "last_active_at", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

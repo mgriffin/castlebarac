@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUsersAndSessions < ActiveRecord::Migration[7.1]
   def change
     create_table "users" do |t|
@@ -10,6 +12,7 @@ class CreateUsersAndSessions < ActiveRecord::Migration[7.1]
       t.string "user_agent"
       t.string "ip_address"
       t.string "token", null: false
+      t.datetime "last_active_at", null: false
       t.references :user, foreign_key: true
       t.timestamps null: false
     end

@@ -28,6 +28,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get logout_url
 
     assert_redirected_to root_url
-    refute cookies[:session_token].present?
+    assert_not cookies[:session_token].present?
   end
 end
