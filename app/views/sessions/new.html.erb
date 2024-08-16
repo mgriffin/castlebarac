@@ -1,0 +1,9 @@
+<h1>Members login</h1>
+<p>If you're a member of Castlebar AC and have an account, you can log in here</p>
+<%= form_with model: @session do |form| %>
+  <%= form.label :email, "Email Address: " %>
+  <%= form.email_field :email, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email] %>
+  <%= form.label :password, "Password: " %>
+  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password" %>
+  <%= form.submit "Log in" %>
+<% end %>

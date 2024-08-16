@@ -35,3 +35,4 @@ en:
   mailing_list_mailer:
     welcome:
       subject: "Thanks for signing up to the mailing list"
+  wrong_email_or_password: "Wrong email or password"
