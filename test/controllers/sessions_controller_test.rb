@@ -18,7 +18,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "can log in" do
     post login_url, params: { email: "bugs@acme.fake", password: "carrots" }
 
-    assert_response :success
+    assert_redirected_to root_url
     assert cookies[:session_token].present?
   end
 
