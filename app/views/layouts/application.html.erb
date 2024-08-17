@@ -12,7 +12,9 @@
   </head>
 
   <body>
-    <%= render "admin/toolbar" %>
+    <%- if logged_in? %>
+      <%= render "admin/toolbar" %>
+    <%- end %>
     <header>
       <nav class="main" aria-label="Main Navigation">
       <span class="links">
