@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_06_224056) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_16_140924) do
   create_table "flipper_features", force: :cascade do |t|
     t.string "key", null: false
     t.datetime "created_at", null: false
@@ -33,6 +33,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_224056) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title", limit: 256, null: false
+    t.text "body", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "user_agent"
     t.string "ip_address"
@@ -51,5 +60,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_06_224056) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "posts", "users"
   add_foreign_key "sessions", "users"
 end

@@ -1,0 +1,10 @@
+<h1>Create a new post</h1>
+<%= form_with model: @post do |form| %>
+  <%= form.label :title, "Title: " %>
+  <%= form.text_field :title, required: true, autofocus: true, placeholder: "Post title" %>
+
+  <%= form.label :body, "Body: " %>
+  <%= form.text_area :body, required: true, placeholder: "This is the main part of the post" %>
+
+  <%= form.submit "Post it" %>
+<% end %>

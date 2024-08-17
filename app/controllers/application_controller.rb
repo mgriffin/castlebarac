@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     Current.user.present?
   end
 
+  def authenticate_user!
+    render plain: "404 Not Found", status: :forbidden unless logged_in?
+  end
+
   def restore_user
     return unless (session = find_session_by_cookie)
 

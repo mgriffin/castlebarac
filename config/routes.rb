@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy", as: :logout
 
+  resources :posts
+
   get "/about", to: "site#about", as: :about
 
   get "/404", to: "errors#not_found"
