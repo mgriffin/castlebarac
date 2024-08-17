@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :mailing_lists, only: :create
+  resources :mailing_lists, only: %i[index create]
 
   get "/login", to: "sessions#new", as: :login
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy", as: :logout
 
   resources :posts
+
+  resources :admin, only: :index
 
   get "/about", to: "site#about", as: :about
 

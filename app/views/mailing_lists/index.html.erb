@@ -1,0 +1,9 @@
+<%- if @entries.empty? %>
+  <p>There's no one signed up</p>
+<%- else %>
+  <ul>
+  <%- @entries.each do |entry| %>
+    <li><%= entry.address %></li>
+  <%- end %>
+  </ul>
+<%- end %>

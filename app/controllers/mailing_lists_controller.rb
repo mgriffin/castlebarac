@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class MailingListsController < ApplicationController
+  before_action :authenticate_user!, except: :create
+
+  def index
+    @entries = MailingList.all
+  end
+
   def create
     email = MailingList.new(mailing_list_params)
 
