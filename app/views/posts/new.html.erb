@@ -3,8 +3,8 @@
   <%= form.label :title, "Title: " %>
   <%= form.text_field :title, required: true, autofocus: true, placeholder: "Post title" %>
 
-  <%= form.label :body, "Body: " %>
-  <%= form.text_area :body, required: true, placeholder: "This is the main part of the post" %>
+  <%= form.label :content, "Body: " %>
+  <%= form.rich_text_area :content, required: true, placeholder: "This is the main part of the post" %>
 
   <%= form.submit "Post it" %>
 <% end %>
