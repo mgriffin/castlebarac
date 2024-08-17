@@ -3,6 +3,10 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+    @post = Post.find_by(params[:id])
+  end
+
   def new
     @post = Post.new
   end
@@ -16,10 +20,6 @@ class PostsController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-    @post = Post.find_by_id(params[:id])
   end
 
   private
