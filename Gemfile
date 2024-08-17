@@ -77,6 +77,7 @@ group :development do
 
   gem "bcrypt_pbkdf", ">= 1.0", "< 2.0", require: false
   gem "ed25519", ">= 1.2", "< 2.0", require: false
+  gem "faker"
 end
 
 group :test do
