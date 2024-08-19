@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_user!
 
+  def index
+    @pagy, @posts = pagy(Post.order(created_at: :desc))
+  end
+
   def show
-    @post = Post.find_by(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def new
     @post = Post.new
+  end
+
+  def edit
+    @post = Post.find(params[:id])
   end
 
   def create
@@ -18,7 +28,17 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_path(@post.id), notice: "Added #{@post.title}"
     else
-      render :new
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      redirect_to post_path(@post.id), notice: "Added #{@post.title}"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
