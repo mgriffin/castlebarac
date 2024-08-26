@@ -9,8 +9,12 @@ class ApplicationController < ActionController::Base
     Current.user.present?
   end
 
+  def admin?
+    Current.user.present? && Current.user.admin?
+  end
+
   def authenticate_user!
-    render plain: "404 Not Found", status: :forbidden unless logged_in?
+    render plain: "404 Not Found", status: :not_found unless logged_in?
   end
 
   def restore_user
