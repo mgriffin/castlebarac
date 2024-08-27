@@ -2,71 +2,73 @@
 
 require "test_helper"
 
-class Admin::PostsControllerTest < ActionDispatch::IntegrationTest
-  test "anonymous user can't load new post page" do
-    get new_admin_post_url
+module Admin
+  class PostsControllerTest < ActionDispatch::IntegrationTest
+    test "anonymous user can't load new post page" do
+      get new_admin_post_url
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "logged in user can't load new post page" do
-    sign_in :bugs
+    test "logged in user can't load new post page" do
+      sign_in :bugs
 
-    get new_admin_post_url
+      get new_admin_post_url
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "admin user can load new post page" do
-    sign_in :admin
+    test "admin user can load new post page" do
+      sign_in :admin
 
-    get new_admin_post_url
+      get new_admin_post_url
 
-    assert_response :success
-  end
+      assert_response :success
+    end
 
-  test "anonymous user can't create new post" do
-    post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+    test "anonymous user can't create new post" do
+      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "logged in user can't create new post" do
-    sign_in :bugs
+    test "logged in user can't create new post" do
+      sign_in :bugs
 
-    post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "admin user can create new post" do
-    sign_in :admin
+    test "admin user can create new post" do
+      sign_in :admin
 
-    post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
 
-    assert_redirected_to post_url(Post.last)
-  end
+      assert_redirected_to post_url(Post.last)
+    end
 
-  test "anonymous user can't edit a post" do
-    patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
+    test "anonymous user can't edit a post" do
+      patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "logged in user can't edit a post" do
-    sign_in :bugs
+    test "logged in user can't edit a post" do
+      sign_in :bugs
 
-    patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
+      patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
 
-    assert_response :not_found
-  end
+      assert_response :not_found
+    end
 
-  test "admin user can edit a post" do
-    sign_in :admin
+    test "admin user can edit a post" do
+      sign_in :admin
 
-    patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
+      patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
 
-    assert_redirected_to post_url(Post.first)
-    assert_equal "edited the title", Post.first.title
+      assert_redirected_to post_url(Post.first)
+      assert_equal "edited the title", Post.first.title
+    end
   end
 end
