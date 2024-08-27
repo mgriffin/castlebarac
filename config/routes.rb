@@ -11,12 +11,13 @@ Rails.application.routes.draw do
 
   get "/about", to: "site#about", as: :about
 
-  resources :posts
+  resources :posts, only: %i[index show]
 
   namespace :admin do
     root to: "admin#index"
 
     resources :users, only: :index
+    resources :posts
   end
 
   get "/404", to: "errors#not_found"

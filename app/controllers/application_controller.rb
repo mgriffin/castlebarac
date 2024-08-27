@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     render plain: "404 Not Found", status: :not_found unless logged_in?
   end
 
+  def admin_only!
+    render plain: "404 Not Found", status: :not_found unless admin?
+  end
+
   def restore_user
     return unless (session = find_session_by_cookie)
 
