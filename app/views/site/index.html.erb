@@ -1,6 +1,5 @@
 <%= image_tag("castlebarac.jpg") %>
 <%- if @posts %>
-  <hr>
   <%- @posts.each do |post| %>
     <h2><%= post.title %></h2>
     <p><%= post.content %></p>

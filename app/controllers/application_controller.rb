@@ -3,14 +3,22 @@
 class ApplicationController < ActionController::Base
   before_action :restore_user
 
-  helper_method :logged_in?
-
   def logged_in?
     Current.user.present?
   end
+  helper_method :logged_in?
+
+  def admin?
+    Current.user.present? && Current.user.admin?
+  end
+  helper_method :admin?
 
   def authenticate_user!
-    render plain: "404 Not Found", status: :forbidden unless logged_in?
+    render plain: "404 Not Found", status: :not_found unless logged_in?
+  end
+
+  def admin_only!
+    render plain: "404 Not Found", status: :not_found unless admin?
   end
 
   def restore_user
