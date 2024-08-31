@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <%- if logged_in? %>
+    <%- if admin? %>
       <%= render "admin/toolbar" %>
     <%- end %>
     <header>
@@ -22,7 +22,7 @@
           <%= inline_svg_tag "shield.svg" %>
           Castlebar A.C.
         <%- end %>
-        <%= link_to "About", about_url, class: "link" %>
+        <%= link_to "About", about_url, class: "link" if Flipper.enabled?(:about) %>
       </span>
       <%- if logged_in? %>
         <%= link_to "Log out", "/logout", class: "login" %>
