@@ -1,5 +1,30 @@
-main img {
-  margin-top: 10px;
+body {
   max-width: 100%;
-  border-radius: .375rem;
+  padding: 0;
+}
+main {
+  padding: 0 10px;
+
+  .container {
+    display: flex;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+  .news {
+    flex: 3 600px;
+  }
+  .calendar {
+    flex: 1 200px;
+  }
+  img {
+    margin: 10px auto 0 auto;
+    width: 800px;
+    display: block;
+    border-radius: .375rem;
+  }
+}
+footer {
+  text-align: center;
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
