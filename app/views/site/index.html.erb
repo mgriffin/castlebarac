@@ -1,19 +1,27 @@
 <%= image_tag("castlebarac.jpg") %>
-<%- if @posts %>
-  <%- @posts.each do |post| %>
-    <h2><%= post.title %></h2>
-    <p><%= post.content %></p>
-    <hr>
-  <%- end %>
-<%- else %>
-  <h1>New website coming soon...</h1>
-  <%- if Flipper.enabled?(:mailing_list) %>
-    <h2>Do you want to know when we launch?</h2>
-    <p>Add your email address here and we'll let you know when to come back</p>
-    <%= form_with model: @mailing_list do |form| %>
-      <%= form.label :address, "Your email address: " %>
-      <%= form.email_field :address, placeholder: "You@your-email.address" %>
-      <%= form.submit "Join the mailing list" %>
+<div class="container">
+  <section class="news">
+    <%- if @posts %>
+      <%- @posts.each do |post| %>
+        <article>
+        <h2><%= post.title %></h2>
+        <p><%= post.content %></p>
+        </article>
+      <%- end %>
+    <%- else %>
+      <h1>New website coming soon...</h1>
+      <%- if Flipper.enabled?(:mailing_list) %>
+        <h2>Do you want to know when we launch?</h2>
+        <p>Add your email address here and we'll let you know when to come back</p>
+        <%= form_with model: @mailing_list do |form| %>
+          <%= form.label :address, "Your email address: " %>
+          <%= form.email_field :address, placeholder: "You@your-email.address" %>
+          <%= form.submit "Join the mailing list" %>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-<% end %>
+  </section>
+  <section class="calendar">
+    <p>There are no entries yet</p>
+  </section>
+</div>
