@@ -1,0 +1,12 @@
+<%= form_with model: [:admin, event] do |form| %>
+  <%= form.label :title, "Title: " %>
+  <%= form.text_field :title, required: true, autofocus: true, placeholder: "Event title", size: "60" %>
+
+  <%= form.label :start_time, "Date and time: " %>
+  <%= form.datetime_local_field :start_time, value: "2024-08-24 12:00" %>
+
+  <%= form.label :content, "Body: " %>
+  <%= form.rich_text_area :content, required: false %>
+
+  <%= form.submit "Post it" %>
+<% end %>
