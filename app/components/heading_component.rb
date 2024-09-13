@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class HeadingComponent < ViewComponent::Base
-  def initialize(level: "h2")
-    @level = level
+  TAG_OPTIONS = [:h1, :h2, :h3, :h4, :h5, :h6].freeze
+
+  def initialize(tag: :h2)
+    @tag = TAG_OPTIONS.include?(tag) ? tag : :h2
+  end
+
+  def call
+    content_tag(@tag, content)
   end
 end

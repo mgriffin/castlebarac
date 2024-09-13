@@ -1,4 +1,4 @@
-<%= render(HeadingComponent.new(level: 1).with_content("Admin Section")) %>
+<%= render(HeadingComponent.new(tag: :h1).with_content("Admin Section")) %>
 
 <ul>
   <li><%= link_to "Add a new post", new_admin_post_url %></li>
