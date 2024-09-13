@@ -28,7 +28,6 @@ module Admin
       end
     end
 
-
     def update
       @event = Event.find(params[:id])
 
@@ -38,6 +37,7 @@ module Admin
         render :edit, status: :unprocessable_entity
       end
     end
+
     private
 
     def event_params

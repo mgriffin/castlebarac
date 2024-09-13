@@ -27,7 +27,8 @@ module Admin
     end
 
     test "anonymous user can't create new event" do
-      post admin_events_url, params: { event: { title: Faker::String.random, start_time: DateTime.now,  body: Faker::Markdown.sandwich } }
+      post admin_events_url,
+           params: { event: { title: Faker::String.random, start_time: DateTime.now, body: Faker::Markdown.sandwich } }
 
       assert_response :not_found
     end
@@ -35,7 +36,8 @@ module Admin
     test "logged in user can't create new event" do
       sign_in :bugs
 
-      post admin_events_url, params: { event: { title: Faker::String.random, start_time: DateTime.now,  body: Faker::Markdown.sandwich } }
+      post admin_events_url,
+           params: { event: { title: Faker::String.random, start_time: DateTime.now, body: Faker::Markdown.sandwich } }
 
       assert_response :not_found
     end
@@ -43,7 +45,8 @@ module Admin
     test "admin user can create new event" do
       sign_in :admin
 
-      post admin_events_url, params: { event: { title: Faker::String.random, start_time: DateTime.now,  body: Faker::Markdown.sandwich } }
+      post admin_events_url,
+           params: { event: { title: Faker::String.random, start_time: DateTime.now, body: Faker::Markdown.sandwich } }
 
       assert_redirected_to admin_event_url(Event.last)
     end
