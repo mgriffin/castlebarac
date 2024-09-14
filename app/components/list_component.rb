@@ -7,6 +7,7 @@ class ListComponent < ViewComponent::Base
     def initialize(label:, href:)
       @label = label
       @href = href
+      super
     end
 
     def call
