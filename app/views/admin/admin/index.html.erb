@@ -1,7 +1,9 @@
 <%= render(HeadingComponent.new(tag: :h1).with_content("Admin Section")) %>
 
-<ul>
-  <li><%= link_to "Add a new post", new_admin_post_url %></li>
-  <li><%= link_to "View all posts", posts_url %></li>
-  <li><%= link_to "View all users", admin_users_url %></li>
-</ul>
+<%= render(ListComponent.new) do |component| %>
+  <% component.with_items([
+    { label: "Add a new post", href: new_admin_post_url },
+    { label: "View all posts", href: posts_url },
+    { label: "View all users", href: admin_users_url },
+  ]) %>
+<% end %>
