@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     resources :users, only: :index
     resources :posts
+    resources :events
   end
 
   get "/404", to: "errors#not_found"
