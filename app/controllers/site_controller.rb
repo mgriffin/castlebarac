@@ -2,6 +2,7 @@
 
 class SiteController < ApplicationController
   include Pagy::Backend
+  include PostsHelper
 
   def index
     @mailing_list = MailingList.new
