@@ -12,10 +12,10 @@ Rails.application.routes.draw do
   get "/about", to: "site#about", as: :about
 
   get "/news/:year/:month/:id",
-    to: "posts#show",
-    as: :post_permalink,
-    year: /20\d{2}/,
-    month: /[01]?\d/
+      to: "posts#show",
+      as: :post_permalink,
+      year: /20\d{2}/,
+      month: /[01]?\d/
 
   namespace :admin do
     root to: "admin#index"

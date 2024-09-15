@@ -8,6 +8,6 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by_url(params[:id])
+    @post = Post.find_by(url: params[:id])
   end
 end

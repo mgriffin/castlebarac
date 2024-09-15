@@ -11,7 +11,7 @@ module Admin
     end
 
     def show
-      @post = Post.find_by_url(params[:id])
+      @post = Post.find_by(url: params[:id])
     end
 
     def new
@@ -19,7 +19,7 @@ module Admin
     end
 
     def edit
-      @post = Post.find_by_url(params[:id])
+      @post = Post.find_by(url: params[:id])
     end
 
     def create
@@ -34,7 +34,7 @@ module Admin
     end
 
     def update
-      @post = Post.find_by_url(params[:id])
+      @post = Post.find_by(url: params[:id])
 
       if @post.update(post_params)
         redirect_to post_path(@post.id), notice: "Added #{@post.title}"
