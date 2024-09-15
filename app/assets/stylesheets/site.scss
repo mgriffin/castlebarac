@@ -23,8 +23,24 @@ main {
     border-radius: .375rem;
   }
 }
-footer {
-  text-align: center;
-  background-color: var(--color-black);
-  color: var(--color-white);
+section {
+  padding: 0 10px;
+}
+article {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin: 10px 0;
+
+  h2 {
+    margin-top: 0;
+  }
+  p {
+    margin: 0;
+  }
+}
+.subtle {
+  color: var(--text-muted);
+  font-size: 0.7em;
+  padding-bottom: 5px;
 }

@@ -3,7 +3,7 @@
 <%= render(ListComponent.new) do |component| %>
   <% component.with_items([
     { label: "Add a new post", href: new_admin_post_url },
-    { label: "View all posts", href: posts_url },
+    { label: "View all posts", href: admin_posts_url },
     { label: "View all users", href: admin_users_url },
     { label: "Add a new event", href: new_admin_event_url },
   ]) %>

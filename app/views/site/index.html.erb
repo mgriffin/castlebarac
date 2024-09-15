@@ -4,8 +4,9 @@
     <%- if @posts %>
       <%- @posts.each do |post| %>
         <article>
-        <h2><%= post.title %></h2>
-        <p><%= post.content %></p>
+          <h2><%= link_to post.title, post_url(post.url) %></h2>
+          <div class="subtle"><%= post.created_at.strftime("%b %-d, %Y") %></div>
+          <%= post.content %>
         </article>
       <%- end %>
     <%- else %>
