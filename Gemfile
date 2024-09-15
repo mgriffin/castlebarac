@@ -93,4 +93,5 @@ gem "flipper-active_record", "~> 1.3"
 
 gem "faraday"
 gem "inline_svg"
+gem "stringex"
 gem "view_component"
