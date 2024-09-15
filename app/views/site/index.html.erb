@@ -23,6 +23,14 @@
     <% end %>
   </section>
   <section class="calendar">
-    <p>There are no entries yet</p>
+    <%- if @events %>
+      <h2>Upcoming events</h2>
+      <%- @events.each do |event| %>
+        <article class="event">
+          <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
+          <p><%= event.title %></p>
+        </article>
+      <%- end %>
+    <%- end %>
   </section>
 </div>
