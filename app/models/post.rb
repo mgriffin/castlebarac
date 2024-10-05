@@ -7,15 +7,15 @@ class Post < ApplicationRecord
   before_validation :create_url, if: :title_changed?
 
   def create_url
-    self.url = DateTime.now.strftime("%Y-%m-%d-") + self.title
-      .gsub(/\s+/, "-")        # replace spaces with -
-      .gsub(/&/, "-and-")      # replace & with -and-
-      .gsub(%r{[^\w\-/]+}, "") # remove all non-word chars except - and /
-      .gsub(%r{/}, "-")        # replace / with -
-      .gsub(/\-\-+/, "-")      # replace multiple - with single -
-      .gsub(/^-/, "")          # remove leading -
-      .gsub(/-$/, "")          # remove trailing -
-      .downcase
+    self.url = DateTime.now.strftime("%Y-%m-%d-") + title
+               .gsub(/\s+/, "-")        # replace spaces with -
+               .gsub("&", "-and-")      # replace & with -and-
+               .gsub(%r{[^\w\-/]+}, "") # remove all non-word chars except - and /
+               .gsub(%r{/}, "-")        # replace / with -
+               .gsub(/--+/, "-")        # replace multiple - with single -
+               .gsub(/^-/, "")          # remove leading -
+               .gsub(/-$/, "")          # remove trailing -
+               .downcase
   end
 
   def to_param
