@@ -1,0 +1,11 @@
+<%- if @events %>
+  <hr>
+  <%- @events.each do |event| %>
+    <article class="event">
+      <p><%= link_to event.title, edit_admin_event_path(event) %></p>
+      <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
+    </article>
+  <%- end %>
+<%- else %>
+  <p>There are no events</p>
+<% end %>

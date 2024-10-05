@@ -6,6 +6,10 @@ module Admin
 
     before_action :admin_only!
 
+    def index
+      @pagy, @events = pagy(Event.order(start_time: :desc))
+    end
+
     def show
       @event = Event.find(params[:id])
     end
