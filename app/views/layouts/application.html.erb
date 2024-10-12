@@ -12,9 +12,7 @@
   </head>
 
   <body>
-    <%- if admin? %>
-      <%= render "admin/toolbar" %>
-    <%- end %>
+    <%= render AdminToolbarComponent.new(user: Current.user) %>
     <header>
       <nav class="main" aria-label="Main Navigation">
       <span class="links">
