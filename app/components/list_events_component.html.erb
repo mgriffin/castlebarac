@@ -1,0 +1,8 @@
+<h2>Upcoming events</h2>
+<%- if events? %>
+  <% events.each do |event| %>
+    <%= event %>
+  <% end %>
+<% else %>
+  <p>There are no events coming up</p>
+<% end %>
