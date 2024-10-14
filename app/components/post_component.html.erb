@@ -1,0 +1,5 @@
+<article>
+  <h2><%= link_to @post.title, post_path(@post) %></h2>
+  <div class="subtle"><%= @post.created_at.strftime("%b %-d, %Y") %></div>
+  <%= @post.content %>
+</article>

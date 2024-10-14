@@ -1,36 +1,13 @@
 <%= image_tag("castlebarac.jpg") %>
 <div class="container">
   <section class="news">
-    <%- if @posts %>
-      <%- @posts.each do |post| %>
-        <article>
-          <h2><%= link_to post.title, post_path(post) %></h2>
-          <div class="subtle"><%= post.created_at.strftime("%b %-d, %Y") %></div>
-          <%= post.content %>
-        </article>
-      <%- end %>
-    <%- else %>
-      <h1>New website coming soon...</h1>
-      <%- if Flipper.enabled?(:mailing_list) %>
-        <h2>Do you want to know when we launch?</h2>
-        <p>Add your email address here and we'll let you know when to come back</p>
-        <%= form_with model: @mailing_list do |form| %>
-          <%= form.label :address, "Your email address: " %>
-          <%= form.email_field :address, placeholder: "You@your-email.address" %>
-          <%= form.submit "Join the mailing list" %>
-        <% end %>
-      <% end %>
+    <%= render ListPostsComponent.new do |component| %>
+      <% component.with_posts(@posts) %>
     <% end %>
   </section>
   <section class="calendar">
-    <%- if @events %>
-      <h2>Upcoming events</h2>
-      <%- @events.each do |event| %>
-        <article class="event">
-          <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
-          <p><%= event.title %></p>
-        </article>
-      <%- end %>
-    <%- end %>
+    <%= render ListEventsComponent.new do |component| %>
+      <% component.with_events(@events) %>
+    <% end %>
   </section>
 </div>

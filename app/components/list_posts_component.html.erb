@@ -1,0 +1,7 @@
+<%- if posts? %>
+  <% posts.each do |post| %>
+    <%= post %>
+  <% end %>
+<% else %>
+  <p>There's no news</p>
+<% end %>
