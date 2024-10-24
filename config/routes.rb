@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy", as: :logout
 
+  resource :profile
+
   get "/about", to: "site#about", as: :about
 
   resources :posts, only: :show
