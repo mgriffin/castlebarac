@@ -20,7 +20,7 @@ class ProfilesController < ApplicationController
     @profile.user = Current.user
 
     if @profile.save
-      redirect_to profile_path, notice: "Thanks for updating your info"
+      redirect_to profile_path, notice: t(".thanks")
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class ProfilesController < ApplicationController
     @profile = Current.user.profile
 
     if @profile.update(profile_params)
-      redirect_to profile_path, notice: "Thanks for updating your info"
+      redirect_to profile_path, notice: t(".thanks")
     else
       render :edit, status: :unprocessable_entity
     end

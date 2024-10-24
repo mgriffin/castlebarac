@@ -36,3 +36,5 @@ en:
     welcome:
       subject: "Thanks for signing up to the mailing list"
   wrong_email_or_password: "Wrong email or password"
+  profiles:
+    thanks: "Thanks for updating your info"
