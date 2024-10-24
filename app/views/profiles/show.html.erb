@@ -1,0 +1,14 @@
+<table>
+  <tbody>
+  <tr>
+    <td><strong>Name:</strong></td>
+    <td><%= [@profile.firstname, @profile.surname].join(" ") %></td>
+    <td><%= link_to "Edit", edit_profile_path %></td>
+  </tr>
+  <tr>
+    <td><strong>Email:</strong></td>
+    <td><%= @profile.user.email %></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>

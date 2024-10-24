@@ -1,23 +1,35 @@
 header {
-  padding: 0 5px;
-  background-color: var(--color-header-background);
-  border-bottom: 2px solid var(--color-header-border);
-  color: var(--color-white);
-  height: 40px;
+  a.logo {
+    height: 120px;
+    color: var(--color-black);
+    font-size: 3.5em;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+    svg {
+      position: relative;
+      top: 3px;
+      vertical-align: bottom;
+    }
+  }
 
   nav.main {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     line-height: 24px;
-  }
-  svg {
-    position: relative;
-    top: 3px;
-    vertical-align: bottom;
+    height: 40px;
+    background-color: var(--color-header-background);
+    border-bottom: 2px solid var(--color-header-border);
+    color: var(--color-white);
+    padding: 0 5px;
   }
   a {
-    color: #fff;
+    color: var(--color-white);
   }
   .name {
     font-weight: bold;
