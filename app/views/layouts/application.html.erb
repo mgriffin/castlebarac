@@ -32,9 +32,8 @@
       </nav>
     </header>
     <main>
-      <div class="flash">
-        <%= render "layouts/flash" %>
-      </div>
+      <%= render FlashComponent.new(flash: flash) %>
+      <%= render FillOutProfileComponent.new(user: Current.user) %>
       <%= yield %>
     </main>
     <%= render(FooterComponent.new) %>
