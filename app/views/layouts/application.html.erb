@@ -14,19 +14,21 @@
   <body>
     <%= render AdminToolbarComponent.new(user: Current.user) %>
     <header>
-      <nav class="main" aria-label="Main Navigation">
-      <span class="links">
-        <%= link_to root_url, class: "name" do %>
-          <%= inline_svg_tag "shield.svg" %>
-          Castlebar A.C.
-        <%- end %>
-        <%= link_to "About", about_url, class: "link" if Flipper.enabled?(:about) %>
-      </span>
-      <%- if logged_in? %>
-        <%= link_to "Log out", "/logout", class: "login" %>
-      <%- else %>
-        <%= link_to "Log in", "/login", class: "login" %>
+      <%= link_to root_url, class: "logo" do %>
+        <%= inline_svg_tag "shield.svg" %>
+        Castlebar A.C.
       <%- end %>
+      <nav class="main" aria-label="Main Navigation">
+        <span class="links">
+          <%= link_to "About", about_url, class: "link" if Flipper.enabled?(:about) %>
+          <%= link_to "Home", root_url, class: "link" %>
+        <%- if logged_in? %>
+          <%= link_to "My Profile", "/profile", class: "link" %>
+          <%= link_to "Log out", "/logout", class: "link" %>
+        <%- else %>
+          <%= link_to "Log in", "/login", class: "link" %>
+        <%- end %>
+        </span>
       </nav>
     </header>
     <main>
