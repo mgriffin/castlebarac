@@ -2,7 +2,8 @@
 
 class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :posts
+  has_one :profile
 
   has_secure_password validations: false
 end
