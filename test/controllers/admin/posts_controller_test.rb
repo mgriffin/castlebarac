@@ -45,7 +45,7 @@ module Admin
 
       post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
 
-      assert_redirected_to admin_post_url(Post.last.id)
+      assert_redirected_to post_url(Post.last)
     end
 
     test "anonymous user can't edit a post" do
