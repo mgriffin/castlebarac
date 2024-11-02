@@ -27,7 +27,7 @@ module Admin
       @post.user = Current.user
 
       if @post.save
-        redirect_to admin_post_path(@post.id), notice: "Added #{@post.title}"
+        redirect_to post_path(@post), notice: "Added #{@post.title}"
       else
         render :new, status: :unprocessable_entity
       end
