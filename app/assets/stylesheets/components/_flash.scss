@@ -1,6 +1,6 @@
 .flash {
   position:fixed;
-  top: 5rem;
+  top: 11rem;
   left: 50%;
   transform: translateX(-50%);
 
@@ -17,8 +17,14 @@
     font-size: var(--font-size-s);
     color: var(--color-white);
     padding: var(--space-xs) var(--space-m);
-    background-color: var(--color-dark);
+    background-color: var(--color-black);
     animation: appear-then-fade 4s both;
-    border-radius: 999px;
+    border-radius: 5px;
+  }
+
+  &__notice {
+    color: #0a3622;
+    background-color: #d1e7dd;
+    border: 1px solid #a3cfbb;
   }
 }
