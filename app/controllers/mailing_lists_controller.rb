@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MailingListsController < ApplicationController
-  before_action :authenticate_user!, except: :create
+  allow_unauthenticated_access(only: :create)
 
   def index
     @entries = MailingList.all

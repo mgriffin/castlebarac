@@ -85,8 +85,8 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem "capybara-playwright-driver"
   gem "mocha"
-  gem "selenium-webdriver"
 end
 
 gem "flipper-active_record", "~> 1.3"

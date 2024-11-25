@@ -1,9 +1,21 @@
 <h1>Members login</h1>
 <p>If you're a member of Castlebar AC and have an account, you can log in here</p>
-<%= form_with model: @session do |form| %>
+<%= form_with model: @session, id: "login" do |form| %>
   <%= form.label :email, "Email Address: " %>
-  <%= form.email_field :email, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email] %>
+  <%= form.email_field :email, required: true, autofocus: true, autocomplete: "email", placeholder: "Enter your email address", value: params[:email] %>
   <%= form.label :password, "Password: " %>
   <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password" %>
   <%= form.submit "Log in" %>
+<% end %>
+
+<h2>Don't have an account yet?</h2>
+<p>Current members can create an account to access the site</p>
+<%= form_with model: @user, url: signup_path, id: "register" do |form| %>
+  <%= form.label :email %>
+  <%= form.email_field :email, required: true, autocomplete: "email", value: @user.email %>
+  <%= form.label :password %>
+  <%= form.password_field :password, required: true, autocomplete: "new-password" %>
+  <%= form.label :password_confirmation %>
+  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
+  <%= form.submit "Register" %>
 <% end %>
