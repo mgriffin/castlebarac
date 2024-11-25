@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  allow_unauthenticated_access only: %i[new create]
 
   def new
     @user = User.new
@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      #redirect_to login_path, alert: "Try another email address or password."
       @user = User.new
       render "sessions/new", status: :unauthorized
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "application_system_test_case"
 
 class RegularUserTest < ApplicationSystemTestCase
@@ -6,7 +8,9 @@ class RegularUserTest < ApplicationSystemTestCase
     click_on "Log in"
     fill_in "Email Address:", with: "bugs@acme.fake"
     fill_in "Password:", with: "carrots"
-    click_button "Log in"
+    within("#login") do
+      click_link_or_button "Log in"
+    end
 
     refute_selector "a", text: "Admin"
   end

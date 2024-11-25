@@ -12,7 +12,7 @@ class RegistrationsController < ApplicationController
 
     if @user.save!
       start_new_session_for(@user)
-      redirect_to root_path, notice: "Signed up successfully"
+      redirect_to root_path, notice: t(".notice")
     else
       render :new, status: :unprocessable_entity
     end

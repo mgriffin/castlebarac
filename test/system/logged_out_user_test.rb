@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "application_system_test_case"
 
 class LoggedOutUserTest < ApplicationSystemTestCase
@@ -12,7 +14,9 @@ class LoggedOutUserTest < ApplicationSystemTestCase
     click_on "Log in"
     fill_in "Email Address:", with: "bugs@acme.fake"
     fill_in "Password:", with: "carrots"
-    click_button "Log in"
+    within("#login") do
+      click_link_or_button "Log in"
+    end
 
     assert_selector "a", text: "Log out"
   end
@@ -22,7 +26,9 @@ class LoggedOutUserTest < ApplicationSystemTestCase
     fill_in "Email", with: "coyote@acme.fake"
     fill_in "Password", with: "carrots"
     fill_in "Password confirmation", with: "carrots"
-    click_button "Register"
+    within("#register") do
+      click_link_or_button "Register"
+    end
 
     assert_selector "div", text: "Signed up successfully"
   end

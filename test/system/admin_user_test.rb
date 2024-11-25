@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "application_system_test_case"
 
 class AdminUserTest < ApplicationSystemTestCase
@@ -6,7 +8,9 @@ class AdminUserTest < ApplicationSystemTestCase
     click_on "Log in"
     fill_in "Email Address:", with: "admin@acme.fake"
     fill_in "Password:", with: "carrots"
-    click_button "Log in"
+    within("#login") do
+      click_link_or_button "Log in"
+    end
 
     click_on "Admin"
     click_on "Add a new post"
@@ -14,7 +18,7 @@ class AdminUserTest < ApplicationSystemTestCase
     title = Faker::Lorem.sentence
     fill_in "Title:", with: title
     fill_in_rich_text_area "Body:", with: Faker::Lorem.paragraph
-    click_button "Post it"
+    click_link_or_button "Post it"
 
     assert_selector "div", text: "Added #{title}"
   end

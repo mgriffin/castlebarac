@@ -38,3 +38,6 @@ en:
   wrong_email_or_password: "Wrong email or password"
   profiles:
     thanks: "Thanks for updating your info"
+  registrations:
+    create:
+      notice: "Signed up successfully"
