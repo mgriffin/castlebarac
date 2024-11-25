@@ -1,5 +1,16 @@
-<ul>
+<div class="container">
+<table>
+  <tr>
+    <td>ID</td>
+    <td>Username</td>
+    <td>Name</td>
+  </tr>
 <%- @users.each do |user| %>
-  <li><%= user.email %></li>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.email %></td>
+    <td><%= user.name %></td>
+  </tr>
 <%- end %>
-</ul>
+</table>
+</div>

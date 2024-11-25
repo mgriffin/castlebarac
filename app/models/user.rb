@@ -6,4 +6,8 @@ class User < ApplicationRecord
   has_one :profile, dependent: :nullify
 
   has_secure_password validations: false
+
+  def name
+    [profile&.firstname, profile&.surname].join(" ")
+  end
 end
