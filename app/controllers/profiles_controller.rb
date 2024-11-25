@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
-  before_action :logged_in?
-
   def show
     @profile = Current.user.profile
   end

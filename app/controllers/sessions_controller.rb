@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  def new; end
+  allow_unauthenticated_access only: %i[ new create ]
+
+  def new
+    @user = User.new
+  end
 
   def create
     if (user = User.authenticate_by(user_params))
-      user.sessions.start!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
-        Current.user = session.user
-        cookies.signed.permanent[:session_token] = { value: session.token, httponly: true, same_site: :lax }
-      end
-      redirect_to root_url
+      start_new_session_for user
+      redirect_to after_authentication_url
     else
-      flash[:alert] = :wrong_email_or_password
-      render :new, status: :unauthorized
+      #redirect_to login_path, alert: "Try another email address or password."
+      @user = User.new
+      render "sessions/new", status: :unauthorized
     end
   end
 
   def destroy
-    cookies.delete(:session_token)
-
+    terminate_session
     redirect_to root_url
   end
 

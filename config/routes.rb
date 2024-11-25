@@ -5,13 +5,16 @@ Rails.application.routes.draw do
 
   resources :mailing_lists, only: %i[index create]
 
-  get "/login", to: "sessions#new", as: :login
-  post "/login", to: "sessions#create"
-  get "/logout", to: "sessions#destroy", as: :logout
+  get "login", to: "sessions#new", as: :login
+  post "login", to: "sessions#create"
+  get "logout", to: "sessions#destroy", as: :logout
+
+  get "signup", to: "registrations#new"
+  post "signup", to: "registrations#create"
 
   resource :profile
 
-  get "/about", to: "site#about", as: :about
+  get "about", to: "site#about", as: :about
 
   resources :posts, only: :show
 
@@ -23,6 +26,6 @@ Rails.application.routes.draw do
     resources :events
   end
 
-  get "/404", to: "errors#not_found"
-  get "/500", to: "errors#internal_error"
+  get "404", to: "errors#not_found"
+  get "500", to: "errors#internal_error"
 end
