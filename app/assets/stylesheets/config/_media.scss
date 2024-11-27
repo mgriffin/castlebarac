@@ -1,10 +1,13 @@
 @media (prefers-color-scheme: light) {
   :root {
-    --color-header-background: hsl(115, 40%, 35%);
+    --color-header-bg: hsl(115, 40%, 35%);
     --color-header-border: hsl(115, 40%, 15%);
     --banner-info-fg: #055160;
     --banner-info-bg: #cff4fc;
     --banner-info-border: #9eeaf9;
+    --button-base: hsl(115, 40%, 35%);
+    --button-hover: hsl(115, 70%, 35%);
+    --color-button-fg: #fff;
     --color-white: #fff;
     --color-black: #000;
   }
