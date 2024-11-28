@@ -12,9 +12,13 @@
     <td><%= user.email %></td>
     <td><%= user.name %></td>
     <td>
-      <%= form_with model: user, url: admin_user_path(user), data: {checkbox_target: "form"} do |f| %>
-        <%= f.hidden_field :id, value: user.id %>
-        <%= f.check_box :admin, data: {action: "checkbox#submit" } %>
+      <%- if user.id == Current.user.id %>
+        <%= inline_svg_tag "check.svg" %>
+      <%- else %>
+        <%= form_with model: user, url: admin_user_path(user), data: {checkbox_target: "form"} do |f| %>
+          <%= f.hidden_field :id, value: user.id %>
+          <%= f.check_box :admin, data: {action: "checkbox#submit" } %>
+        <%- end %>
       <%- end %>
     </td>
   </tr>
