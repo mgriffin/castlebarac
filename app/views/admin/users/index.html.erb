@@ -1,15 +1,22 @@
-<div class="container">
+<div class="container" data-controller="checkbox">
 <table>
   <tr>
-    <td>ID</td>
-    <td>Username</td>
-    <td>Name</td>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Admin?</th>
   </tr>
 <%- @users.each do |user| %>
   <tr>
     <td><%= user.id %></td>
     <td><%= user.email %></td>
     <td><%= user.name %></td>
+    <td>
+      <%= form_with model: user, url: admin_user_path(user), data: {checkbox_target: "form"} do |f| %>
+        <%= f.hidden_field :id, value: user.id %>
+        <%= f.check_box :admin, data: {action: "checkbox#submit" } %>
+      <%- end %>
+    </td>
   </tr>
 <%- end %>
 </table>
