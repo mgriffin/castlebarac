@@ -13,10 +13,8 @@ module Admin
     def update
       @user = User.find(user_params[:id])
 
-      if @user.update_attribute(:admin, user_params[:admin])
-        respond_to do |format|
-          redirect_to admin_users_path
-        end
+      if @user.update(:admin, user_params[:admin])
+        redirect_to admin_users_path
       else
         render :new, status: :unprocessable_entity
       end
