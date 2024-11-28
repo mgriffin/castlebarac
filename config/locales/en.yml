@@ -41,3 +41,6 @@ en:
   registrations:
     create:
       notice: "Signed up successfully"
+  sessions:
+    create:
+      alert: "Username or password was incorrect"

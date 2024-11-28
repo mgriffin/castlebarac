@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import RemovalsController from "./removals_controller"
 application.register("removals", RemovalsController)
+
+import CheckboxController from "./checkbox_controller"
+application.register("checkbox", CheckboxController)

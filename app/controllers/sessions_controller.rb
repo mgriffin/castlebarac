@@ -12,8 +12,7 @@ class SessionsController < ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      @user = User.new
-      render "sessions/new", status: :unauthorized
+      redirect_to login_url, alert: t(".alert")
     end
   end
 
@@ -25,6 +24,6 @@ class SessionsController < ApplicationController
   private
 
   def user_params
-    params.permit(:email, :password)
+    params.require(:user).permit(:email, :password)
   end
 end
