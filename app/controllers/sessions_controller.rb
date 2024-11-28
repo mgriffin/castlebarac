@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      redirect_to login_url, alert: "Username or password was incorrect"
+      redirect_to login_url, alert: t(".alert")
     end
   end
 

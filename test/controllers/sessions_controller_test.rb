@@ -10,13 +10,14 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "can't log in" do
-    post login_url, params: { email: "not-a-user@acme.fake", password: "carrots" }
+    post login_url, params: { user: { email: "not-a-user@acme.fake", password: "carrots" } }
 
-    assert_response :unauthorized
+    assert_redirected_to login_url
+    assert_not cookies[:session_token].present?
   end
 
   test "can log in" do
-    post login_url, params: { email: "bugs@acme.fake", password: "carrots" }
+    post login_url, params: { user: { email: "bugs@acme.fake", password: "carrots" } }
 
     assert_redirected_to root_url
     assert cookies[:session_token].present?

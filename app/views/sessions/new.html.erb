@@ -1,7 +1,12 @@
 <div class="container">
   <div class="modal-form">
     <h1>Members login</h1>
-    <%= form_with model: @session, id: "login" do |form| %>
+    <% if @user.errors.any? %>
+      <div class="error-message">
+        <%= @user.errors.full_messages.to_sentence.capitalize %>
+      </div>
+    <% end %>
+    <%= form_with model: @user, url: login_path, id: "login", html: {novalidate: true} do |form| %>
       <%= form.label :email, "Email Address: " %>
       <%= form.email_field :email, required: true, autocomplete: "email", placeholder: "person@example.com", value: params[:email] %>
       <%= form.label :password, "Password: " %>
