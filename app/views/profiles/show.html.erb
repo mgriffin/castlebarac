@@ -4,7 +4,11 @@
       <tr>
         <td><strong>Name:</strong></td>
         <td><%= [@profile.firstname, @profile.surname].join(" ") %></td>
-        <td><%= link_to "Edit", edit_profile_path %></td>
+        <td>
+          <%= link_to edit_profile_path do
+            inline_svg_tag "pencil.svg"
+          end %>
+        </td>
       </tr>
       <tr>
         <td><strong>Email:</strong></td>

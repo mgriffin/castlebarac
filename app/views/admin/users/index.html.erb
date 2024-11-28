@@ -13,7 +13,7 @@
     <td><%= user.name %></td>
     <td>
       <%- if user.id == Current.user.id %>
-        <%= inline_svg_tag "check.svg" %>
+        <%= inline_svg_tag "check.svg" %> (That's me)
       <%- else %>
         <%= form_with model: user, url: admin_user_path(user), data: {checkbox_target: "form"} do |f| %>
           <%= f.hidden_field :id, value: user.id %>
