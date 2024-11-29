@@ -13,30 +13,27 @@
   </head>
 
   <body>
+    <div class="wrapper">
     <%= render AdminToolbarComponent.new(user: Current.user) %>
     <header>
       <%= link_to root_url, class: "logo" do %>
         <%= inline_svg_tag "shield.svg" %>
         Castlebar A.C.
       <%- end %>
-      <nav class="main" aria-label="Main Navigation">
-        <span class="links">
-          <%= link_to "About", about_url, class: "link" if Flipper.enabled?(:about) %>
-          <%= link_to "Home", root_url, class: "link" %>
-        <%- if authenticated? %>
-          <%= link_to "My Profile", "/profile", class: "link" %>
-          <%= link_to "Log out", "/logout", class: "link" %>
-        <%- else %>
-          <%= link_to "Log in", "/login", class: "link" %>
-        <%- end %>
-        </span>
-      </nav>
     </header>
-    <main>
+    <nav class="main" aria-label="Main Navigation">
+      <%= render(ListComponent.new) do |component| %>
+        <% component.with_items([
+          { label: "Home", href: root_url },
+          ({ label: "My Profile", href: profile_url } if authenticated?),
+          ({ label: "Log out", href: logout_url } if authenticated?),
+          ({ label: "Log in", href: login_url } unless authenticated?),
+        ].reject &:nil?) %>
+      <%- end %>
+    </nav>
       <%= render FlashComponent.new(flash: flash) %>
       <%= render FillOutProfileComponent.new(user: Current.user) %>
       <%= yield %>
-    </main>
     <%= render(FooterComponent.new) %>
   </body>
 </html>

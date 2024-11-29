@@ -1,13 +1,13 @@
-<%= image_tag("castlebarac.jpg") %>
-<div class="container">
-  <section class="news">
-    <%= render ListPostsComponent.new do |component| %>
-      <% component.with_posts(@posts) %>
-    <% end %>
-  </section>
-  <section class="calendar">
-    <%= render ListEventsComponent.new do |component| %>
-      <% component.with_events(@events) %>
-    <% end %>
-  </section>
+<div class="carousel">
+  <%= image_tag("castlebarac.jpg") %>
 </div>
+<section class="news">
+  <%= render ListPostsComponent.new do |component| %>
+    <% component.with_posts(@posts) %>
+  <% end %>
+</section>
+<section class="calendar">
+  <%= render ListEventsComponent.new do |component| %>
+    <% component.with_events(@events) %>
+  <% end %>
+</section>
