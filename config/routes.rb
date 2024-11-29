@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "signup", to: "registrations#new", as: :signup
   post "signup", to: "registrations#create"
 
-  get "rss", to: "feeds#rss"
+  get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
   resource :profile
 
