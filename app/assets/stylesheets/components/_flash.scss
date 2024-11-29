@@ -22,9 +22,15 @@
     border-radius: 5px;
   }
 
+  &__alert {
+    color: var(--color-flash-alert-fg);
+    background-color: var(--color-flash-alert-bg);
+    border: 1px solid var(--color-flash-alert-border);
+  }
+
   &__notice {
-    color: #0a3622;
-    background-color: #d1e7dd;
-    border: 1px solid #a3cfbb;
+    color: var(--color-flash-notice-fg);
+    background-color: var(--color-flash-notice-bg);
+    border: 1px solid var(--color-flash-notice-border);
   }
 }
