@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get "signup", to: "registrations#new", as: :signup
   post "signup", to: "registrations#create"
 
+  get "rss", to: "feeds#rss"
+
   resource :profile
 
   get "about", to: "site#about", as: :about
