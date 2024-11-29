@@ -10,6 +10,8 @@
     <%= stylesheet_link_tag "water" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= auto_discovery_link_tag(:rss, rss_url, {title: "RSS Feed"}) %>
+
   </head>
 
   <body>
