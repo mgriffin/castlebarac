@@ -2,15 +2,12 @@
 
 module Admin
   class PeopleController < ApplicationController
-    before_action :set_person, only: %i[show edit update]
+    before_action :set_person, only: %i[edit update]
 
     # GET /admin/people
     def index
       @people = Person.all
     end
-
-    # GET /admin/people/1
-    def show; end
 
     # GET /admin/people/new
     def new
