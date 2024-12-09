@@ -1,0 +1,27 @@
+<div class="content" data-controller="checkbox">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Surname</th>
+      <th>Linked User</th>
+    </tr>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.id %></td>
+        <td><%= person.firstname %></td>
+        <td><%= person.surname %></td>
+        <td><%= person&.user&.email %></td>
+        <td>
+          <%- unless person&.user&.id == Current.user.id %>
+            <%= link_to edit_admin_person_path(person) do
+              inline_svg_tag "pencil.svg"
+            end %>
+          <%- end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= link_to "New person", new_admin_person_path %>
+</div>
