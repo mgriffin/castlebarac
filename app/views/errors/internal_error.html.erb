@@ -1,1 +1,11 @@
-<p>Uh oh, something broke behind the curtain, sorry</p>
+<div class="content">
+  <p>Uh oh, something broke behind the curtain, sorry</p>
+  <%- if admin? %>
+    <h4>Backtrace</h4>
+    <pre>
+    <%- trace.each do |line| %>
+      <%= line %>
+    <%- end %>
+    </pre>
+  <%- end %>
+</div>
