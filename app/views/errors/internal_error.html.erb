@@ -1,9 +1,9 @@
 <div class="content">
   <p>Uh oh, something broke behind the curtain, sorry</p>
   <%- if admin? %>
-    <h4>Backtrace</h4>
+    <h4><%= exception.message %></h4>
     <pre>
-    <%- trace.each do |line| %>
+    <%- exception.application_trace.each do |line| %>
       <%= line %>
     <%- end %>
     </pre>
