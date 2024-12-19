@@ -16,8 +16,6 @@ Rails.application.routes.draw do
 
   resource :profile
 
-  get "about", to: "site#about", as: :about
-
   resources :posts, only: %i[index show]
 
   namespace :admin do
