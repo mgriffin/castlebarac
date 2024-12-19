@@ -18,7 +18,7 @@
     <div class="wrapper">
     <%= render AdminToolbarComponent.new(user: Current.user) %>
     <header>
-      <%= link_to root_url, class: "logo" do %>
+      <%= link_to root_path, class: "logo" do %>
         <%= inline_svg_tag "shield.svg" %>
         Castlebar A.C.
       <%- end %>
@@ -26,10 +26,11 @@
     <nav class="main" aria-label="Main Navigation">
       <%= render(ListComponent.new) do |component| %>
         <% component.with_items([
-          { label: "Home", href: root_url },
-          ({ label: "My Profile", href: profile_url } if authenticated?),
-          ({ label: "Log out", href: logout_url } if authenticated?),
-          ({ label: "Log in", href: login_url } unless authenticated?),
+          { label: "Home", href: root_path },
+          { label: "Archive", href: posts_path },
+          ({ label: "My Profile", href: profile_path } if authenticated?),
+          ({ label: "Log out", href: logout_path } if authenticated?),
+          ({ label: "Log in", href: login_path } unless authenticated?),
         ].reject &:nil?) %>
       <%- end %>
     </nav>
