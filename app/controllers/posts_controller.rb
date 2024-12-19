@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   allow_unauthenticated_access
 
   def index
-    @pagy, @posts = pagy(Post.order(created_at: :desc))
+    @posts = Post.order(created_at: :desc).group_by{|p| p.created_at.beginning_of_month}
   end
 
   def show
