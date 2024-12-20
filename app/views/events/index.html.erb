@@ -1,0 +1,36 @@
+<div class="content event-list">
+  <h2>Upcoming Events</h2>
+  <%- if @future_events.empty? %>
+    <p>There's nothing planned</p>
+  <%- else %>
+    <%- @future_events.each do |month, events| %>
+      <h3><%= month.strftime("%B %Y") %></h3>
+      <ul>
+      <%- events.each do |event| %>
+          <li class="event">
+            <span><%= inline_svg_tag "calendar.svg" %><%= event.start_time.strftime("%a %e, %l:%M%P") %></span>
+            <%= link_to event.title, event_path(event) %>
+          </li>
+      <%- end %>
+      </ul>
+    <%- end %>
+  <%- end %>
+
+  <hr />
+  <h2>Past Events</h2>
+  <%- if @past_events.empty? %>
+    <p>There are no events</p>
+  <%- else %>
+    <%- @past_events.each do |month, events| %>
+      <h3><%= month.strftime("%B %Y") %></h3>
+      <ul>
+      <%- events.each do |event| %>
+          <li class="event">
+            <span><%= inline_svg_tag "calendar.svg" %><%= event.start_time.strftime("%a %e, %l:%M%P") %></span>
+            <%= link_to event.title, event_path(event) %>
+          </li>
+      <%- end %>
+      </ul>
+    <%- end %>
+  <% end %>
+</div>

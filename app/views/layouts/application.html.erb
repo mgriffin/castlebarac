@@ -28,6 +28,7 @@
         <% component.with_items([
           { label: "Home", href: root_path },
           { label: "Archive", href: posts_path },
+          { label: "Events", href: events_path },
           ({ label: "My Profile", href: profile_path } if authenticated?),
           ({ label: "Log out", href: logout_path } if authenticated?),
           ({ label: "Log in", href: login_path } unless authenticated?),

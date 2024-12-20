@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resource :profile
 
   resources :posts, only: %i[index show]
+  resources :events, only: %i[index show]
 
   namespace :admin do
     root to: "admin#index"
