@@ -1,12 +1,13 @@
 <div class="content">
-  <%- if @posts %>
-    <hr>
-    <%- @posts.each do |post| %>
-      <h2><%= link_to post.title, edit_admin_post_url(post.url) %></h2>
-      <p><%= post.content %></p>
-      <hr>
-    <%- end %>
-  <%- else %>
+  <%- if @posts.empty? %>
     <p>There are no posts</p>
+  <%- else %>
+    <%- @posts.each do |post| %>
+        <article>
+          <h3>
+            <%= link_to post.title, edit_admin_post_url(post.url) %>
+          </h3>
+        </article>
+    <%- end %>
   <% end %>
 </div>
