@@ -1,14 +1,26 @@
 <div class="content">
-    <%= render(HeadingComponent.new(tag: :h1).with_content("Admin Section")) %>
+  <%= render(HeadingComponent.new(tag: :h1).with_content("Admin Section")) %>
 
-    <%= render(ListComponent.new) do |component| %>
-      <% component.with_items([
-        { label: "Add a new post", href: new_admin_post_url },
-        { label: "View all posts", href: admin_posts_url },
-        { label: "View all users", href: admin_users_url },
-        { label: "View all people", href: admin_people_url },
-        { label: "Add a new event", href: new_admin_event_url },
-        { label: "View all events", href: admin_events_url },
-      ]) %>
-  <% end %>
+  <%= render(HeadingComponent.new(tag: :h2).with_content("Users")) %>
+  <%= render(ListComponent.new) do |component| %>
+    <% component.with_items([
+      { label: "View all users", href: admin_users_url },
+      { label: "View all people", href: admin_people_url },
+      { label: "Add a new person", href: new_admin_person_url },
+    ]) %>
+  <%- end %>
+  <%= render(HeadingComponent.new(tag: :h2).with_content("Posts")) %>
+  <%= render(ListComponent.new) do |component| %>
+    <% component.with_items([
+      { label: "View all posts", href: admin_posts_url },
+      { label: "Add a new post", href: new_admin_post_url },
+    ]) %>
+  <%- end %>
+  <%= render(HeadingComponent.new(tag: :h2).with_content("Events")) %>
+  <%= render(ListComponent.new) do |component| %>
+    <% component.with_items([
+      { label: "View all events", href: admin_events_url },
+      { label: "Add a new event", href: new_admin_event_url },
+    ]) %>
+  <%- end %>
 </div>
