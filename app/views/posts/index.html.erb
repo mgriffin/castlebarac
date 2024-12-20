@@ -1,16 +1,16 @@
 <div class="content">
-  <%- if @posts %>
+  <%- if @posts.empty? %>
+    <p>There are no posts</p>
+  <%- else %>
     <%- @posts.each do |month, posts| %>
       <h2><%= month.strftime("%B %Y") %></h2>
       <%- posts.each do |post| %>
         <article>
           <h3>
-            <%= link_to post.title, post_url(post.url) %>
+            <%= link_to post.title, post_path(post.url) %>
           </h3>
         </article>
       <%- end %>
     <%- end %>
-  <%- else %>
-    <p>There are no posts</p>
   <% end %>
 </div>

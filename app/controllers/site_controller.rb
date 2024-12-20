@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class SiteController < ApplicationController
-  include Pagy::Backend
   include PostsHelper
 
   allow_unauthenticated_access
