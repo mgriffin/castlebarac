@@ -6,7 +6,7 @@ class FeedsController < ApplicationController
   allow_unauthenticated_access
 
   def rss
-    @pagy, @posts = pagy(Post.order(created_at: :desc))
+    @posts = Post.order(created_at: :desc).limit(20)
 
     render template: "feeds/rss", content_type: "application/rss"
   end
