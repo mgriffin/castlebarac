@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  include Pagy::Backend
-
   allow_unauthenticated_access
 
   def index
