@@ -1,6 +1,12 @@
 nav.admin-toolbar {
   background-color: var(--color-black);
   padding: 5px 10px;
+  justify-content: normal;
+
+  svg {
+    padding-right: 3px;
+    fill: var(--color-white);
+  }
 
   a {
     color: var(--color-white);
