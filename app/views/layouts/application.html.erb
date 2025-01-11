@@ -24,16 +24,17 @@
       <%- end %>
     </header>
     <nav class="main" aria-label="Main Navigation">
-      <%= render(ListComponent.new) do |component| %>
-        <% component.with_items([
-          { label: "Home", href: root_path },
-          { label: "Archive", href: posts_path },
-          { label: "Events", href: events_path },
-          ({ label: "My Profile", href: profile_path } if authenticated?),
-          ({ label: "Log out", href: logout_path } if authenticated?),
-          ({ label: "Log in", href: login_path } unless authenticated?),
-        ].reject &:nil?) %>
+    <ul>
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Archive", posts_path %></li>
+      <li><%= link_to "Events", events_path %></li>
+      <%- if user_signed_in? %>
+        <li><%= link_to "My Profile", profile_path %></li>
+        <li><%= link_to "Log out", destroy_user_session_path, data: { "turbo-method": :delete } %></li>
+      <%- else %>
+        <li><%= link_to "Log in", new_user_session_path %></li>
       <%- end %>
+    </ul>
     </nav>
       <%= render FlashComponent.new(flash: flash) %>
       <%= render FillOutProfileComponent.new(user: Current.user) %>
