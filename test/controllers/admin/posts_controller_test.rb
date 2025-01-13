@@ -4,6 +4,8 @@ require "test_helper"
 
 module Admin
   class PostsControllerTest < ActionDispatch::IntegrationTest
+    include Devise::Test::IntegrationHelpers
+
     test "anonymous user can't load new post page" do
       get new_admin_post_url
 
@@ -11,7 +13,7 @@ module Admin
     end
 
     test "logged in user can't load new post page" do
-      sign_in :bugs
+      sign_in users(:bugs)
 
       get new_admin_post_url
 
@@ -19,7 +21,7 @@ module Admin
     end
 
     test "admin user can load new post page" do
-      sign_in :admin
+      sign_in users(:admin)
 
       get new_admin_post_url
 
@@ -27,23 +29,23 @@ module Admin
     end
 
     test "anonymous user can't create new post" do
-      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+      post admin_posts_url, params: { post: { title: Faker::String.random, content: Faker::Markdown.sandwich } }
 
       assert_response :not_found
     end
 
     test "logged in user can't create new post" do
-      sign_in :bugs
+      sign_in users(:bugs)
 
-      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+      post admin_posts_url, params: { post: { title: Faker::String.random, content: Faker::Markdown.sandwich } }
 
       assert_response :not_found
     end
 
     test "admin user can create new post" do
-      sign_in :admin
+      sign_in users(:admin)
 
-      post admin_posts_url, params: { post: { title: Faker::String.random, body: Faker::Markdown.sandwich } }
+      post admin_posts_url, params: { post: { title: Faker::String.random, content: Faker::Markdown.sandwich } }
 
       assert_redirected_to post_url(Post.last)
     end
@@ -55,7 +57,7 @@ module Admin
     end
 
     test "logged in user can't edit a post" do
-      sign_in :bugs
+      sign_in users(:bugs)
 
       patch admin_post_url(Post.first.id), params: { post: { title: "edited the title" } }
 
@@ -63,7 +65,7 @@ module Admin
     end
 
     test "admin user can edit a post" do
-      sign_in :admin
+      sign_in users(:admin)
 
       patch admin_post_url(Post.first), params: { post: { title: "edited the title" } }
 

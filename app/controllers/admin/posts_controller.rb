@@ -24,7 +24,7 @@ module Admin
 
     def create
       @post = Post.new(post_params)
-      @post.user = Current.user
+      @post.user = current_user
 
       if @post.save
         redirect_to post_path(@post), notice: "Added #{@post.title}"

@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users
   root "site#index"
 
   resources :mailing_lists, only: %i[index create]
-
-  get "login", to: "sessions#new", as: :login
-  post "login", to: "sessions#create"
-  get "logout", to: "sessions#destroy", as: :logout
-
-  get "signup", to: "registrations#new", as: :signup
-  post "signup", to: "registrations#create"
 
   get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
