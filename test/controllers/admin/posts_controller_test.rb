@@ -4,7 +4,7 @@ require "test_helper"
 
 module Admin
   class PostsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
+    include Devise::Test::IntegrationHelpers
 
     test "anonymous user can't load new post page" do
       get new_admin_post_url
