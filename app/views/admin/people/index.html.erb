@@ -13,7 +13,7 @@
         <td><%= person.surname %></td>
         <td><%= person&.user&.email %></td>
         <td>
-          <%- unless person&.user&.id == Current.user.id %>
+          <%- unless person&.user&.id == current_user.id %>
             <%= link_to edit_admin_person_path(person) do
               inline_svg_tag "pencil.svg"
             end %>
