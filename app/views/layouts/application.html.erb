@@ -16,7 +16,7 @@
 
   <body>
     <div class="wrapper">
-    <%= render AdminToolbarComponent.new(user: Current.user) %>
+    <%= render AdminToolbarComponent.new(user: current_user) %>
     <header>
       <%= link_to root_path, class: "logo" do %>
         <%= inline_svg_tag "shield.svg" %>
@@ -37,7 +37,7 @@
     </ul>
     </nav>
       <%= render FlashComponent.new(flash: flash) %>
-      <%= render FillOutProfileComponent.new(user: Current.user) %>
+      <%= render FillOutProfileComponent.new(user: current_user) %>
       <%= yield %>
     <%= render(FooterComponent.new) %>
   </body>

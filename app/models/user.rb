@@ -9,7 +9,6 @@ class User < ApplicationRecord
   has_many :posts, dependent: :nullify
   has_one :profile, dependent: :nullify
 
-
   def name
     [profile&.firstname, profile&.surname].join(" ")
   end
