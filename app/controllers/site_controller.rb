@@ -3,8 +3,6 @@
 class SiteController < ApplicationController
   include PostsHelper
 
-  allow_unauthenticated_access
-
   def index
     @mailing_list = MailingList.new
     @posts = Post.order(created_at: :desc).limit(5)

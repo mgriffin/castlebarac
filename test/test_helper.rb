@@ -13,12 +13,5 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
-
-    # Add more helper methods to be used by all tests here...
-    def sign_in(user)
-      user = users(user) unless user.is_a? User
-      post login_url, params: { user: { email: user.email, password: "carrots" } }
-      assert cookies[:session_token].present?
-    end
   end
 end

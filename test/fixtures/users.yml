@@ -1,8 +1,10 @@
 admin:
   email: admin@acme.fake
   password_digest: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= BCrypt::Password.create("carrots") %>
   admin: true
 
 bugs:
   email: bugs@acme.fake
   password_digest: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= BCrypt::Password.create("carrots") %>

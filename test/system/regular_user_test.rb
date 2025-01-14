@@ -8,7 +8,7 @@ class RegularUserTest < ApplicationSystemTestCase
     click_on "Log in"
     fill_in "Email Address:", with: "bugs@acme.fake"
     fill_in "Password:", with: "carrots"
-    within("#login") do
+    within("#new_user") do
       click_link_or_button "Log in"
     end
 
