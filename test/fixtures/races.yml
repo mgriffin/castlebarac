@@ -2,8 +2,4 @@
 
 one:
   name: MyString
-  event: one
-
-two:
-  name: MyString
-  event: two
+  event: first
