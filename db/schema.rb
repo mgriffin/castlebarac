@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_17_215814) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_23_215532) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_17_215814) do
     t.datetime "start_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "url"
   end
 
   create_table "flipper_features", force: :cascade do |t|
