@@ -26,7 +26,7 @@ module Admin
       @event = Event.new(event_params)
 
       if @event.save
-        redirect_to admin_event_path(@event.id), notice: "Added #{@event.title}"
+        redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
         render :new, status: :unprocessable_entity
       end
@@ -36,7 +36,7 @@ module Admin
       @event = Event.find(params[:id])
 
       if @event.update(event_params)
-        redirect_to admin_event_path(@event.id), notice: "Added #{@event.title}"
+        redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
         render :edit, status: :unprocessable_entity
       end
