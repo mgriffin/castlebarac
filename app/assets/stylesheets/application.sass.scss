@@ -1,18 +1,18 @@
 // Configuration
-@import "config/variables";
-@import "config/media";
-@import "config/animations";
+@use "config/variables";
+@use "config/media";
+@use "config/animations";
 
 // Components
-@import "components/event_list";
-@import "components/flash";
-@import "components/header";
-@import "components/footer";
-@import "components/admin-toolbar";
-@import "components/fill_out_profile";
-@import "components/modal_form";
+@use "components/event_list";
+@use "components/flash";
+@use "components/header";
+@use "components/footer";
+@use "components/admin-toolbar";
+@use "components/fill_out_profile";
+@use "components/modal_form";
 
 // Everything else
-@import "site";
-@import "actiontext";
-@import "trix/dist/trix";
+@use "site";
+@use "actiontext";
+@use "rhino-editor/exports/styles/trix"

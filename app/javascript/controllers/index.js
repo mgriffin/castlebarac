@@ -9,3 +9,5 @@ application.register("removals", RemovalsController)
 
 import CheckboxController from "./checkbox_controller"
 application.register("checkbox", CheckboxController)
+
+import "rhino-editor"

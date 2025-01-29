@@ -11,7 +11,7 @@ module Admin
     end
 
     def show
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
     end
 
     def new
@@ -19,24 +19,24 @@ module Admin
     end
 
     def edit
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
     end
 
     def create
       @event = Event.new(event_params)
 
       if @event.save
-        redirect_to admin_event_path(@event.id), notice: "Added #{@event.title}"
+        redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
         render :new, status: :unprocessable_entity
       end
     end
 
     def update
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
 
       if @event.update(event_params)
-        redirect_to admin_event_path(@event.id), notice: "Added #{@event.title}"
+        redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
         render :edit, status: :unprocessable_entity
       end

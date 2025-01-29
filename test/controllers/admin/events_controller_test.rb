@@ -70,7 +70,7 @@ module Admin
     test "admin user can edit a event" do
       sign_in users(:admin)
 
-      patch admin_event_url(Event.first.id), params: { event: { title: "edited the title" } }
+      patch admin_event_url(Event.first), params: { event: { title: "edited the title" } }
 
       assert_redirected_to admin_event_url(Event.first)
       assert_equal "edited the title", Event.first.title
