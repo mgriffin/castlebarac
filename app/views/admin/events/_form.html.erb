@@ -3,7 +3,7 @@
   <%= form.text_field :title, required: true, autofocus: true, placeholder: "Event title", size: "60" %>
 
   <%= form.label :start_time, "Date and time: " %>
-  <%= form.datetime_local_field :start_time, value: "#{Date.today.strftime("%Y-%m-%d")} 12:00" %>
+  <%= form.datetime_local_field :start_time %>
 
   <%= form.label :content, "Body: " %>
   <%= form.hidden_field :content, id: form.field_id(:content), value: form.object.content.try(:to_trix_html) || form.object.content %>
