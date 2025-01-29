@@ -11,7 +11,7 @@ module Admin
     end
 
     def show
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
     end
 
     def new
@@ -19,7 +19,7 @@ module Admin
     end
 
     def edit
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
     end
 
     def create
@@ -33,7 +33,7 @@ module Admin
     end
 
     def update
-      @event = Event.find(params[:id])
+      @event = Event.find_by(url: params[:id])
 
       if @event.update(event_params)
         redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
