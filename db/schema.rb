@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_23_215532) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_03_100920) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -115,6 +115,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_23_215532) do
     t.index ["event_id"], name: "index_races_on_event_id"
   end
 
+  create_table "results", force: :cascade do |t|
+    t.string "name"
+    t.string "club"
+    t.decimal "result"
+    t.integer "heat"
+    t.integer "bib"
+    t.string "category"
+    t.integer "race_id", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["race_id"], name: "index_results_on_race_id"
+    t.index ["user_id"], name: "index_results_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "user_agent"
     t.string "ip_address"
@@ -150,5 +165,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_23_215532) do
   add_foreign_key "people", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "races", "events"
+  add_foreign_key "results", "races"
   add_foreign_key "sessions", "users"
 end
