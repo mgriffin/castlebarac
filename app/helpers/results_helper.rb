@@ -5,22 +5,22 @@ module ResultsHelper
     h = seconds.to_i / 3600
     m = (seconds.to_i % 3600) / 60
     s = seconds.to_i % 60
-    ms = seconds.to_s.match(%r((\.\d+)))&.captures&.first || ""
+    ms = seconds.to_s.match(/(\.\d+)/)&.captures&.first || ""
 
-    if h == 0
+    if h.zero?
       h = ""
 
-      if m == 0
-        m = ""
-      else
-        m = "#{m}:"
-      end
+      m = if m.zero?
+            ""
+          else
+            "#{m}:"
+          end
     else
       h = "#{h}:"
-      m = sprintf("%02d:", m)
+      m = format("%02d:", m)
     end
 
-    s = sprintf("%02d", s) unless m == ""
+    s = format("%02d", s) unless m == ""
 
     "#{h}#{m}#{s}#{ms[0..2]}"
   end

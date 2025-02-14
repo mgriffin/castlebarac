@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class AddResultsToEventJobTest < ActiveJob::TestCase
   test "the truth" do
-    json =<<~JSON
+    json = <<~JSON
       [
         {
           "name": "ACME Dash - Results",
@@ -42,9 +44,8 @@ class AddResultsToEventJobTest < ActiveJob::TestCase
 
     event = events(:first)
 
-    assert_difference ->{ Race.count } => 1, ->{ Result.count } => 2 do
+    assert_difference -> { Race.count } => 1, -> { Result.count } => 2 do
       AddResultsToEventJob.perform_now(event_id: event.id, races: JSON.parse(json))
     end
-
   end
 end
