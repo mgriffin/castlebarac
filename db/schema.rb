@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_03_100920) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_13_215300) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_03_100920) do
   create_table "results", force: :cascade do |t|
     t.string "name"
     t.string "club"
-    t.decimal "result"
+    t.decimal "seconds"
     t.integer "heat"
     t.integer "bib"
     t.string "category"
@@ -126,6 +126,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_03_100920) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "result"
+    t.integer "position"
     t.index ["race_id"], name: "index_results_on_race_id"
     t.index ["user_id"], name: "index_results_on_user_id"
   end
