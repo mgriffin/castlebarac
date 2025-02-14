@@ -1,0 +1,22 @@
+table.results {
+  th:nth-child(1) {
+    width: 5em;
+  }
+  th:nth-child(2) {
+    width: 5em;
+  }
+  th:nth-child(5) {
+    width: 5em;
+  }
+  th:nth-child(6) {
+    width: 5em;
+  }
+  td.result {
+    text-align: right;
+    font-family: monospace;
+  }
+
+  .cbac {
+    background-color: #ada;
+  }
+}
