@@ -10,11 +10,7 @@ module ResultsHelper
     if h.zero?
       h = ""
 
-      m = if m.zero?
-            ""
-          else
-            "#{m}:"
-          end
+      m = m.zero? ? "" : "#{m}:"
     else
       h = "#{h}:"
       m = format("%02d:", m)
