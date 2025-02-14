@@ -3,4 +3,46 @@
   <p class="subtle"><%= @event.start_time.strftime("%A %e %B %Y at %l:%M%P") %></p>
 
   <p><%= @event.content %></p>
+
+  <%- if @event.races %>
+    <%- @event.races.sort_by { |r| r.name }.each do |race| %>
+      <h3><%= race.name %></h3>
+      <table class="results">
+        <tr>
+          <th>Position</th>
+          <th>Bib</th>
+          <th>Name</th>
+          <th>Club</th>
+          <th>Category</th>
+          <th>Time</th>
+        </tr>
+        <%- race.results.each do |result| %>
+          <tr<%= " class=cbac" if result.club == "Castlebar A.C." %>>
+            <td class="position">
+              <%= result.position %>
+            </td>
+            <td class="bib">
+              <%= result.bib %>
+            </td>
+            <td class="name">
+              <%= result.name %>
+            </td>
+            <td class="club">
+              <%= result.club %>
+            </td>
+            <td class="category">
+              <%= result.category %>
+            </td>
+            <td class="result">
+              <%- if ["DNS", "DNF", "DQ", ""].include? result.result %>
+                <%= result.result %>
+              <%- else %>
+                <%= net_time(result.seconds) %>
+              <%- end %>
+            </td>
+          </tr>
+        <%- end %>
+      </table>
+    <%- end %>
+  <%- end %>
 </div>
