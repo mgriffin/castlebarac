@@ -46,7 +46,7 @@ module Admin
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:firstname, :surname)
+      params.expect(person: %i[firstname surname])
     end
   end
 end

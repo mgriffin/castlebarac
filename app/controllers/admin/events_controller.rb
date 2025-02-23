@@ -45,7 +45,7 @@ module Admin
     private
 
     def event_params
-      params.require(:event).permit(:title, :start_time, :content)
+      params.expect(event: %i[title start_time content])
     end
   end
 end

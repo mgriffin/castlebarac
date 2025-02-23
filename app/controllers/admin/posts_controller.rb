@@ -46,7 +46,7 @@ module Admin
     private
 
     def post_params
-      params.require(:post).permit(:title, :content)
+      params.expect(post: %i[title content])
     end
   end
 end
