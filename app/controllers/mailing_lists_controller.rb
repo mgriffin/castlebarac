@@ -25,6 +25,6 @@ class MailingListsController < ApplicationController
   private
 
   def mailing_list_params
-    params.require(:mailing_list).permit(:address)
+    params.expect(mailing_list: [:address])
   end
 end

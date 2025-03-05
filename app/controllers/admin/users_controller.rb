@@ -23,7 +23,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:id, :admin)
+      params.expect(user: %i[id admin])
     end
   end
 end
