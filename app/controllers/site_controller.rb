@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SiteController < ApplicationController
-  include PostsHelper
-
   def index
     @mailing_list = MailingList.new
     @posts = Post.order(created_at: :desc).limit(5)
