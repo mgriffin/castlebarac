@@ -37,7 +37,7 @@
               <%- if ["DNS", "DNF", "DQ", ""].include? result.result %>
                 <%= result.result %>
               <%- else %>
-                <%= net_time(result.seconds) %>
+                <%= result.net_time %>
               <%- end %>
             </td>
           </tr>
