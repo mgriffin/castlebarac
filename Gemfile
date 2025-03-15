@@ -51,6 +51,7 @@ gem "image_processing", "~> 1.2"
 
 gem "devise"
 gem "pagy"
+gem "typhoeus"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -88,6 +89,7 @@ group :test do
   gem "capybara"
   gem "capybara-playwright-driver"
   gem "mocha"
+  gem "webmock"
 end
 
 gem "flipper-active_record", "~> 1.3"
