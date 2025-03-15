@@ -4,7 +4,7 @@ class AddResultsToEventJob < ApplicationJob
   queue_as :default
 
   def perform(event:, url:)
-    result_ids.each do |id|
+    result_ids_from(url).each do |id|
       doc = Nokogiri::HTML(Typhoeus.get("#{url}/results.php", params: { id: id }).body)
 
       name = doc.css("title").text
@@ -30,7 +30,7 @@ class AddResultsToEventJob < ApplicationJob
     end
   end
 
-  def result_ids
+  def result_ids_from(url)
     Nokogiri::HTML(Typhoeus.get("#{url}/competition.php").body)
             .css(".schedule-table tr")
             .collect { |tr| tr.attribute("onclick")&.value }
