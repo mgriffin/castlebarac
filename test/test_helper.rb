@@ -5,6 +5,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "mocha/minitest"
 require "faker"
+require "webmock/minitest"
 
 module ActiveSupport
   class TestCase
