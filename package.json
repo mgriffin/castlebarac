@@ -8,7 +8,7 @@
     "@rails/actiontext": "^7.2.0",
     "esbuild": "^0.25.0",
     "rhino-editor": "^0.16.5",
-    "sass": "^1.75.0"
+    "sass": "^1.86.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
