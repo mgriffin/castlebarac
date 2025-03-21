@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   resource :profile
 
-  resources :posts, only: %i[index show]
+  resources :posts, only: %i[index show] do
+    resources :comments, module: :posts
+  end
   resources :events, only: %i[index show]
 
   namespace :admin do
