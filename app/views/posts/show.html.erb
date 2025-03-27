@@ -2,4 +2,8 @@
   <h1><%= @post.title %></h1>
   <div class="subtle"><%= @post.created_at.strftime("%b %-d, %Y") %></div>
   <%= @post.content %>
+  <%- if policy(@post.comments).index? %>
+    <%= render partial: "comments/comments", locals: {commentable: @post} %>
+    <%= render partial: "comments/form", locals: {commentable: @post} %>
+  <%- end %>
 </article>

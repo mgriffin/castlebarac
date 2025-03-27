@@ -44,3 +44,6 @@ en:
   sessions:
     create:
       alert: "Username or password was incorrect"
+  comments:
+    create:
+      notice: "Your comment was successfully posted"
