@@ -3,7 +3,7 @@
 class Post < ApplicationRecord
   has_rich_text :content
   belongs_to :user
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   before_validation :create_url, if: :title_changed?
 

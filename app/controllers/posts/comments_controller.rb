@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class Posts::CommentsController < CommentsController
-  before_action :set_commentable
+module Posts
+  class CommentsController < CommentsController
+    before_action :set_commentable
 
-  private
+    private
 
-  def set_commentable
-    @commentable = Post.find_by(url: params[:post_id])
+    def set_commentable
+      @commentable = Post.find_by(url: params[:post_id])
+    end
   end
 end
