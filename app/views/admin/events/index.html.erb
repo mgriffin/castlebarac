@@ -1,5 +1,8 @@
 <div class="content">
-  <%- if @events %>
+  <%- if @events.empty? %>
+    <p>There are no events</p>
+    <%= link_to "Add one", new_admin_event_path %>
+  <%- else %>
     <%- @events.each do |event| %>
     <hr>
       <article class="event">
@@ -7,7 +10,5 @@
         <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
       </article>
     <%- end %>
-  <%- else %>
-    <p>There are no events</p>
   <% end %>
 </div>
