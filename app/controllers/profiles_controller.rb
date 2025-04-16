@@ -2,7 +2,7 @@
 
 class ProfilesController < ApplicationController
   def show
-    @profile = current_user.profile
+    @profile = current_user.person
   end
 
   def new
@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    @profile = current_user.profile
+    @profile = current_user.person
   end
 
   def create
@@ -25,7 +25,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    @profile = current_user.profile
+    @profile = current_user.person
 
     if @profile.update(profile_params)
       redirect_to profile_path, notice: t(".thanks")

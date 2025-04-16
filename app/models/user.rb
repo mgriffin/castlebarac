@@ -12,6 +12,6 @@ class User < ApplicationRecord
   delegate :teams, to: :person
 
   def name
-    [profile&.firstname, profile&.surname].join(" ")
+    [person&.firstname, person&.surname].join(" ")
   end
 end
