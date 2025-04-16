@@ -1,0 +1,10 @@
+admin:
+  firstname: Ad
+  surname: Min
+  user: admin
+  teams: [admins]
+
+bugsbunny:
+  firstname: Bugs
+  surname: Bunny
+  user: bugs
