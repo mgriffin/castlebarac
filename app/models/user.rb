@@ -14,4 +14,8 @@ class User < ApplicationRecord
   def name
     [person&.firstname, person&.surname].join(" ")
   end
+
+  def admin?
+    teams.exists?(name: "Admins")
+  end
 end

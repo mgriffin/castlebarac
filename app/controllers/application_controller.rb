@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   def admin?
-    current_user.present? && current_user.admin?
+    current_user.present? && current_user.teams.exists?(name: "Admins")
   end
   helper_method :admin?
 
