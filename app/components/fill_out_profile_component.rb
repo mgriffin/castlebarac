@@ -7,6 +7,6 @@ class FillOutProfileComponent < ViewComponent::Base
   end
 
   def render?
-    !@user.nil? && @user.profile.nil?
+    !@user.nil? && @user.person.nil?
   end
 end

@@ -7,9 +7,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts, dependent: :nullify
-  has_one :profile, dependent: :nullify
+  has_one :person, dependent: :nullify
+
+  delegate :teams, to: :person
 
   def name
-    [profile&.firstname, profile&.surname].join(" ")
+    [person&.firstname, person&.surname].join(" ")
+  end
+
+  def admin?
+    teams.exists?(name: "Admins")
   end
 end

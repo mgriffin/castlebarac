@@ -2,6 +2,8 @@
 
 class Person < ApplicationRecord
   belongs_to :user, optional: true
+  has_many :memberships, dependent: :destroy
+  has_many :teams, through: :memberships
 
   before_validation :create_slug
 
