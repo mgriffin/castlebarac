@@ -18,7 +18,6 @@ class AdminUserTest < ApplicationSystemTestCase
 
       title = Faker::Lorem.sentence
       fill_in "Title:", with: title
-      #fill_in_rich_text_area "Body:", with: Faker::Lorem.paragraph
       find(".ProseMirror").set(Faker::Lorem.paragraph)
       click_link_or_button "Post it"
 

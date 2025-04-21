@@ -24,7 +24,7 @@ class LoggedOutUserTest < ApplicationSystemTestCase
   test "Can register" do
     visit root_url
     click_on "Members"
-    click_link "Register"
+    click_link_or_button "Register"
     ensure_turbo_frames_are_complete
     within("#new_user") do
       fill_in "Email", with: "coyote@acme.fake"
