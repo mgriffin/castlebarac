@@ -3,6 +3,8 @@
 require "test_helper"
 
 class AdminToolbarComponentTest < ViewComponent::TestCase
+  include Devise::Test::IntegrationHelpers
+
   def test_is_not_shown_when_no_user
     render_inline(AdminToolbarComponent.new(user: nil))
 
