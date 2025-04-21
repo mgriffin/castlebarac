@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class AdminToolbarComponent < ViewComponent::Base
-  def initialize(user:)
-    @user = user
-    super
-  end
+  include Pundit::Authorization
+  include Devise::Controllers::Helpers
 
   def render?
-    @user.present? && @user.admin?
+    policy(:admin_toolbar).show?
   end
 end
