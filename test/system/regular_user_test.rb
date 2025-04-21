@@ -5,7 +5,7 @@ require "application_system_test_case"
 class RegularUserTest < ApplicationSystemTestCase
   test "Regular user cannot create a post" do
     visit root_url
-    click_on "Log in"
+    click_on "Members"
     fill_in "Email Address:", with: "bugs@acme.fake"
     fill_in "Password:", with: "carrots"
     within("#new_user") do
