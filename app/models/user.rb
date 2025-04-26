@@ -12,7 +12,7 @@ class User < ApplicationRecord
   delegate :teams, to: :person
 
   def name
-    [person&.firstname, person&.surname].join(" ")
+    person.fullname
   end
 
   def admin?

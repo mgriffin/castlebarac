@@ -18,4 +18,8 @@ class Person < ApplicationRecord
                 .gsub(/-$/, "")      # remove trailing -
                 .downcase
   end
+
+  def fullname
+    [firstname, surname].join(" ")
+  end
 end
