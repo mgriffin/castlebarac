@@ -5,7 +5,7 @@
     <%- @posts.each do |post| %>
         <article>
           <h3>
-            <%= link_to post.title, edit_admin_post_url(post.url) %>
+            <%= link_to post.title, edit_admin_post_path(post.url) %>
           </h3>
         </article>
     <%- end %>
