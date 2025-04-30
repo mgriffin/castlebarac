@@ -1,0 +1,13 @@
+<div class="content">
+  <h1><%= @team.name %></h1>
+  <%= link_to "Add someone to the team", new_admin_membership_path(team: @team.slug) %>
+  <%- if @team.people.empty? %>
+    <p>There are no members of this team</p>
+  <%- else %>
+    <ul>
+      <%- @team.people.each do |member| %>
+        <li><%= member.fullname %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+</div>
