@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     root to: "admin#index"
 
     resources :users, only: %i[index update]
-    resources :people, only: %i[index new edit update]
+    resources :people
     resources :events
     resources :posts
     resources :teams
