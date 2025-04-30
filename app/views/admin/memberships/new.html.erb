@@ -1,21 +1,4 @@
 <div class="content">
   <h1>Add someone to <%= @team.name %></h1>
-  <%= form_with model: [:admin, @membership],
-    data: {
-      controller: "autocomplete",
-      autocomplete_url_value:  people_search_index_url
-    } do |form| %>
-  <%= form.label :person, "Person: " %>
-  <%= form.text_field :person,
-    required: true,
-    autofocus: true,
-    autocomplete: "off",
-    data: {
-      autocomplete_target: "input"
-    } %>
-  <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
-  <%= form.hidden_field :team_id, value: @team.id %>
-  <ul data-autocomplete-target="results"></ul>
-  <%= form.submit "Add them" %>
-<% end %>
+  <%= render partial: "form", locals: { team: @team, membership: @membership } %>
 </div>

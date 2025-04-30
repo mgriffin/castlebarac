@@ -1,3 +1,8 @@
-<li class="list-group-item" role="option" data-autocomplete-value="<%= person.id %>">
-  <%= person.fullname %>
-</li>
+<%= tag.li(
+  role: "option",
+  data: {
+    autocomplete_value: person.id
+  }
+) do
+  person.fullname
+end %>
