@@ -8,7 +8,7 @@ module Admin
     end
 
     def create
-      if membership = Membership.find_by(membership_params)
+      if (membership = Membership.find_by(membership_params))
         redirect_to admin_team_path(membership.team),
                     notice: "#{membership.person.fullname} is already a member of #{membership.team.name}"
         return
