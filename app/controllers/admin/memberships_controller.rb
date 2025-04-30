@@ -11,7 +11,8 @@ module Admin
       membership = Membership.new(membership_params)
 
       if membership.save
-        redirect_to admin_team_path(membership.team), notice: "Added #{membership.person.fullname} to #{membership.team.name}"
+        redirect_to admin_team_path(membership.team),
+                    notice: "Added #{membership.person.fullname} to #{membership.team.name}"
       else
         render :new, status: :unprocessable_entity
       end

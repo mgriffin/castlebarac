@@ -7,7 +7,7 @@ class Person < ApplicationRecord
 
   before_validation :create_slug
 
-  scope :search, -> (name) { where("LOWER(firstname) LIKE :name OR LOWER(surname) LIKE :name", { name: name + "%"}) }
+  scope :search, ->(name) { where("LOWER(firstname) LIKE :name OR LOWER(surname) LIKE :name", { name: "#{name}%" }) }
 
   def create_slug
     return unless firstname_changed? || surname_changed?

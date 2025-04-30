@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   resource :profile
 
+  namespace :people do
+    resources :search, only: :index
+  end
+
   resources :posts, only: %i[index show] do
     resources :comments, module: :posts
   end
@@ -20,9 +24,10 @@ Rails.application.routes.draw do
 
     resources :users, only: %i[index update]
     resources :people, only: %i[index new edit update]
-    resources :teams
-    resources :posts
     resources :events
+    resources :posts
+    resources :teams
+    resources :memberships, only: %i[new create]
   end
 
   get "404", to: "errors#not_found"
