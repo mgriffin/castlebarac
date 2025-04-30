@@ -1,26 +1,46 @@
 <div class="content">
-  <%= render(HeadingComponent.new(tag: :h1).with_content("Admin Section")) %>
+  <h1>Admin Section</h1>
 
-  <%= render(HeadingComponent.new(tag: :h2).with_content("Users")) %>
-  <%= render(ListComponent.new) do |component| %>
-    <% component.with_items([
-      { label: "View all users", href: admin_users_url },
-      { label: "View all people", href: admin_people_url },
-      { label: "Add a new person", href: new_admin_person_url },
-    ]) %>
-  <%- end %>
-  <%= render(HeadingComponent.new(tag: :h2).with_content("Posts")) %>
-  <%= render(ListComponent.new) do |component| %>
-    <% component.with_items([
-      { label: "View all posts", href: admin_posts_url },
-      { label: "Add a new post", href: new_admin_post_url },
-    ]) %>
-  <%- end %>
-  <%= render(HeadingComponent.new(tag: :h2).with_content("Events")) %>
-  <%= render(ListComponent.new) do |component| %>
-    <% component.with_items([
-      { label: "View all events", href: admin_events_url },
-      { label: "Add a new event", href: new_admin_event_url },
-    ]) %>
-  <%- end %>
+  <h2>Users</h2>
+  <ul>
+    <li>
+      <%= link_to "View all users", admin_users_path %>
+    </li>
+    <li>
+      <%= link_to "View all people", admin_people_path %>
+    </li>
+    <li>
+      <%= link_to "Add a new person", new_admin_person_path %>
+    </li>
+  </ul>
+
+  <h2>Posts</h2>
+  <ul>
+    <li>
+      <%= link_to "View all posts", admin_posts_path %>
+    </li>
+    <li>
+      <%= link_to "Add a new post", new_admin_post_path %>
+    </li>
+  </ul>
+
+  <h2>Events</h2>
+  <ul>
+    <li>
+      <%= link_to "View all events", admin_events_path %>
+    </li>
+    <li>
+      <%= link_to "Add a new event", new_admin_event_path %>
+    </li>
+  </ul>
+
+  <h2>Teams</h2>
+  <ul>
+    <li>
+      <%= link_to "View all teams", admin_teams_path %>
+    </li>
+    <li>
+      <%= link_to "Add a new team", new_admin_team_path %>
+    </li>
+  </ul>
 </div>

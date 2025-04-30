@@ -1,0 +1,14 @@
+<div class="content">
+  <h1><%= @team.name %></h1>
+  <%= render partial: "admin/memberships/form", locals: { team: @team, membership: @membership } %>
+  <%- if @team.people.empty? %>
+    <p>There are no members of this team</p>
+  <%- else %>
+    <h3>Members</h3>
+    <ul>
+      <%- @team.people.each do |member| %>
+        <li><%= member.fullname %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+</div>

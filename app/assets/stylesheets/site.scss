@@ -98,3 +98,41 @@ article {
   font-size: 0.7em;
   padding-bottom: 5px;
 }
+.auto {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  margin: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+ul.autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 10px;
+    cursor: pointer;
+    color: var(--text-main);
+    background: var(--background-body);
+    transition: background-color 0.3s ease;
+
+    &.active {
+      background-color: var(--banner-info-bg);
+      color: var(--banner-info-fg);
+    }
+  }
+}

@@ -1,0 +1,5 @@
+<% if @people.any? %>
+  <%= render partial: "person", collection: @people %>
+<% else %>
+  <li role="option">No results</li>
+<% end %>

@@ -5,5 +5,9 @@ module Admin
     def index?
       user&.teams&.exists?(name: "Admins")
     end
+
+    def update?
+      user&.teams&.exists?(name: "Admins")
+    end
   end
 end

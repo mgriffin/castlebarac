@@ -1,0 +1,8 @@
+<div class="content">
+  <h1>Teams</h1>
+  <ul>
+    <%- @teams.each do |team| %>
+      <li><%= link_to team.name, admin_team_path(team) %></li>
+    <%- end %>
+  </ul>
+</div>

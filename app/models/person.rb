@@ -7,6 +7,8 @@ class Person < ApplicationRecord
 
   before_validation :create_slug
 
+  scope :search, ->(name) { where("LOWER(firstname) LIKE :name OR LOWER(surname) LIKE :name", { name: "#{name}%" }) }
+
   def create_slug
     return unless firstname_changed? || surname_changed?
 
@@ -17,5 +19,9 @@ class Person < ApplicationRecord
                 .gsub(/^-/, "")      # remove leading -
                 .gsub(/-$/, "")      # remove trailing -
                 .downcase
+  end
+
+  def fullname
+    [firstname, surname].join(" ")
   end
 end
