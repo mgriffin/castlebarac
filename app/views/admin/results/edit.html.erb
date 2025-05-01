@@ -21,7 +21,7 @@
               <%= @result.name %>
             </td>
             <td class="name">
-              <%= link_to @result.person.fullname, person_path(@result.person) %>
+              <%= link_to @result.person.fullname, person_path(@result.person) if result.person %>
             </td>
             <td class="club">
               <%= @result.club %>
