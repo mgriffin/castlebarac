@@ -26,15 +26,15 @@
               <%= result.bib %>
             </td>
             <td class="name">
-              <%- if policy([:admin, result]).edit? %>
-                <%= link_to edit_admin_result_path(result) do
-                  inline_svg_tag "pencil.svg"
-                end %>
-              <%- end %>
               <%- if policy(result).view_person? && result.person %>
                 <%= link_to result.name, person_path(result.person) %>
               <%- else %>
                 <%= result.name %>
+              <%- end %>
+              <%- if policy([:admin, result]).edit? && result.club == "Castlebar A.C."%>
+                <%= link_to edit_admin_result_path(result) do
+                  inline_svg_tag "pencil.svg"
+                end %>
               <%- end %>
             </td>
             <td class="club">
