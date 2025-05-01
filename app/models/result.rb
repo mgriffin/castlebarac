@@ -2,7 +2,7 @@
 
 class Result < ApplicationRecord
   belongs_to :race
-  belongs_to :user, optional: true
+  belongs_to :person, optional: true
 
   def net_time
     h = seconds.to_i / 3600

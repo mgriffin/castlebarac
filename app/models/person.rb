@@ -4,6 +4,7 @@ class Person < ApplicationRecord
   belongs_to :user, optional: true
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
+  has_many :results, dependent: :nullify
 
   before_validation :create_slug
 
@@ -19,6 +20,10 @@ class Person < ApplicationRecord
                 .gsub(/^-/, "")      # remove leading -
                 .gsub(/-$/, "")      # remove trailing -
                 .downcase
+  end
+
+  def to_param
+    slug
   end
 
   def fullname

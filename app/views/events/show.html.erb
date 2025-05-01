@@ -19,13 +19,23 @@
         <%- race.results.each do |result| %>
           <tr<%= " class=cbac" if result.club == "Castlebar A.C." %>>
             <td class="position">
+              <%= tag.a(name: dom_id(result)) if result.club == "Castlebar A.C." %>
               <%= result.position %>
             </td>
             <td class="bib">
               <%= result.bib %>
             </td>
             <td class="name">
-              <%= result.name %>
+              <%- if policy([:admin, result]).edit? %>
+                <%= link_to edit_admin_result_path(result) do
+                  inline_svg_tag "pencil.svg"
+                end %>
+              <%- end %>
+              <%- if policy(result).view_person? %>
+                <%= link_to result.name, person_path(result.person) %>
+              <%- else %>
+                <%= result.name %>
+              <%- end %>
             </td>
             <td class="club">
               <%= result.club %>
