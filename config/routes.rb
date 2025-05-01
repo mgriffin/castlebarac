@@ -10,10 +10,10 @@ Rails.application.routes.draw do
 
   resource :profile
 
-  resources :people, only: :show
   namespace :people do
     resources :search, only: :index
   end
+  resources :people, only: :show
 
   resources :posts, only: %i[index show] do
     resources :comments, module: :posts
