@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resource :profile
 
+  resources :people, only: :show
   namespace :people do
     resources :search, only: :index
   end
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[index update]
     resources :people
     resources :events
+    resources :results, only: %i[edit update]
     resources :posts
     resources :teams
     resources :memberships, only: %i[new create]

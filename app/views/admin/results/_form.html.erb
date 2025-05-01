@@ -1,0 +1,21 @@
+<%= form_with model: [:admin, result],
+  data: {
+    controller: "autocomplete",
+    autocomplete_url_value:  people_search_index_url
+  } do |form| %>
+  <div class="auto">
+  <%= form.label :person, "Link this result to: " %>
+  <%= form.text_field :person,
+    required: true,
+    autofocus: true,
+    autocomplete: "off",
+    value: result.person.fullname,
+    data: {
+      autocomplete_target: "input"
+    } %>
+  <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
+  <%= form.hidden_field :id, value: result.id %>
+  <ul class="autocomplete" data-autocomplete-target="results"></ul>
+  </div>
+  <%= form.submit "Link them" %>
+<% end %>

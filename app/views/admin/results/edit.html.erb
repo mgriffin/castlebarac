@@ -1,0 +1,42 @@
+<div class="content">
+  <h1>Link someone to this result</h1>
+      <table class="results">
+        <tr>
+          <th>Position</th>
+          <th>Bib</th>
+          <th>Name</th>
+          <th>Linked to</th>
+          <th>Club</th>
+          <th>Category</th>
+          <th>Time</th>
+        </tr>
+          <tr class=cbac">
+            <td class="position">
+              <%= @result.position %>
+            </td>
+            <td class="bib">
+              <%= @result.bib %>
+            </td>
+            <td class="name">
+              <%= @result.name %>
+            </td>
+            <td class="name">
+              <%= link_to @result.person.fullname, person_path(@result.person) %>
+            </td>
+            <td class="club">
+              <%= @result.club %>
+            </td>
+            <td class="category">
+              <%= @result.category %>
+            </td>
+            <td class="result">
+              <%- if ["DNS", "DNF", "DQ", ""].include? @result.result %>
+                <%= @result.result %>
+              <%- else %>
+                <%= @result.net_time %>
+              <%- end %>
+            </td>
+          </tr>
+      </table>
+  <%= render "form", result: @result %>
+</div>
