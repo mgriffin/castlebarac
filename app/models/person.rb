@@ -13,7 +13,7 @@ class Person < ApplicationRecord
   def create_slug
     return unless firstname_changed? || surname_changed?
 
-    self.slug = "#{firstname} #{surname}"
+    self.slug = I18n.transliterate("#{firstname} #{surname}")
                 .gsub(/\s+/, "-")    # replace spaces with -
                 .gsub(/[^\w]+/, "-") # replace all non-word chars with -
                 .gsub(/--+/, "-")    # replace multiple - with single -

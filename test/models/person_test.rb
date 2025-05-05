@@ -19,4 +19,11 @@ class PersonTest < ActiveSupport::TestCase
 
     assert_equal "bugs-bunny", person.slug
   end
+
+  test "slug uses the transliterated version of a name" do
+    person = Person.new(firstname: "Snörí", surname: "Snöríssøň")
+    person.validate
+
+    assert_equal "snori-snorisson", person.slug
+  end
 end
