@@ -5,7 +5,7 @@ class AddResultsToEventJob < ApplicationJob
 
   def perform(event:, url:)
     result_ids_from(url).each do |id|
-      doc = Nokogiri::HTML(Typhoeus.get("#{url}/results.php", params: { id: id }).body)
+      doc = Nokogiri::HTML(Typhoeus.get("#{url}/index.php", params: { id: id }).body)
 
       name = doc.css("title").text
                 .gsub(" - Results", "")
@@ -15,6 +15,7 @@ class AddResultsToEventJob < ApplicationJob
                 .split("\n")
                 .first
                 &.gsub(/^.*?{/, "{")
+                &.gsub(/;const.*/, "")
                 &.gsub(";", "")
 
       next if json.nil?
@@ -34,7 +35,7 @@ class AddResultsToEventJob < ApplicationJob
     Nokogiri::HTML(Typhoeus.get("#{url}/competition.php").body)
             .css(".schedule-table tr")
             .collect { |tr| tr.attribute("onclick")&.value }
-            .compact.map { |text| text.match(/results\.php\?id=(\d+)/).captures.first }
+            .compact.map { |text| text.match(/index\.php\?id=(\d+)/).captures.first }
   end
 
   def create_results(race, participants)
