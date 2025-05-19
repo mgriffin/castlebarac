@@ -39,6 +39,8 @@
       <%= render FlashComponent.new(flash: flash) %>
       <%= render FillOutProfileComponent.new(user: current_user) %>
       <%= yield %>
-    <%= render(FooterComponent.new) %>
+      <footer class="footer">
+        &copy; Castlebar A.C. 2025
+      </footer>
   </body>
 </html>
