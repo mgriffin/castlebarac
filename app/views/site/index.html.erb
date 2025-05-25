@@ -1,11 +1,8 @@
-<div class="carousel">
-  <%= image_tag("castlebarac.jpg") %>
-</div>
 <section class="news">
   <%= render ListPostsComponent.new do |component| %>
     <% component.with_posts(@posts) %>
   <% end %>
-  <%= link_to "News Archive", posts_path %>
+  <%= link_to "Older news >>", posts_path %>
 </section>
 <section class="calendar">
   <%= render ListEventsComponent.new do |component| %>

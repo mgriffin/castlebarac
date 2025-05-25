@@ -1,0 +1,32 @@
+/* grid container */
+.left-sidebar-grid {
+  max-width: 1024px;
+  margin: 0 auto;
+  display:grid;
+  grid-template-areas:
+  'main-content'
+  'left-sidebar'
+}
+
+/* general column padding */
+.left-sidebar-grid > * {
+  padding:1rem;
+}
+
+.left-sidebar-grid > .main-content {
+  grid-area:main-content;
+}
+
+.left-sidebar-grid > .left-sidebar {
+  grid-area:left-sidebar;
+}
+
+/* tablet breakpoint */
+@media (min-width:768px) {
+  .left-sidebar-grid {
+    grid-template-columns: 200px 1fr 1fr;
+    grid-template-areas:
+    'left-sidebar main-content main-content'
+  }
+}
+

@@ -1,7 +1,13 @@
 @media (prefers-color-scheme: light) {
   :root {
+    --background: #efefef;
+    --button-base: #d0cfcf;
+    --button-hover: #9b9b9b;
+    --form-placeholder: #949494;
+    --form-text: #1d1d1d;
     --color-header-bg: hsl(115, 40%, 35%);
     --color-header-border: hsl(115, 40%, 15%);
+    --links: #0076d1;
     --banner-info-fg: #055160;
     --banner-info-bg: #cff4fc;
     --banner-info-border: #9eeaf9;
