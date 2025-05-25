@@ -7,38 +7,40 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "water" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= auto_discovery_link_tag(:rss, rss_url, {title: "RSS Feed"}) %>
-
   </head>
-
   <body>
-    <div class="wrapper">
-    <%= render AdminToolbarComponent.new(user: current_user) %>
-    <header>
-      <%= link_to root_path, class: "logo" do %>
-        <%= inline_svg_tag "shield.svg" %>
-        Castlebar A.C.
-      <%- end %>
-    </header>
-    <nav class="main" aria-label="Main Navigation">
-    <ul>
-      <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "Archive", posts_path %></li>
-      <li><%= link_to "Events", events_path %></li>
-      <%- if user_signed_in? %>
-        <li><%= link_to "My Profile", profile_path %></li>
-        <li><%= link_to "Log out", destroy_user_session_path, data: { "turbo-method": :delete } %></li>
-      <%- else %>
-        <li><%= link_to "Members", new_user_session_path %></li>
-      <%- end %>
-    </ul>
-    </nav>
-      <%= render FlashComponent.new(flash: flash) %>
-      <%= render FillOutProfileComponent.new(user: current_user) %>
-      <%= yield %>
+      <%= render AdminToolbarComponent.new(user: current_user) %>
+      <header class="header">
+        <%= link_to root_path, class: "logo" do %>
+          <%= inline_svg_tag "shield.svg" %>
+          Castlebar A.C.
+        <%- end %>
+      </header>
+    <div class="left-sidebar-grid">
+      <main class="main-content">
+        <%= render FlashComponent.new(flash: flash) %>
+        <%= render FillOutProfileComponent.new(user: current_user) %>
+        <%= yield %>
+      </main>
+      <section class="left-sidebar">
+        <nav class="main" aria-label="Main Navigation">
+          <ul>
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "News", posts_path %></li>
+            <li><%= link_to "Events", events_path %></li>
+            <%- if user_signed_in? %>
+              <li><%= link_to "My Profile", profile_path %></li>
+              <li><%= link_to "Log out", destroy_user_session_path, data: { "turbo-method": :delete } %></li>
+            <%- else %>
+              <li><%= link_to "Log in", new_user_session_path %></li>
+            <%- end %>
+          </ul>
+        </nav>
+      </section>
+    </div>
       <footer class="footer">
         &copy; Castlebar A.C. 2025
       </footer>

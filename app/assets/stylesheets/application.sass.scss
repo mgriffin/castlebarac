@@ -4,6 +4,7 @@
 @use "config/animations";
 
 // Components
+@use "components/layout";
 @use "components/event_list";
 @use "components/flash";
 @use "components/header";
@@ -16,4 +17,4 @@
 // Everything else
 @use "site";
 @use "actiontext";
-@use "rhino-editor/exports/styles/trix"
+@use "rhino-editor/exports/styles/trix";

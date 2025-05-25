@@ -1,62 +1,31 @@
 body {
   max-width: 100%;
   padding: 0;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  color: var(--text-main);
+  background: var(--background-body);
 }
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(12, [col-start] 1fr);
-  gap: 20px;
+a {
+  text-decoration: none;
+  color: var(--links);
 }
-.wrapper > * {
-  grid-column: col-start / span 12;
-}
-@media (min-width: 500px) {
-  section.news {
-    grid-column: col-start / span 8;
-  }
-  section.calendar {
-    grid-column: col-start 9 / span 4;
-  }
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    ul {
-      display: flex;
-    }
-  }
-}
-@media (min-width: 700px) {
-  .content {
-    grid-column: col-start 2 / span 10;
-  }
-  section.news {
-    grid-column: col-start 2 / span 7;
-  }
-  section.calendar {
-    grid-column: col-start 9 / span 3;
-  }
-  .carousel {
-    grid-column: col-start / span 12;
-    margin: 0 auto;
-    width: 700px;
-  }
-}
-@media (min-width: 1000px) {
-  .carousel {
-    width: 800px;
-  }
+a:hover {
+  text-decoration: underline;
 }
 
 nav.main {
   background-color: var(--color-header-bg);
   border-bottom: 2px solid var(--color-header-border);
   color: var(--color-white);
-  padding: 10px 5px;
+  padding: 10px 5px 6px 5px;
+  height: 100%;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 5px 10px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
 
   ul {
     margin: 0 auto;
+    line-height: 3;
   }
 
   li {
