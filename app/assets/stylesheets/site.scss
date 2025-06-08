@@ -105,3 +105,23 @@ ul.autocomplete {
     }
   }
 }
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+td,
+th {
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+thead {
+  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid var(--border);
+}
