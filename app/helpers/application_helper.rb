@@ -6,7 +6,7 @@ module ApplicationHelper
     when 0..4999
       "#{distance}m"
     else
-      "#{distance/1000}km"
+      "#{distance / 1000}km"
     end
   end
 end

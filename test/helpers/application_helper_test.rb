@@ -4,10 +4,10 @@ require "test_helper"
 
 class ApplicationHelperTest < ActionView::TestCase
   [
-    [ 60, "60m" ],
-    [ 100, "100m" ],
-    [ 5000, "5km" ],
-    [ 10000, "10km" ],
+    [60, "60m"],
+    [100, "100m"],
+    [5000, "5km"],
+    [10_000, "10km"]
   ].each do |input, expected|
     test "distance_to_human for #{input} metres" do
       actual = distance_to_human(input)
