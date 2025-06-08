@@ -6,7 +6,7 @@
 
   <%- if @event.races %>
     <%- @event.races.sort_by { |r| r.name }.each do |race| %>
-      <h3><%= race.name %></h3>
+      <h3 id="<%= dom_id(race) %>"><%= race.name %></h3>
       <table class="results">
         <tr>
           <th>Position</th>
@@ -17,9 +17,9 @@
           <th>Time</th>
         </tr>
         <%- race.results.each do |result| %>
-          <tr<%= " class=cbac" if result.club == "Castlebar A.C." %>>
+          <tr<%= " class=cbac" if result.club == "Castlebar A.C." %> id="<%= dom_id(result) %>">
             <td class="position">
-              <%= tag.a(name: dom_id(result)) if result.club == "Castlebar A.C." %>
+              <%= tag.a(id: dom_id(result)) if result.club == "Castlebar A.C." %>
               <%= result.position %>
             </td>
             <td class="bib">
