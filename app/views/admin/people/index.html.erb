@@ -2,15 +2,13 @@
   <table>
     <tr>
       <th>ID</th>
-      <th>First Name</th>
-      <th>Surname</th>
+      <th>Name</th>
       <th>Linked User</th>
     </tr>
     <% @people.each do |person| %>
       <tr>
         <td><%= person.id %></td>
-        <td><%= person.firstname %></td>
-        <td><%= person.surname %></td>
+        <td><%= link_to(person.fullname, person_path(person)) %></td>
         <td><%= person&.user&.email %></td>
         <td>
           <%- unless person&.user&.id == current_user.id %>
