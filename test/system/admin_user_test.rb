@@ -6,7 +6,7 @@ class AdminUserTest < ApplicationSystemTestCase
   test "Admin user can create a post" do
     Capybara.current_session.driver.with_playwright_page do
       visit root_url
-      click_on "Members"
+      click_on "Log in"
       fill_in "Email Address:", with: "admin@acme.fake"
       fill_in "Password:", with: "carrots"
       within("#new_user") do

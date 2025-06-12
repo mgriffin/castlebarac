@@ -1,3 +1,4 @@
+<%- content_for :title, "Home" %>
 <section class="news">
   <%= render ListPostsComponent.new do |component| %>
     <% component.with_posts(@posts) %>

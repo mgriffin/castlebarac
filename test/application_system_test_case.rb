@@ -12,6 +12,8 @@ Capybara.default_max_wait_time = 15
 WebMock.disable_net_connect!(allow_localhost: true)
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include Warden::Test::Helpers
+
   driven_by :my_playwright
 
   def ensure_turbo_frames_are_complete

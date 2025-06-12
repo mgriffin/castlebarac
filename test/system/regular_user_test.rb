@@ -3,15 +3,28 @@
 require "application_system_test_case"
 
 class RegularUserTest < ApplicationSystemTestCase
-  test "Regular user cannot create a post" do
-    visit root_url
-    click_on "Members"
-    fill_in "Email Address:", with: "bugs@acme.fake"
-    fill_in "Password:", with: "carrots"
-    within("#new_user") do
-      click_link_or_button "Log in"
-    end
+  test "cannot create a post" do
+    login_as(users(:bugs))
 
     refute_selector "a", text: "Admin"
+  end
+
+  test "can see comments on a story" do
+    post = Post.first
+    login_as(users(:bugs))
+
+    visit post_url(post.url)
+
+    assert_selector "h3", text: "Comments"
+    assert_selector "input[type=submit][value=Post]"
+  end
+
+  test "can see events" do
+    login_as(users(:bugs))
+
+    visit events_url
+
+    assert_selector "h2", text: "Upcoming Events"
+    assert_selector "h2", text: "Past Events"
   end
 end

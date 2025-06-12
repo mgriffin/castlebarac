@@ -3,29 +3,35 @@
 require "application_system_test_case"
 
 class LoggedOutUserTest < ApplicationSystemTestCase
-  test "Visiting the root page" do
+  test "can see the root page" do
     visit root_url
 
-    assert_selector "a", text: "Members"
+    assert_title "Castlebar A.C. - Home"
+    assert_selector "a", text: "Log in"
   end
 
-  test "Logging in" do
-    visit root_url
-    click_on "Members"
-    fill_in "Email Address:", with: "bugs@acme.fake"
-    fill_in "Password:", with: "carrots"
-    within("#new_user") do
-      click_link_or_button "Log in"
-    end
+  test "can see the news archive page" do
+    visit posts_url
 
-    assert_selector "a", text: "Log out"
+    assert_title "Castlebar A.C. - News"
+    assert_selector "a", text: "Log in"
   end
 
-  test "Can register" do
+  test "does not see comments on a story" do
+    post = Post.first
+
+    visit post_url(post.url)
+
+    refute_selector "h3", text: "Comments"
+    refute_selector "button", text: "Post"
+  end
+
+  test "can register" do
     visit root_url
-    click_on "Members"
+    click_on "Log in"
     click_link_or_button "Register"
     ensure_turbo_frames_are_complete
+
     within("#new_user") do
       fill_in "Email", with: "coyote@acme.fake"
       fill_in "Password", with: "carrots"
