@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Castlebarac</title>
+    <title>Castlebar A.C.<%= " - #{yield :title}" if content_for?(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-prefetch" content="false">
     <%= csrf_meta_tags %>
