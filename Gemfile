@@ -98,6 +98,7 @@ gem "flipper-active_record", "~> 1.3"
 
 gem "faraday"
 gem "inline_svg"
+gem "lograge"
 gem "view_component"
 
 gem "pundit", "~> 2.5"
