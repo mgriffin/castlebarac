@@ -70,10 +70,10 @@ Rails.application.configure do
   #   authentication: :plain
   # }
   config.action_mailer.smtp_settings = {
-    address: "smtp.fastmail.com",
+    address: "smtp.postmarkapp.com",
     port: 587,
-    user_name: Rails.application.credentials.fastmail.username,
-    password: Rails.application.credentials.fastmail.token,
+    user_name: Rails.application.credentials.postmark_api_token,
+    password: Rails.application.credentials.postmark_api_token,
     authentication: :plain
   }
 
