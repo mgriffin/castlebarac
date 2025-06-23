@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  after_action set_postmark_header
+  after_action :set_postmark_header
 
   default from: "info@castlebarac.ie"
   layout "mailer"
