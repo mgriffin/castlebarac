@@ -1,6 +1,6 @@
-<h3>Comments</h3>
+<h3><%= pluralize(commentable.comments.count, "comment")%></h3>
 <%- commentable.comments.each do |comment| %>
-  <div class="well">
+  <div class="comment">
     <%= comment.body %>
     <div class="subtle"><%= time_ago_in_words(comment.created_at) %> ago by <%= comment.user.name %></div>
   </div>
