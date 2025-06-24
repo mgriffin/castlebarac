@@ -10,10 +10,10 @@ class EventPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin? || user.coach?
+    user.admin? || user.coach? || user.committee?
   end
 
   def update?
-    user.admin? || user.coach?
+    user.admin? || user.coach? || user.committee?
   end
 end
