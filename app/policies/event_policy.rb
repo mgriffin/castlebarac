@@ -10,10 +10,14 @@ class EventPolicy < ApplicationPolicy
   end
 
   def create?
+    return false unless user
+
     user.admin? || user.coach? || user.committee?
   end
 
   def update?
+    return false unless user
+
     user.admin? || user.coach? || user.committee?
   end
 end
