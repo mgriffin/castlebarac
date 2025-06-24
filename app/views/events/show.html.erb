@@ -1,4 +1,7 @@
 <div class="content">
+  <%- if policy(@event).update? %>
+    <%= link_to "Update event", edit_event_path %>
+  <%- end %>
   <h2><%= @event.title %></h2>
   <p class="subtle"><%= @event.start_time.strftime("%A %e %B %Y at %l:%M%P") %></p>
 
