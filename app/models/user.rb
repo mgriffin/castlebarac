@@ -18,4 +18,12 @@ class User < ApplicationRecord
   def admin?
     teams.exists?(name: "Admins")
   end
+
+  def coach?
+    teams.exists?(name: "Coaches")
+  end
+
+  def committee?
+    teams.exists?(name: "Committee")
+  end
 end

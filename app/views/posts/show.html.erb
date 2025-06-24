@@ -1,4 +1,7 @@
 <article class="content">
+  <%- if policy(@post).update? %>
+    <%= link_to "Update post", edit_post_path %>
+  <%- end %>
   <h1><%= @post.title %></h1>
   <div class="subtle"><%= @post.created_at.strftime("%b %-d, %Y") %></div>
   <%= @post.content %>

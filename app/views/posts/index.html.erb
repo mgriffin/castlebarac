@@ -1,5 +1,8 @@
 <%- content_for :title, "News" %>
 <div class="content">
+  <%- if policy(Post.new).new? %>
+    <%= link_to "Add a post", new_post_path %>
+  <%- end %>
   <%- if @posts.empty? %>
     <p>There are no posts</p>
   <%- else %>

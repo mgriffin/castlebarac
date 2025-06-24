@@ -1,4 +1,8 @@
+<%- content_for :title, "Events" %>
 <div class="content event-list">
+  <%- if policy(Event.new).new? %>
+    <%= link_to "Add an event", new_event_path %>
+  <%- end %>
   <h2>Upcoming Events</h2>
   <%- if @future_events.empty? %>
     <p>There's nothing planned</p>

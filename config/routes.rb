@@ -15,10 +15,10 @@ Rails.application.routes.draw do
   end
   resources :people, only: :show
 
-  resources :posts, only: %i[index show] do
+  resources :posts, except: :destroy do
     resources :comments, module: :posts
   end
-  resources :events, only: %i[index show]
+  resources :events, except: :destroy
 
   namespace :admin do
     root to: "admin#index"
