@@ -1,5 +1,13 @@
 <div class="content">
   <h2><%= @person.fullname %></h2>
+  <%- if policy(PersonRelationship.new).show? %>
+    <%- if @person.children.any? %>
+      Parent of <%= @person.children.map(&:fullname).to_sentence %>
+    <%- end %>
+    <%- if @person.parents.any? %>
+      Child of <%= @person.parents.map(&:fullname).to_sentence %>
+    <%- end %>
+  <%- end %>
   <ul>
     <%- @person.results.group_by(&:distance).each do |distance,results| %>
       <h3><%= distance_to_human(distance) %></h3>

@@ -2,4 +2,5 @@
   <h1>Editing person</h1>
 
   <%= render "form", person: @person %>
+  <%= render partial: "person_relationships/form", locals: { person_relationship: PersonRelationship.new, parent: @person } %>
 </div>

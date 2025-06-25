@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :search, only: :index
   end
   resources :people, only: :show
+  resources :person_relationships, only: :create
 
   resources :posts, except: :destroy do
     resources :comments, module: :posts

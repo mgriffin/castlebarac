@@ -1,0 +1,20 @@
+<%= form_with model: person_relationship,
+  data: {
+    controller: "autocomplete",
+    autocomplete_url_value:  people_search_index_url
+  } do |form| %>
+  <div class="auto">
+  <%= form.label :child, "Link someone to their parent" %>
+  <%= form.text_field :child,
+    required: true,
+    autofocus: true,
+    autocomplete: "off",
+    data: {
+      autocomplete_target: "input"
+    } %>
+  <%= form.hidden_field :child_id, data: { autocomplete_target: "hidden" } %>
+  <%= form.hidden_field :parent_id, value: parent.id %>
+  <ul class="autocomplete" data-autocomplete-target="results"></ul>
+  </div>
+  <%= form.submit "Link them" %>
+<% end %>
