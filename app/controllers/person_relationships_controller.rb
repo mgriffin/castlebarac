@@ -2,9 +2,9 @@
 
 class PersonRelationshipsController < ApplicationController
   def create
-    if (person_relationship = PersonRelationship.find_by(person_relationship_params))
+    if PersonRelationship.find_by(person_relationship_params)
       redirect_to admin_people_path(person.relationship.parent),
-        notice: "already linked"
+                  notice: t(".already_done")
       return
     end
 
@@ -12,7 +12,7 @@ class PersonRelationshipsController < ApplicationController
 
     if person_relationship.save
       redirect_to admin_people_path(person_relationship.parent),
-        notice: "Linked"
+                  notice: t(".good")
     else
       render :new, status: :unprocessable_entity
     end
