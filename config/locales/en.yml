@@ -47,3 +47,7 @@ en:
   comments:
     create:
       notice: "Your comment was successfully posted"
+  person_relationships:
+    create:
+      already_done: "already linked"
+      good: "Linked"
