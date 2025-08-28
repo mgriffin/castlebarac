@@ -1,4 +1,4 @@
-require:
+plugins:
   - rubocop-capybara
   - rubocop-rails
 
@@ -20,3 +20,7 @@ Style/Documentation:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
   StyleGuide: https://github.com/github/rubocop-github/blob/main/STYLEGUIDE.md#double-quotes
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/**/*'
