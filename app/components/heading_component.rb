@@ -5,7 +5,6 @@ class HeadingComponent < ViewComponent::Base
 
   def initialize(tag: :h2)
     @tag = TAG_OPTIONS.include?(tag) ? tag : :h2
-    super
   end
 
   def call

@@ -3,7 +3,6 @@
 class FlashComponent < ViewComponent::Base
   def initialize(flash:)
     @flash = flash
-    super
   end
 
   def render?

@@ -6,7 +6,6 @@ class AdminToolbarComponent < ViewComponent::Base
 
   def initialize(user:)
     @current_user = user
-    super
   end
 
   def render?

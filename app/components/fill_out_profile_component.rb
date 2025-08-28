@@ -3,7 +3,6 @@
 class FillOutProfileComponent < ViewComponent::Base
   def initialize(user:)
     @user = user
-    super
   end
 
   def render?

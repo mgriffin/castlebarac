@@ -6,7 +6,6 @@ class ListEventsComponent < ViewComponent::Base
   class EventComponent < ViewComponent::Base
     def initialize(event)
       @event = event
-      super
     end
   end
 end
