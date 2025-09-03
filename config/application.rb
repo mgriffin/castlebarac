@@ -26,5 +26,8 @@ module Castlebarac
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     # config.action_mailer.delivery_method = :smtp
+
+    ### For Pundit
+    config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :not_found
   end
 end
