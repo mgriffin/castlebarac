@@ -1,5 +1,17 @@
+:root {
+  --background-color: hsl(115, 40%, 35%);
+  --header-bg-color: hsl(0, 0%, 100%, 0.7);
+  --header-text-color: hsl(0, 0%, 100%); /* white */
+  --nav-link-color: var(--header-text-color);
+  --main-bg-color: hsl(0, 0%, 100%); /* white */
+  --main-text-color: hsl(0, 0%, 0%); /* black */
+  --main-link-color: var(--background-color);
+  --border-color: hsl(from var(--background-color) h, s, 0%);
+  --footer-text-color: var(--header-text-color);
+}
+
 body {
-  background-color: hsl(115, 40%, 35%);
+  background-color: var(--background-color);
   background-image: url("jumper.jpg");
   background-attachment: fixed;
   background-size: cover;
@@ -16,8 +28,8 @@ img {
   position: relative;
 
   header {
-    background-color: rgba(255,255,255,0.7);
-    border-top: 3px solid hsl(115, 40%, 0%);
+    background-color: var(--header-bg-color);
+    border-top: 3px solid var(--border-color);
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -27,8 +39,8 @@ img {
     }
 
     span {
-      background-color: hsl(115, 40%, 35%);
-      color: #fff;
+      background-color: var(--background-color);
+      color: var(--header-text-color);
       font-size: 48px;
       margin: 16px 0 16px 20px;
       padding: 10px 15px;
@@ -37,9 +49,9 @@ img {
   }
 
   nav {
-    background-color: hsl(115, 40%, 35%);
-    border-top: 3px solid hsl(115, 40%, 0%);
-    border-bottom: 3px solid hsl(115, 40%, 0%);
+    background-color: var(--background-color);
+    border-top: 3px solid var(--border-color);
+    border-bottom: 3px solid var(--border-color);
     display: flex;
     justify-content: space-between;
 
@@ -51,14 +63,14 @@ img {
         display: inline-block;
 
         a {
-          color: #fff;
+          color: var(--nav-link-color);
         }
       }
     }
   }
 
   .main {
-    background-color: #fff;
+    background-color: var(--main-bg-color);
     color: #000;
     padding: 30px;
     display: flex;
@@ -71,12 +83,28 @@ img {
     .sidebar {
       flex: 1;
     }
+
+    a {
+      color: var(--main-link-color);
+    }
   }
 
   footer {
-    background-color: hsl(115, 40%, 35%);
-    border-top: 3px solid hsl(115, 40%, 0%);
-    color: #fff;
+    background-color: var(--background-color);
+    border-top: 3px solid var(--border-color);
+    color: var(--footer-text-color);
     padding: 15px;
+  }
+}
+
+form {
+  label {
+    display: block;
+    margin: 0 0 0.5rem 0;
+  }
+  input {
+    display: block;
+    padding: 6px 12px;
+    margin-bottom: 0.5rem;
   }
 }
