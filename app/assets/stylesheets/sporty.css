@@ -96,3 +96,15 @@ img {
     padding: 15px;
   }
 }
+
+form {
+  label {
+    display: block;
+    margin: 0 0 0.5rem 0;
+  }
+  input {
+    display: block;
+    padding: 6px 12px;
+    margin-bottom: 0.5rem;
+  }
+}

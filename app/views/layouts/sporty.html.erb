@@ -4,10 +4,12 @@
     <title>Castlebar A.C.<%= " - #{yield :title}" if content_for?(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-prefetch" content="false">
-
-    <%= stylesheet_link_tag "sporty", "data-turbo-track": "reload" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "sporty", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "rhinoeditor", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= auto_discovery_link_tag(:rss, rss_url, {title: "RSS Feed"}) %>
   </head>
   <body>
