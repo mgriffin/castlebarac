@@ -16,6 +16,6 @@
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css ./app/assets/stylesheets/rhinoeditor.sass.scss:./app/assets/builds/rhinoeditor.css --no-source-map --load-path=node_modules"
   },
   "devDependencies": {
-    "playwright": "1.48.2"
+    "playwright": "1.55.1"
   }
 }
