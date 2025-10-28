@@ -2,6 +2,8 @@
 
 module ApplicationHelper
   def distance_to_human(distance)
+    return "" if distance.nil?
+
     case distance
     when 0..4999
       "#{distance}m"
