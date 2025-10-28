@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connacht Even Age Cross Country 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <style>
+        /* Override body background for index page - Connacht Blue */
+        body {
+            background: linear-gradient(135deg, #3686C5 0%, #2563a0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Banner styling */
+        .banner {
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .banner img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+        }
+
+        .banner h3 {
+            color: #3686C5;
+            margin-top: 15px;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .banner h4 {
+            color: #666;
+            margin-top: 10px;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        /* Entry button container - prominent styling with Connacht Blue */
+        .entry-button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .entry-button-container button {
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #3686C5 0%, #2563a0 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(54, 134, 197, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .entry-button-container button:hover {
+            background: linear-gradient(135deg, #2563a0 0%, #1d4f7e 100%);
+            box-shadow: 0 8px 25px rgba(54, 134, 197, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .entry-button-container button i {
+            margin-right: 10px;
+        }
+
+        /* Results button container */
+        .button-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .button-container h5 {
+            color: #3686C5;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .button-container button {
+            padding: 12px 24px;
+            margin: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #3686C5 0%, #2563a0 100%);
+            color: white;
+            border-radius: 8px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(54, 134, 197, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background: linear-gradient(135deg, #2563a0 0%, #1d4f7e 100%);
+            box-shadow: 0 6px 16px rgba(54, 134, 197, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* iFrame container */
+        .iframe-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+            display: block;
+        }
+
+        /* Back to Top Button for Mobile */
+        .back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #3686C5 0%, #2563a0 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(54, 134, 197, 0.5);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(54, 134, 197, 0.7);
+        }
+
+        /* Tablet Responsive (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .banner h3 {
+                font-size: 1.8em;
+            }
+
+            .button-container button {
+                padding: 11px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Mobile Tablet (600px - 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .banner {
+                padding: 20px 15px;
+            }
+
+            .banner img {
+                max-height: 100px;
+            }
+
+            .banner h3 {
+                font-size: 1.5em;
+                margin-top: 12px;
+            }
+
+            .banner h4 {
+                font-size: 1.1em;
+            }
+
+            .entry-button-container {
+                margin: 15px 0;
+            }
+
+            .entry-button-container button {
+                font-size: 18px;
+                padding: 14px 32px;
+            }
+
+            .button-container {
+                padding: 20px 15px;
+            }
+
+            .button-container h5 {
+                font-size: 1.2em;
+            }
+
+            .button-container button {
+                font-size: 14px;
+                padding: 11px 20px;
+                margin: 5px 3px;
+                min-width: 100px;
+            }
+
+            iframe {
+                height: 550px;
+            }
+
+            .back-to-top {
+                display: block;
+            }
+        }
+
+        /* Mobile (481px - 600px) */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .banner {
+                padding: 18px 12px;
+                margin-bottom: 15px;
+            }
+
+            .banner img {
+                max-height: 80px;
+            }
+
+            .banner h3 {
+                font-size: 1.35em;
+            }
+
+            .banner h4 {
+                font-size: 1em;
+                margin-top: 8px;
+            }
+
+            .entry-button-container button {
+                font-size: 17px;
+                padding: 13px 28px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .button-container {
+                padding: 18px 12px;
+            }
+
+            .button-container h5 {
+                font-size: 1.1em;
+                margin-bottom: 12px;
+            }
+
+            .button-container button {
+                font-size: 13px;
+                padding: 10px 16px;
+                margin: 4px 2px;
+                min-width: 90px;
+                display: inline-block;
+            }
+
+            iframe {
+                height: 500px;
+            }
+        }
+
+        /* Small Mobile (320px - 480px) */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .banner {
+                padding: 15px 10px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+            }
+
+            .banner img {
+                max-height: 70px;
+            }
+
+            .banner h3 {
+                font-size: 1.2em;
+                margin-top: 10px;
+            }
+
+            .banner h3 i {
+                font-size: 0.9em;
+                margin-right: 8px;
+            }
+
+            .banner h4 {
+                font-size: 0.95em;
+                margin-top: 6px;
+            }
+
+            .entry-button-container {
+                margin: 12px 0;
+            }
+
+            .entry-button-container button {
+                font-size: 16px;
+                padding: 12px 24px;
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .entry-button-container button i {
+                margin-right: 8px;
+                font-size: 0.9em;
+            }
+
+            .button-container {
+                padding: 15px 10px;
+                border-radius: 12px;
+            }
+
+            .button-container h5 {
+                font-size: 1em;
+                margin-bottom: 10px;
+            }
+
+            .button-container h5 i {
+                font-size: 0.9em;
+            }
+
+            .button-container button {
+                font-size: 12px;
+                padding: 9px 14px;
+                margin: 3px 2px;
+                min-width: 80px;
+                border-radius: 6px;
+            }
+
+            .iframe-container {
+                border-radius: 12px;
+                margin-top: 15px;
+            }
+
+            iframe {
+                height: 450px;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        /* Extra Small Mobile (max 320px) */
+        @media (max-width: 320px) {
+            .banner h3 {
+                font-size: 1.1em;
+            }
+
+            .banner h4 {
+                font-size: 0.9em;
+            }
+
+            .entry-button-container button {
+                font-size: 15px;
+                padding: 11px 20px;
+            }
+
+            .button-container button {
+                font-size: 11px;
+                padding: 8px 12px;
+                min-width: 70px;
+            }
+
+            iframe {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner">
+            <img src="GA.png" alt="Connacht Athletics Logo">
+            <h3><i class="fas fa-trophy"></i> 2025 Even Age Cross Country Results</h3>
+            <h4>Click button below for results</h4>
+        </div>
+
+        <!-- Prominent Entries Button -->
+        <div class="entry-button-container">
+            <button onclick="loadPage('entries.html')" aria-label="View entries page">
+                <i class="fas fa-list-alt"></i> View Entries
+            </button>
+        </div>
+
+        <!-- Results Buttons -->
+        <div class="button-container">
+            <h5><i class="fas fa-running"></i> Select Age Category</h5>
+            <button onclick="loadPage('U10G.html')">U10G</button>
+            <button onclick="loadPage('U10B.html')">U10B</button>
+            <button onclick="loadPage('U12G.html')">U12G</button>
+            <button onclick="loadPage('U12B.html')">U12B</button>
+            <button onclick="loadPage('U14G.html')">U14G</button>
+            <button onclick="loadPage('U14B.html')">U14B</button>
+            <button onclick="loadPage('U16G.html')">U16G</button>
+            <button onclick="loadPage('U16B.html')">U16B</button>
+            <button onclick="loadPage('U18G.html')">U18G</button>
+            <button onclick="loadPage('U18B.html')">U18B</button>
+            <button onclick="loadPage('JW.html')">Junior Women</button>
+            <button onclick="loadPage('JM.html')">Junior Men</button>
+            <button onclick="loadPage('SW.html')">Senior Women</button>
+            <button onclick="loadPage('SM.html')">Senior Men</button>
+<button onclick="loadPage('O65M.html')">O65 Men</button>
+        </div>
+
+        <!-- iFrame container -->
+        <div class="iframe-container">
+            <iframe id="contentFrame" src=""></iframe>
+        </div>
+
+        <!-- Back to Top Button (appears on mobile) -->
+        <button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script>
+        function loadPage(page) {
+            document.getElementById("contentFrame").src = page;
+            // On mobile, scroll to iframe after loading
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    document.querySelector('.iframe-container').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide back to top button based on scroll position
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
