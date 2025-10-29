@@ -1,0 +1,19 @@
+<h3 id="<%= dom_id(race) %>">
+  <%= race.name %>
+  <%= link_to event_path(race.event, anchor: dom_id(race)) do
+    inline_svg_tag "link.svg"
+  end %>
+</h3>
+<table class="results">
+  <thead>
+    <tr>
+      <th class="position">Position</th>
+      <%- if race.bib_numbers_included? %><th class="bib">Bib</th><%- end %>
+      <th class="name">Name</th>
+      <th class="club">Club</th>
+      <%- if race.county_included? %><th class="county">County</th><%- end %>
+      <%- unless race.timed? %><th class="result">Time</th><%- end %>
+    </tr>
+  </thead>
+  <%= render race.results %>
+</table>

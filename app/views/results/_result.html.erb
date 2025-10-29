@@ -1,0 +1,40 @@
+<tr<%= " class=cbac" if result.castlebarac? %> id="<%= dom_id(result) %>">
+  <td class="position">
+    <%= tag.a(id: dom_id(result)) if result.castlebarac? %>
+    <%= result.position %>
+  </td>
+  <%- if result.bib_numbers_included? %>
+    <td class="bib">
+      <%= result.bib %>
+    </td>
+  <%- end %>
+  <td class="name">
+    <%- if policy(result).view_person? && result.person %>
+      <%= link_to result.name, person_path(result.person) %>
+    <%- else %>
+      <%= result.name %>
+    <%- end %>
+    <%- if policy([:admin, result]).edit? && result.castlebarac? %>
+      <%= link_to edit_admin_result_path(result) do
+        inline_svg_tag "pencil.svg"
+      end %>
+    <%- end %>
+  </td>
+  <td class="club">
+    <%= result.club %>
+  </td>
+  <%- if result.county_included? %>
+    <td class="county">
+      <%= result.county %>
+    </td>
+  <%- end %>
+  <%- unless result.timed? %>
+    <td class="result">
+      <%- if ["DNS", "DNF", "DQ", ""].include? result.result %>
+        <%= result.result %>
+      <%- else %>
+        <%= result.net_time %>
+      <%- end %>
+    </td>
+  <%- end %>
+</tr>
