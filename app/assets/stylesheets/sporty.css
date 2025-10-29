@@ -108,3 +108,48 @@ form {
     margin-bottom: 0.5rem;
   }
 }
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+td,
+th {
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+thead {
+  border-bottom: 1px solid #dbdbdb;
+}
+
+table.results {
+  .position {
+    width: 1.5em;
+  }
+  .name {
+    width: 5em;
+  }
+  .club {
+    width: 5em;
+  }
+  .county {
+    width: 5em;
+  }
+  .category {
+    width: 5em;
+  }
+  td.result {
+    text-align: right;
+    font-family: monospace;
+  }
+
+  .cbac {
+    background-color: #ada;
+  }
+}

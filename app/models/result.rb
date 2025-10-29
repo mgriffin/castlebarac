@@ -4,6 +4,10 @@ class Result < ApplicationRecord
   belongs_to :race
   belongs_to :person, optional: true
 
+  def timed?
+    !!seconds.nil?
+  end
+
   def net_time
     h = seconds.to_i / 3600
     m = (seconds.to_i % 3600) / 60
