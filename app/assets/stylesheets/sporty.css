@@ -132,6 +132,9 @@ table.results {
   .position {
     width: 1.5em;
   }
+  .bib {
+    width: 1.5em;
+  }
   .name {
     width: 5em;
   }
@@ -141,8 +144,8 @@ table.results {
   .county {
     width: 5em;
   }
-  .category {
-    width: 5em;
+  .result {
+    width: 2em;
   }
   td.result {
     text-align: right;

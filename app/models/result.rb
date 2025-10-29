@@ -4,9 +4,9 @@ class Result < ApplicationRecord
   belongs_to :race
   belongs_to :person, optional: true
 
-  def timed?
-    !!seconds.nil?
-  end
+  delegate :bib_numbers_included?, to: :race
+  delegate :county_included?, to: :race
+  delegate :timed?, to: :race
 
   def net_time
     h = seconds.to_i / 3600
@@ -26,5 +26,9 @@ class Result < ApplicationRecord
     s = format("%02d", s) unless m == ""
 
     "#{h}#{m}#{s}#{ms[0..2]}"
+  end
+
+  def castlebarac?
+    club == "Castlebar A.C."
   end
 end
