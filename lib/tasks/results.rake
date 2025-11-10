@@ -1,33 +1,29 @@
+# frozen_string_literal: true
+
 namespace :results do
   desc "Link Results back to a Person object"
   task link: :environment do
-    STDIN.set_encoding("UTF-8", invalid: :replace, undef: :replace)
+    $stdin.set_encoding("UTF-8", invalid: :replace, undef: :replace)
 
     Result.not_linked.each do |unlinked_result|
       puts "#{unlinked_result.name} came #{unlinked_result.position} in #{unlinked_result.race.name}"
-      if p = Person.match(unlinked_result.name)
-        unlinked_result.person = p
-        unlinked_result.save
-
-        puts "Linked #{p.fullname}"
-      else
+      unless (p = Person.match(unlinked_result.name))
         puts "No matching person found, create one? y/n (y)"
-        answer = STDIN.gets.chomp
+        answer = $stdin.gets.chomp
         next if answer.downcase == "n"
 
         puts "What's their firstname?"
-        firstname = STDIN.gets.chomp
+        firstname = $stdin.gets.chomp
 
         puts "What's their surname?"
-        surname = STDIN.gets.chomp
+        surname = $stdin.gets.chomp
 
         p = Person.create!(firstname:, surname:)
-        unlinked_result.person = p
-        unlinked_result.save
 
-        puts "Linked #{p.fullname}"
       end
+      unlinked_result.person = p
+      unlinked_result.save
+      puts "Linked #{p.fullname}"
     end
   end
-
 end

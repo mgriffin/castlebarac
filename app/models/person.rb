@@ -32,13 +32,13 @@ class Person < ApplicationRecord
   end
 
   def slugify(name)
-      I18n.transliterate(name)
-                    .gsub(/\s+/, "-")    # replace spaces with -
-                    .gsub(/[^\w]+/, "-") # replace all non-word chars with -
-                    .gsub(/--+/, "-")    # replace multiple - with single -
-                    .gsub(/^-/, "")      # remove leading -
-                    .gsub(/-$/, "")      # remove trailing -
-                    .downcase
+    I18n.transliterate(name)
+        .gsub(/\s+/, "-")    # replace spaces with -
+        .gsub(/[^\w]+/, "-") # replace all non-word chars with -
+        .gsub(/--+/, "-")    # replace multiple - with single -
+        .gsub(/^-/, "")      # remove leading -
+        .gsub(/-$/, "")      # remove trailing -
+        .downcase
   end
 
   def to_param

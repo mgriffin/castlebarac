@@ -26,4 +26,20 @@ class PersonTest < ActiveSupport::TestCase
 
     assert_equal "snori-snorisson", person.slug
   end
+
+  test "can match a full name" do
+    person = people(:snori)
+
+    result = Person.match("Snörí Snöríssøň")
+
+    assert_equal result, person
+  end
+
+  test "can match a full name with CAPITAL surname" do
+    person = people(:snori)
+
+    result = Person.match("Snörí SNÖRÍSSØŇ")
+
+    assert_equal result, person
+  end
 end
