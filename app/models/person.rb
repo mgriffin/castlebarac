@@ -28,15 +28,17 @@ class Person < ApplicationRecord
   scope :search, ->(name) { where("LOWER(firstname) LIKE :name OR LOWER(surname) LIKE :name", { name: "#{name}%" }) }
 
   def create_slug
-    return unless firstname_changed? || surname_changed?
+    self.slug = slugify("#{firstname} #{surname}")
+  end
 
-    self.slug = I18n.transliterate("#{firstname} #{surname}")
-                    .gsub(/\s+/, "-")    # replace spaces with -
-                    .gsub(/[^\w]+/, "-") # replace all non-word chars with -
-                    .gsub(/--+/, "-")    # replace multiple - with single -
-                    .gsub(/^-/, "")      # remove leading -
-                    .gsub(/-$/, "")      # remove trailing -
-                    .downcase
+  def slugify(name)
+    I18n.transliterate(name)
+        .gsub(/\s+/, "-")    # replace spaces with -
+        .gsub(/[^\w]+/, "-") # replace all non-word chars with -
+        .gsub(/--+/, "-")    # replace multiple - with single -
+        .gsub(/^-/, "")      # remove leading -
+        .gsub(/-$/, "")      # remove trailing -
+        .downcase
   end
 
   def to_param
@@ -45,5 +47,9 @@ class Person < ApplicationRecord
 
   def fullname
     [firstname, surname].join(" ")
+  end
+
+  def self.match(name)
+    Person.find_by(slug: Person.new.slugify(name))
   end
 end

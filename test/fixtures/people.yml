@@ -8,3 +8,8 @@ bugsbunny:
   firstname: Bugs
   surname: Bunny
   user: bugs
+
+snori:
+  firstname: Snörí
+  surname: Snöríssøň
+  slug: snori-snorisson
