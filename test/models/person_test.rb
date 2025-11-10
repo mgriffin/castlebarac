@@ -42,4 +42,12 @@ class PersonTest < ActiveSupport::TestCase
 
     assert_equal result, person
   end
+
+  test "can match a full name with CAPITAL surname, reversed" do
+    person = people(:snori)
+
+    result = Person.match("SNÖRÍSSØŇ, Snörí")
+
+    assert_equal result, person
+  end
 end

@@ -50,6 +50,8 @@ class Person < ApplicationRecord
   end
 
   def self.match(name)
+    name = name.split(",").map(&:chomp).reverse.join(" ") if name.include?(", ")
+
     Person.find_by(slug: Person.new.slugify(name))
   end
 end
