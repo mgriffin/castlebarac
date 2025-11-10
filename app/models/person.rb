@@ -48,4 +48,8 @@ class Person < ApplicationRecord
   def fullname
     [firstname, surname].join(" ")
   end
+
+  def self.match(name)
+    Person.find_by(slug: Person.new.slugify(name))
+  end
 end
