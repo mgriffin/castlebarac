@@ -8,6 +8,9 @@ class Result < ApplicationRecord
   delegate :county_included?, to: :race
   delegate :timed?, to: :race
 
+  scope :club_members, -> { where(club: "Castlebar A.C.").where.not("name LIKE ?", "%Relay%") }
+  scope :not_linked, -> { club_members.where(person_id: nil)}
+
   def net_time
     h = seconds.to_i / 3600
     m = (seconds.to_i % 3600) / 60
