@@ -8,7 +8,11 @@ class Result < ApplicationRecord
   delegate :county_included?, to: :race
   delegate :timed?, to: :race
 
-  scope :club_members, -> { where(club: "Castlebar A.C.").where.not("name LIKE ?", "%Relay%") }
+  scope :club_members, lambda {
+    where(club: "Castlebar A.C.")
+      .where.not("name LIKE ?", "%Relay%")
+      .where.not("name LIKE ?", "Castlebar%")
+  }
   scope :not_linked, -> { club_members.where(person_id: nil) }
 
   def net_time
