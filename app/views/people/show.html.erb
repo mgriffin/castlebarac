@@ -13,7 +13,7 @@
       <h3><%= distance_to_human(distance) %></h3>
       <%- results.each do |result| %>
         <li>
-          <%= result.result %> --
+          <%= result.result_or_position %> --
           <%= link_to(result.race.name, event_path(result.race.event, anchor: dom_id(result))) %>
           at <%= result.race.event.title %>
         (<%= result.race.event.human_date %>)
