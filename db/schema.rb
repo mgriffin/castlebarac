@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_27_232639) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_13_131252) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -427,6 +427,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_232639) do
     t.index ["user_id", "postable_id"], name: "thredded_user_topic_read_states_user_postable", unique: true
   end
 
+  create_table "time_trials", force: :cascade do |t|
+    t.integer "distance"
+    t.string "surface"
+    t.date "recorded_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name", limit: 256, null: false
     t.string "slug", limit: 256, null: false
@@ -436,6 +444,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_232639) do
     t.datetime "updated_at", null: false
     t.index ["forum_id"], name: "index_topics_on_forum_id"
     t.index ["user_id"], name: "index_topics_on_user_id"
+  end
+
+  create_table "tt_times", force: :cascade do |t|
+    t.decimal "seconds"
+    t.integer "person_id", null: false
+    t.integer "time_trial_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_tt_times_on_person_id"
+    t.index ["time_trial_id"], name: "index_tt_times_on_time_trial_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -469,4 +487,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_232639) do
   add_foreign_key "thredded_user_post_notifications", "users", on_delete: :cascade
   add_foreign_key "topics", "forums"
   add_foreign_key "topics", "users"
+  add_foreign_key "tt_times", "people"
+  add_foreign_key "tt_times", "time_trials"
 end
