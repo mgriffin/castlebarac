@@ -38,4 +38,10 @@ class Result < ApplicationRecord
   def castlebarac?
     club == "Castlebar A.C."
   end
+
+  def result_or_position
+    return result if result.present?
+
+    "#{position.ordinalize} place"
+  end
 end
