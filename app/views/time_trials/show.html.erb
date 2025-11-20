@@ -14,7 +14,7 @@
     <%- @time_trial.tt_times.each do |tt| %>
       <tr>
         <td><%= link_to tt.person.fullname, person_path(tt.person) %></td>
-        <td><%= tt.seconds %></td>
+        <td><%= tt.net_time %></td>
       </tr>
     <%- end %>
   </table>
