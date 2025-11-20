@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find_by(url: params[:id])
+    @event = Event.includes(races: { results: [ :person ] } ).find_by(url: params[:id])
   end
 
   def new
