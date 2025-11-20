@@ -9,7 +9,7 @@ class TimeTrialsController < ApplicationController
   end
 
   def show
-    @time_trial = TimeTrial.find(params[:id])
+    @time_trial = TimeTrial.includes(tt_times: [:person]).order("tt_times.seconds").find(params[:id])
     authorize @time_trial
   end
 
