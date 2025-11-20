@@ -14,6 +14,7 @@
   </head>
   <body>
     <div class="container">
+      <%= render AdminToolbarComponent.new(user: current_user) %>
       <header>
         <%= link_to root_path, class: "logo" do %>
           <%= inline_svg_tag "shield.svg" %>

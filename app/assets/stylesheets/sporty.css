@@ -209,3 +209,19 @@ ul.autocomplete {
     }
   }
 }
+nav.admin-toolbar {
+  background-color: #000;
+  color: hsl(0, 0%, 100%, 0.7);
+  padding: 5px 10px;
+  justify-content: normal;
+
+  svg {
+    padding-right: 3px;
+    fill: #fff;
+  }
+
+  a {
+    color: #fff;
+    padding: 0 10px;
+  }
+}

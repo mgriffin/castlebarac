@@ -1,6 +1,5 @@
 <nav class="admin-toolbar" aria-label="Admin toolbar">
-  <%= link_to admin_root_url do %>
-    <%= helpers.inline_svg_tag "rocket.svg" %>
-    Admin
-  <%- end %>
+  <%= helpers.inline_svg_tag "rocket.svg" %>
+  <%= link_to "Admin", admin_root_url %> |
+  <%= link_to "Time Trials", time_trials_path %> |
 </nav>
