@@ -1,3 +1,7 @@
 admins:
   name: Admins
   slug: admins
+
+coaches:
+  name: Coaches
+  slug: coaches

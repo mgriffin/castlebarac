@@ -1,0 +1,35 @@
+<%= form_with model: @time_trial, data: { controller: "nested-fields" } do |form| %>
+  <div class="auto">
+  <%= form.label :recorded_at, "Date: " %>
+  <%= form.date_field :recorded_at %>
+
+  <%= form.label :distance %>
+  <%= form.text_field :distance %>
+
+  <%= form.label :surface %>
+  <%= form.text_field :surface %>
+
+  <hr />
+
+  <div data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>" role="combobox">
+    <%= form.fields_for :tt_times do |tt_times| %>
+      <%= render "tt_times_fields", form: tt_times %>
+    <%- end %>
+  </div>
+
+  <div data-nested-fields-target="fields"></div>
+  <div>
+    <%= button_tag "Add another?", type: :button, data: {action: "nested-fields#append"} %>
+
+    <template data-nested-fields-target="template">
+      <div data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>" role="combobox">
+        <%= fields_for "time_trial[tt_times_attributes][]", TtTime.new, index: "__INDEX__" do |form| %>
+          <%= render "tt_times_fields", form: %>
+        <%- end %>
+      </div>
+    </template>
+  </div>
+
+  <%= form.submit "Save" %>
+  </div>
+<% end %>

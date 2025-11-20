@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   end
   resources :events, except: :destroy
 
+  resources :time_trials, except: :destroy do
+    resources :tt_times, only: :new, module: :time_trials
+  end
+
   namespace :admin do
     root to: "admin#index"
 
