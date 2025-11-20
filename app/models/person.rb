@@ -5,6 +5,7 @@ class Person < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
   has_many :results, dependent: :nullify
+  has_many :tt_times, dependent: :nullify, inverse_of: :person
   has_many :parent_child_relationships,
            class_name: "PersonRelationship",
            foreign_key: :child_id,

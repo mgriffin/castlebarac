@@ -1,0 +1,15 @@
+<div class="content">
+  <h1><%= @time_trial.recorded_at.strftime("%-d %B %Y") %></h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Time</th>
+    </tr>
+    <%- @time_trial.tt_times.each do |tt| %>
+      <tr>
+        <td><%= link_to tt.person.fullname, person_path(tt.person) %></td>
+        <td><%= tt.seconds %></td>
+      </tr>
+    <%- end %>
+  </table>
+</div>

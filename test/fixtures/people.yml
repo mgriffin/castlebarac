@@ -9,6 +9,11 @@ bugsbunny:
   surname: Bunny
   user: bugs
 
+coach:
+  firstname: Coach
+  surname: Watkins
+  user: coach
+
 snori:
   firstname: Snörí
   surname: Snöríssøň

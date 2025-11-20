@@ -1,0 +1,15 @@
+<div class="content">
+  <%- if policy(TimeTrial.new).new? %>
+    <%= link_to "Add a time trial", new_time_trial_path %>
+  <%- end %>
+  <h1>Past Time Trials</h1>
+  <%- if @time_trials.empty? %>
+    <p>There are no time trials recorded yet</p>
+  <%- else %>
+    <ul>
+      <%- @time_trials.each do |tt| %>
+        <li><%= link_to Date.parse(tt.day).strftime("%-d %B %Y"), time_trial_path(tt) %></li>
+      <%- end %>
+    </ul>
+  <%- end %>
+</div>

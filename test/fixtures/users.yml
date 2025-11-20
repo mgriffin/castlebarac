@@ -5,3 +5,7 @@ admin:
 bugs:
   email: bugs@acme.fake
   encrypted_password: <%= BCrypt::Password.create("carrots") %>
+
+coach:
+  email: coach@acme.fake
+  encrypted_password: <%= BCrypt::Password.create("carrots") %>

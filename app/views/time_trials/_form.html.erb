@@ -1,0 +1,36 @@
+<%= form_with model: @time_trial,
+  data: {
+    controller: "autocomplete",
+    autocomplete_url_value:  people_search_index_url
+  } do |form| %>
+  <div class="auto">
+  <%= form.label :recorded_at, "Date: " %>
+  <%= form.date_field :recorded_at %>
+
+  <%= form.label :distance %>
+  <%= form.text_field :distance %>
+
+  <%= form.label :surface %>
+  <%= form.text_field :surface %>
+
+  <hr />
+
+  <%= form.fields_for :tt_times do |tt_times_form| %>
+    <%= tt_times_form.label :person %>
+    <%= tt_times_form.text_field :person,
+      required: true,
+      autofocus: true,
+      autocomplete: "off",
+      value: time_trial.person&.fullname,
+      data: {
+        autocomplete_target: "input"
+      } %>
+    <%= tt_times_form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
+    <%= tt_times_form.hidden_field :id, value: time_trial.id %>
+    <ul class="autocomplete" data-autocomplete-target="results"></ul>
+    <%= tt_times_form.label :seconds %>
+    <%= tt_times_form.text_field :seconds %>
+  <%- end %>
+  <%= form.submit "Save" %>
+  </div>
+<% end %>
