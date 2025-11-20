@@ -1,0 +1,12 @@
+<%= turbo_stream.append "questions" do %>
+  <%= form_with model: @time_trial,
+    data: {
+      controller: "autocomplete",
+      autocomplete_url_value:  people_search_index_url
+    } do |form| %>
+    <%= fields_for "time_trial[tt_times_attributes][]", TtTime.new, index: Time.current.to_i do |form| %>
+      <%= render "time_trials/tt_times_fields", form: %>
+    <%- end %>
+    <%= form.submit "Save" %>
+  <% end %>
+<% end %>

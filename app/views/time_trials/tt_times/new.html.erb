@@ -1,0 +1,9 @@
+<%= form_with model: @time_trial,
+  data: {
+    controller: "autocomplete nested-fields",
+    autocomplete_url_value:  people_search_index_url
+  } do |form| %>
+  <%= form.fields_for :tt_times do |tt_times| %>
+    <%= render "time_trials/tt_times_fields", form: tt_times %>
+  <%- end %>
+<% end %>

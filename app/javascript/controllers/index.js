@@ -10,6 +10,9 @@ application.register("removals", RemovalsController)
 import CheckboxController from "./checkbox_controller"
 application.register("checkbox", CheckboxController)
 
+import NestedFieldsController from "./nested_fields_controller"
+application.register("nested-fields", NestedFieldsController)
+
 import { Autocomplete } from 'stimulus-autocomplete'
 application.register('autocomplete', Autocomplete)
 

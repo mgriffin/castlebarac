@@ -1,8 +1,4 @@
-<%= form_with model: @time_trial,
-  data: {
-    controller: "autocomplete",
-    autocomplete_url_value:  people_search_index_url
-  } do |form| %>
+<%= form_with model: @time_trial, data: { controller: "nested-fields" } do |form| %>
   <div class="auto">
   <%= form.label :recorded_at, "Date: " %>
   <%= form.date_field :recorded_at %>
@@ -15,22 +11,25 @@
 
   <hr />
 
-  <%= form.fields_for :tt_times do |tt_times_form| %>
-    <%= tt_times_form.label :person %>
-    <%= tt_times_form.text_field :person,
-      required: true,
-      autofocus: true,
-      autocomplete: "off",
-      value: time_trial.person&.fullname,
-      data: {
-        autocomplete_target: "input"
-      } %>
-    <%= tt_times_form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
-    <%= tt_times_form.hidden_field :id, value: time_trial.id %>
-    <ul class="autocomplete" data-autocomplete-target="results"></ul>
-    <%= tt_times_form.label :seconds %>
-    <%= tt_times_form.text_field :seconds %>
-  <%- end %>
+  <div data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>" role="combobox">
+    <%= form.fields_for :tt_times do |tt_times| %>
+      <%= render "tt_times_fields", form: tt_times %>
+    <%- end %>
+  </div>
+
+  <div data-nested-fields-target="fields"></div>
+  <div>
+    <%= button_tag "Add another?", type: :button, data: {action: "nested-fields#append"} %>
+
+    <template data-nested-fields-target="template">
+      <div data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>" role="combobox">
+        <%= fields_for "time_trial[tt_times_attributes][]", TtTime.new, index: "__INDEX__" do |form| %>
+          <%= render "tt_times_fields", form: %>
+        <%- end %>
+      </div>
+    </template>
+  </div>
+
   <%= form.submit "Save" %>
   </div>
 <% end %>

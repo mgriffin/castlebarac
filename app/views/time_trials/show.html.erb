@@ -1,5 +1,11 @@
 <div class="content">
-  <h1><%= @time_trial.recorded_at.strftime("%-d %B %Y") %></h1>
+  <h1><%= @time_trial.recorded_at.strftime("%-d %B %Y") %>
+  (<%= distance_to_human(@time_trial.distance) %>)
+  </h1>
+
+  <p>Missing someone? Why not <%= link_to "add them?", new_time_trial_tt_time_path(@time_trial), data: {turbo_stream: true} %></p>
+  <div id="questions"></div>
+
   <table>
     <tr>
       <th>Name</th>
