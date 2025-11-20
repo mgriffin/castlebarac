@@ -24,8 +24,8 @@ class TimeTrialsController < ApplicationController
     @time_trial = TimeTrial.new(time_trial_params)
     authorize @time_trial
 
-    if @time_trial.save!
-      redirect_to time_trial_path(@time_trial), notice: "Added Time Trial"
+    if @time_trial.save
+      redirect_to time_trial_path(@time_trial), notice: t(".notice")
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class TimeTrialsController < ApplicationController
     authorize @time_trial
 
     if @time_trial.update(time_trial_params)
-      redirect_to time_trial_path(@time_trial), notice: "Updated Time Trial"
+      redirect_to time_trial_path(@time_trial), notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
     end

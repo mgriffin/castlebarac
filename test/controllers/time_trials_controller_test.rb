@@ -24,27 +24,28 @@ class TimeTrialsControllerTest < ActionDispatch::IntegrationTest
 
     get time_trials_url
 
-    assert_response :not_found
+    assert_response :success
   end
 
   test "logged in coach can create a new time trial" do
+    bugsbunny = people(:bugsbunny)
     sign_in users(:coach)
 
     assert_difference "TimeTrial.count" do
       post time_trials_url,
-        params: {
-          time_trial: {
-            recorded_at: "2024-01-01",
-            distance: "800m",
-            surface: "Gravel Track",
-            tt_times_attributes: {
-              "0": {
-                person_id: 1,
-                seconds: 300
-              }
-            }
-          }
-        }
+           params: {
+             "time_trial" => {
+               "recorded_at" => "2024-01-01",
+               "distance" => "800m",
+               "surface" => "Gravel Track",
+               "tt_times_attributes" => {
+                 "123" => {
+                   "person_id" => bugsbunny.id,
+                   "seconds" => "300"
+                 }
+               }
+             }
+           }
     end
 
     assert_redirected_to time_trial_path(TimeTrial.last)

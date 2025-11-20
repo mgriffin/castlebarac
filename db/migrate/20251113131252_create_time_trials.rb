@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTimeTrials < ActiveRecord::Migration[8.0]
   def change
     create_table :time_trials do |t|

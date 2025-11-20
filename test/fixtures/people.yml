@@ -13,6 +13,7 @@ coach:
   firstname: Coach
   surname: Watkins
   user: coach
+  teams: [ coaches ]
 
 snori:
   firstname: Snörí

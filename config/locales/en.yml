@@ -51,3 +51,8 @@ en:
     create:
       already_done: "already linked"
       good: "Linked"
+  time_trials:
+    create:
+      notice: "Created Time Trial"
+    update:
+      notice: "Updated Time Trial"
