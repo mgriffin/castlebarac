@@ -14,7 +14,10 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile = Profile.new(profile_params)
+    @profile = Profile.find_by(
+      firstname: profile_params["firstname"],
+      surname: profile_params["surname"]
+    ) || Profile.new(profile_params)
     @profile.user = current_user
 
     if @profile.save
