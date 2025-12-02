@@ -9,3 +9,7 @@ bugs:
 coach:
   email: coach@acme.fake
   encrypted_password: <%= BCrypt::Password.create("carrots") %>
+
+gabby:
+  email: gabbygabby@acme.fake
+  encrypted_password: <%= BCrypt::Password.create("carrots") %>
