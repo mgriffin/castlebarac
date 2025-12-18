@@ -12,6 +12,11 @@
   --banner-info-bg: #cff4fc;
 }
 
+.navbar-nav {
+  --bs-nav-link-color: var(--header-text-color);
+  --bs-nav-link-hover-color: hsl(0, 0%, 80%);
+}
+
 body {
   background-color: var(--background-color);
   background-image: url("jumper.jpg");
@@ -24,91 +29,48 @@ body {
 img {
   width: 100%;
 }
-.container {
-  margin: 0 auto;
-  max-width: 1024px;
-  position: relative;
+header.row {
+  background-color: var(--header-bg-color);
+  border-top: 3px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
 
-  header {
-    background-color: var(--header-bg-color);
-    border-top: 3px solid var(--border-color);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    svg {
-      margin: 6px 0 0 15px;
-    }
-
-    span {
-      background-color: var(--background-color);
-      color: var(--header-text-color);
-      font-size: 48px;
-      margin: 16px 0 16px 20px;
-      padding: 10px 15px;
-      border-radius: 10px 0 0 10px;
-    }
+  svg {
+    margin: 6px 0 0 15px;
   }
 
-  nav {
+  span {
     background-color: var(--background-color);
-    border-top: 3px solid var(--border-color);
-    border-bottom: 3px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-
-    ul {
-      list-style: none;
-
-      li {
-        padding: 0 0.5rem;
-        display: inline-block;
-
-        a {
-          color: var(--nav-link-color);
-        }
-      }
-    }
-  }
-
-  .main {
-    background-color: var(--main-bg-color);
-    color: #000;
-    padding: 30px;
-    display: flex;
-    flex-wrap: wrap;
-
-    .content {
-      flex: 2;
-    }
-
-    .sidebar {
-      flex: 1;
-    }
-
-    a {
-      color: var(--main-link-color);
-    }
-  }
-
-  footer {
-    background-color: var(--background-color);
-    border-top: 3px solid var(--border-color);
-    color: var(--footer-text-color);
-    padding: 15px;
+    color: var(--header-text-color);
+    font-size: 48px;
+    margin: 16px 0 16px 20px;
+    padding: 10px 15px;
+    border-radius: 10px 0 0 10px;
   }
 }
 
-form {
-  label {
-    display: block;
-    margin: 0 0 0.5rem 0;
+nav {
+  background-color: var(--background-color);
+  border-top: 3px solid var(--border-color);
+  border-bottom: 3px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.main {
+  background-color: var(--main-bg-color);
+  color: #000;
+
+  a {
+    color: var(--main-link-color);
   }
-  input {
-    display: block;
-    padding: 6px 12px;
-    margin-bottom: 0.5rem;
-  }
+}
+
+footer {
+  background-color: var(--background-color);
+  border-top: 3px solid var(--border-color);
+  color: var(--footer-text-color);
+  padding: 15px;
 }
 
 table {
@@ -224,4 +186,9 @@ nav.admin-toolbar {
     color: #fff;
     padding: 0 10px;
   }
+}
+
+.post-meta {
+  margin-bottom: 1.25rem;
+  color: #727272;
 }
