@@ -1,5 +1,5 @@
 <div class="content" data-controller="checkbox">
-<table>
+<table class="table table-striped">
   <tr>
     <th>ID</th>
     <th>Username</th>
@@ -10,7 +10,7 @@
   <tr>
     <td><%= user.id %></td>
     <td><%= user.email %></td>
-    <td><%= user.name %></td>
+    <td><%= render "name", user: user %></td>
     <td>
       <%- if user.id == current_user.id %>
         <%= inline_svg_tag "check.svg" %> (That's me)

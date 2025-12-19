@@ -1,15 +1,16 @@
 <div class="content" data-controller="checkbox">
-  <table>
+  <table class="table table-striped table-bordered">
     <tr>
       <th>ID</th>
       <th>Name</th>
       <th>Linked User</th>
+      <th></th>
     </tr>
     <% @people.each do |person| %>
       <tr>
         <td><%= person.id %></td>
         <td><%= link_to(person.fullname, person_path(person)) %></td>
-        <td><%= person&.user&.email %></td>
+        <td><%= render "user", user: person&.user %></td>
         <td>
           <%- unless person&.user&.id == current_user.id %>
             <%= link_to edit_admin_person_path(person) do

@@ -11,11 +11,15 @@
     </div>
   <% end %>
 
-  <%= form.label :firstname, "First Name: " %>
-  <%= form.text_field :firstname %>
+  <div class="mb-3">
+    <%= form.label :firstname, "First Name: " %>
+    <%= form.text_field :firstname %>
+  </div>
 
-  <%= form.label :surname, "Surname: " %>
-  <%= form.text_field :surname %>
+  <div class="mb-3">
+    <%= form.label :surname, "Surname: " %>
+    <%= form.text_field :surname %>
+  </div>
 
-  <%= form.submit %>
+  <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>

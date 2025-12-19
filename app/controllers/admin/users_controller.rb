@@ -10,6 +10,10 @@ module Admin
       @pagy, @users = pagy(User.order(created_at: :desc))
     end
 
+    def show
+      @user = User.find(params[:id])
+    end
+
     def update
       @user = User.find(user_params[:id])
 

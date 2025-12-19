@@ -1,0 +1,11 @@
+<%= turbo_frame_tag user do %>
+  <%- unless user.name.nil? %>
+    <%= user.name %>
+    <%= link_to person_path(user.person), data: {turbo_frame: "_top"} do
+      inline_svg_tag "eye.svg"
+    end %>
+    <%= link_to edit_admin_person_path(user.person), data: {turbo_frame: "_top"} do
+      inline_svg_tag "rocket.svg"
+    end %>
+  <%- end %>
+<%- end %>
