@@ -188,6 +188,13 @@ nav.admin-toolbar {
   }
 }
 
+.post {
+  h2 {
+    a {
+      text-decoration: none;
+    }
+  }
+}
 .post-meta {
   margin-bottom: 1.25rem;
   color: #727272;
