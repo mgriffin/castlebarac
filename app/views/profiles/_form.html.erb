@@ -1,9 +1,5 @@
 <%= form_with model: profile, url: profile_path do |form| %>
-  <%= form.label :firstname, "First name: " %>
-  <%= form.text_field :firstname, placeholder: "Your first name" %>
+  <%= render "form_fields", form: %>
 
-  <%= form.label :surname, "Surname: " %>
-  <%= form.text_field :surname, placeholder: "Your surname" %>
-
-  <%= form.submit "Save" %>
+  <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>

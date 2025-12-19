@@ -1,10 +1,13 @@
 <%- content_for :title, "Register" %>
-<div class="container">
+<section class="content">
   <div class="modal-form">
     <h1>Register for an account</h1>
     <%= form_with model: @user, url: signup_path, id: "register" do |form| %>
       <%= form.label :email %>
       <%= form.email_field :email, required: true, autocomplete: "email", placeholder: "person@example.com" %>
+      <%= form.fields_for :person do |person| %>
+        <%= render "profile/form_fields", form: person %>
+      <%- end %>
       <%= form.label :password %>
       <%= form.password_field :password, required: true, autocomplete: "new-password" %>
       <%= form.label :password_confirmation %>
@@ -13,4 +16,4 @@
     <% end %>
     <p>Already have an account? <%= link_to "Log in", login_path %> instead.</p>
   </div>
-</div>
+</section>

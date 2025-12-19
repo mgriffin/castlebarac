@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :nullify
   has_one :person, dependent: :nullify
+  accepts_nested_attributes_for :person
 
   delegate :teams, to: :person
 

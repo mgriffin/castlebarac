@@ -9,26 +9,32 @@
   </ul>
   <p>Any new accounts will be restricted until they're verified by a committee member</p>
   <div class="modal-form">
-    <h1>Members login</h1>
+    <h2>Members login</h2>
     <% if @user.errors.any? %>
       <div class="error-message">
         <%= @user.errors.full_messages.to_sentence.capitalize %>
       </div>
     <% end %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= f.label :email, "Email Address: " %>
-      <%= f.email_field :email, required: true, autocomplete: "email", placeholder: "person@example.com" %>
-      <%= f.label :password, "Password: " %>
-      <%= f.password_field :password, required: true, autocomplete: "current-password" %>
+      <div class="mb-3">
+        <%= f.label :email, "Email Address: ", class: "form-label" %>
+        <%= f.email_field :email, required: true, autocomplete: "email", placeholder: "person@example.com", class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, "Password: ", class: "form-label" %>
+        <%= f.password_field :password, required: true, autocomplete: "current-password", class: "form-control" %>
+      </div>
 
       <% if devise_mapping.rememberable? %>
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+        <div class="mb-3">
+          <%= f.check_box :remember_me, class: "form-check-input" %>
+          <%= f.label :remember_me, class: "form-check-label" %>
+        </div>
       <% end %>
 
-      <%= f.submit "Log in" %>
+      <%= f.submit "Log in", class: "btn btn-primary" %>
     <% end %>
-    <p><%= link_to "Forgot your password?", new_password_path(resource_name) %></p>
     <p>Don't have an account yet? <%= link_to "Register", new_registration_path(resource_name) %> for one now.</p>
   </div>
 </section>
