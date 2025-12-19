@@ -3,7 +3,9 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
-  layout :which_layout
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  layout "sporty"
 
   def admin?
     current_user.present? && current_user.teams.exists?(name: "Admins")
@@ -14,9 +16,9 @@ class ApplicationController < ActionController::Base
     render plain: "404 Not Found", status: :not_found unless admin?
   end
 
-  private
+  protected
 
-  def which_layout
-    Flipper.enabled?(:sporty, current_user) ? "sporty" : "application"
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [person_attributes: [:firstname, :surname]])
   end
 end
