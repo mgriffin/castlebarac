@@ -1,46 +1,32 @@
 <%- content_for :title, "Home" %>
-<%- if Flipper.enabled?(:sporty, current_user) %>
-  <section class="content">
-    <%- @posts.each do |post| %>
-      <article class="post">
-        <h2><%= link_to post.title, post_path(post) %></h2>
-        <div class="subtle"><%= post.created_at.strftime("%b %-d, %Y") %></div>
-        <%= post.content %>
+<section class="content col-md-8">
+  <%- @posts.each do |post| %>
+    <article class="post">
+      <h2 class="display-5 link-body-emphasis mb-1"><%= link_to post.title, post_path(post) %></h2>
+      <div class="post-meta"><%= post.created_at.strftime("%b %-d, %Y") %></div>
+      <%= post.content %>
+    </article>
+  <%- end %>
+  <%= link_to "Older news >>", posts_path %>
+</section>
+<section class="sidebar col-md-4">
+  <h2>Next Training</h2>
+  <p>Wednesday at 6pm for 2015 and younger</p>
+  <p>Wednesday at 7pm for 2014 and older</p>
+  <ul>
+    <li>At St Mary's track</li>
+  </ul>
+  <h2>Upcoming events</h2>
+  <%- if @events.any? %>
+    <%- @events.each do |event| %>
+      <article class="event">
+        <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
+        <p>
+        <%= link_to event.title, event_path(event) %>
+        </p>
       </article>
     <%- end %>
-    <%= link_to "Older news >>", posts_path %>
-  </section>
-  <section class="sidebar">
-    <h2>Next Training</h2>
-    <p>Wednesday at 6pm for 2015 and younger</p>
-    <p>Wednesday at 7pm for 2014 and older</p>
-    <ul>
-      <li>At St Mary's track</li>
-    </ul>
-    <h2>Upcoming events</h2>
-    <%- if @events.any? %>
-      <%- @events.each do |event| %>
-        <article class="event">
-          <time><%= event.start_time.strftime("%b %-d, %Y") %></time>
-          <p>
-          <%= link_to event.title, event_path(event) %>
-          </p>
-        </article>
-      <%- end %>
-    <%- else %>
-      <p>There are no events coming up</p>
-    <%- end %>
-  </section>
-<%- else %>
-  <section class="news">
-    <%= render ListPostsComponent.new do |component| %>
-      <% component.with_posts(@posts) %>
-    <%- end %>
-    <%= link_to "Older news >>", posts_path %>
-  </section>
-  <section class="calendar">
-    <%= render ListEventsComponent.new do |component| %>
-      <% component.with_events(@events) %>
-    <%- end %>
-  </section>
-<%- end %>
+  <%- else %>
+    <p>There are no events coming up</p>
+  <%- end %>
+</section>
