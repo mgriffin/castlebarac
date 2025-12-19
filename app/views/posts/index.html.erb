@@ -8,13 +8,16 @@
   <%- else %>
     <%- @posts.each do |month, posts| %>
       <h2><%= month.strftime("%B %Y") %></h2>
+      <ul class="list-group">
       <%- posts.each do |post| %>
-        <article>
-          <h3>
-            <%= link_to post.title, post_path(post.url) %>
-          </h3>
-        </article>
+        <li class="list-group-item d-flex align-items-center">
+          <span class="text-body-tertiary">
+            <%= post.created_at.strftime("%-d %B") %> -&nbsp;
+          </span>
+          <%= link_to post.title, post_path(post.url) %>
+        </li>
       <%- end %>
+      </ul>
     <%- end %>
   <% end %>
 </div>

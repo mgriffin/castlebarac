@@ -1,10 +1,12 @@
 <%- content_for :title, "Home" %>
 <section class="content col-md-8">
   <%- @posts.each do |post| %>
-    <article class="post">
-      <h2 class="display-5 link-body-emphasis mb-1"><%= link_to post.title, post_path(post) %></h2>
-      <div class="post-meta"><%= post.created_at.strftime("%b %-d, %Y") %></div>
-      <%= post.content %>
+    <article class="card">
+      <div class="card-body">
+        <h2 class="card-title"><%= link_to post.title, post_path(post) %></h2>
+        <div class="card-subtitle mb-2 text-body-tertiary"><%= post.created_at.strftime("%b %-d, %Y") %></div>
+        <span class="card-text"><%= post.content %></span>
+      </div>
     </article>
   <%- end %>
   <%= link_to "Older news >>", posts_path %>

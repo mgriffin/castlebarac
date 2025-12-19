@@ -31,7 +31,7 @@
       <%- events.each do |event| %>
           <li class="event list-group-item d-flex align-items-center">
             <%= inline_svg_tag "calendar.svg", class: "me-2" %>
-            <span class="me-2"><%= event.start_time.strftime("%a %e, %l:%M%P") %></span>
+            <span class="me-2 text-body-tertiary"><%= event.start_time.strftime("%a %e, %l:%M%P") %></span>
             <%= link_to event.title, event_path(event) %>
           </li>
       <%- end %>

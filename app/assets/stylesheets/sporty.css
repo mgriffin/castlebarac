@@ -188,10 +188,12 @@ nav.admin-toolbar {
   }
 }
 
-.post {
-  h2 {
-    a {
-      text-decoration: none;
+.card-title {
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
