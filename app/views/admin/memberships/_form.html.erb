@@ -3,7 +3,7 @@
     controller: "autocomplete",
     autocomplete_url_value:  people_search_index_url
   } do |form| %>
-  <div class="auto">
+  <div class="auto mb-4">
   <%= form.label :person, "Add someone to the team: " %>
   <%= form.text_field :person,
     required: true,
@@ -16,5 +16,5 @@
   <%= form.hidden_field :team_id, value: team.id %>
   <ul class="autocomplete" data-autocomplete-target="results"></ul>
   </div>
-  <%= form.submit "Add them" %>
+  <%= form.submit "Add them", class: "btn btn-primary" %>
 <% end %>
