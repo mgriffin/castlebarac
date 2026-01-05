@@ -6,7 +6,7 @@
 # The name of the class your app uses for your users.
 # By default the engine will use 'User' but if you have another name
 # for your user class - change it here.
-Thredded.user_class = 'User'
+Thredded.user_class = "User"
 
 # User name column, used in @mention syntax and *must* be unique.
 # This is the column used to search for users' names if/when someone is @ mentioned.
@@ -21,7 +21,7 @@ Thredded.user_name_column = :username
 # the path or url to your user. This lambda is evaluated in the view context.
 # If the lambda returns nil, a span element is returned instead of a link; so
 # setting this to always return nil effectively disables all user links.
-Thredded.user_path = ->(user) {
+Thredded.user_path = lambda { |user|
   user_path = :"#{Thredded.user_class_name.demodulize.underscore}_path"
   main_app.respond_to?(user_path) ? main_app.send(user_path, user) : "/users/#{user.to_param}"
 }
@@ -30,7 +30,7 @@ Thredded.user_path = ->(user) {
 Thredded.current_user_method = :"current_#{Thredded.user_class_name.demodulize.underscore}"
 
 # User avatar URL. rails_gravatar gem is used by default:
-Thredded.avatar_url = ->(user) { RailsGravatar.src(user.email, 156, 'mm') }
+Thredded.avatar_url = ->(user) { RailsGravatar.src(user.email, 156, "mm") }
 
 # ==> Permissions Configuration
 # By default, thredded uses a simple permission model, where all the users can post to all message boards,
@@ -77,17 +77,17 @@ Thredded.private_messaging_enabled = false
 # Thredded.posts_per_page = 25
 
 # The layout for rendering Thredded views.
-###Thredded.layout = 'thredded/application'
-Thredded.layout = 'thredded'
+# ##Thredded.layout = 'thredded/application'
+Thredded.layout = "thredded"
 
 # ==> Email Configuration
 # Email "From:" field will use the following
 # (this is also used as the "To" address for both email notifcations, as all the recipients are on bcc)
 # Thredded.email_from = 'no-reply@example.com'
-Thredded.email_from = 'info@castlebarac.ie'
+Thredded.email_from = "info@castlebarac.ie"
 
 # Emails going out will prefix the "Subject:" with the following string
-Thredded.email_outgoing_prefix = '[Castlebar A.C.] '
+Thredded.email_outgoing_prefix = "[Castlebar A.C.] "
 #
 # The parent mailer for all Thredded mailers
 # Thredded.parent_mailer = 'ActionMailer::Base'
@@ -198,7 +198,7 @@ Rails.application.config.to_prepare do
     # Require authentication to access the forums:
     before_action { thredded_require_login! }
 
-    rescue_from Thredded::Errors::LoginRequired do |exception|
+    rescue_from Thredded::Errors::LoginRequired do
       redirect_to main_app.new_user_session_path
     end
   end

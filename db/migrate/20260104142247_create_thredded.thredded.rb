@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 # This migration comes from thredded (originally 20160329231848)
-require 'thredded/base_migration'
+require "thredded/base_migration"
 
 # rubocop:disable Metrics/ClassLength
-# rubocop:disable Metrics/MethodLength
 class CreateThredded < Thredded::BaseMigration
   def change
     unless table_exists?(:friendly_id_slugs)
@@ -61,14 +60,14 @@ class CreateThredded < Thredded::BaseMigration
     create_table :thredded_posts do |t|
       t.references :user, type: user_id_type, index: false
       t.text :content, limit: 65_535
-      t.string :source, limit: 191, default: 'web'
+      t.string :source, limit: 191, default: "web"
       t.references :postable, null: false, index: false
       t.references :messageboard, null: false, index: false
       t.integer :moderation_state, null: false
       t.timestamps null: false
       t.index %i[moderation_state updated_at],
               order: { updated_at: :asc },
-              name:  :index_thredded_posts_for_display
+              name: :index_thredded_posts_for_display
       t.index [:messageboard_id], name: :index_thredded_posts_on_messageboard_id
       t.index [:postable_id], name: :index_thredded_posts_on_postable_id
       t.index %i[postable_id created_at], name: :index_thredded_posts_on_postable_id_and_created_at
@@ -109,12 +108,14 @@ class CreateThredded < Thredded::BaseMigration
       t.index [:user_id], name: :index_thredded_private_users_on_user_id
     end
 
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :thredded_topic_categories do |t|
       t.references :topic, null: false, index: false
       t.references :category, null: false, index: false
       t.index [:category_id], name: :index_thredded_topic_categories_on_category_id
       t.index [:topic_id], name: :index_thredded_topic_categories_on_topic_id
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
 
     create_table :thredded_topics do |t|
       t.references :user, type: user_id_type, index: false
@@ -131,7 +132,7 @@ class CreateThredded < Thredded::BaseMigration
       t.timestamps null: false
       t.index %i[moderation_state sticky updated_at],
               order: { sticky: :desc, updated_at: :desc },
-              name:  :index_thredded_topics_for_display
+              name: :index_thredded_topics_for_display
       t.index [:last_post_at], name: :index_thredded_topics_on_last_post_at
       t.index [:hash_id], name: :index_thredded_topics_on_hash_id
       t.index [:slug],
@@ -159,6 +160,7 @@ class CreateThredded < Thredded::BaseMigration
       t.index %i[user_id], name: :index_thredded_user_details_on_user_id, unique: true
     end
 
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :thredded_messageboard_users do |t|
       t.references :thredded_user_detail, null: false, index: false
       t.references :thredded_messageboard, null: false, index: false
@@ -169,6 +171,7 @@ class CreateThredded < Thredded::BaseMigration
       t.index %i[thredded_messageboard_id last_seen_at],
               name: :index_thredded_messageboard_users_for_recently_active
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
     add_foreign_key :thredded_messageboard_users, :thredded_user_details,
                     column: :thredded_user_detail_id, on_delete: :cascade
     add_foreign_key :thredded_messageboard_users, :thredded_messageboards,
@@ -193,6 +196,7 @@ class CreateThredded < Thredded::BaseMigration
               unique: true
     end
 
+    # rubocop:disable Rails/CreateTableWithTimestamps
     %i[topic private_topic].each do |topics_table|
       table_name = :"thredded_user_#{topics_table}_read_states"
       create_table table_name do |t|
@@ -205,6 +209,7 @@ class CreateThredded < Thredded::BaseMigration
         t.index %i[user_id postable_id], name: :"#{table_name}_user_postable", unique: true
       end
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
     add_index :thredded_user_topic_read_states, %i[user_id messageboard_id],
               name: :thredded_user_topic_read_states_user_messageboard
 
@@ -222,6 +227,7 @@ class CreateThredded < Thredded::BaseMigration
       t.index %i[user_id topic_id], name: :thredded_user_topic_follows_user_topic, unique: true
     end
 
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :thredded_post_moderation_records do |t|
       t.references :post, index: false
       t.references :messageboard, index: false
@@ -234,22 +240,24 @@ class CreateThredded < Thredded::BaseMigration
       t.timestamp :created_at, null: false
       t.index %i[messageboard_id created_at],
               order: { created_at: :desc },
-              name:  :index_thredded_moderation_records_for_display
+              name: :index_thredded_moderation_records_for_display
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
 
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :thredded_notifications_for_private_topics do |t|
       t.references :user, null: false, index: false, type: user_id_type
       t.string :notifier_key, null: false, limit: 90
       t.boolean :enabled, default: true, null: false
       t.index %i[user_id notifier_key],
-              name: 'thredded_notifications_for_private_topics_unique', unique: true
+              name: "thredded_notifications_for_private_topics_unique", unique: true
     end
     create_table :thredded_notifications_for_followed_topics do |t|
       t.references :user, null: false, index: false, type: user_id_type
       t.string :notifier_key, null: false, limit: 90
       t.boolean :enabled, default: true, null: false
       t.index %i[user_id notifier_key],
-              name: 'thredded_notifications_for_followed_topics_unique', unique: true
+              name: "thredded_notifications_for_followed_topics_unique", unique: true
     end
     create_table :thredded_messageboard_notifications_for_followed_topics do |t|
       t.references :user, null: false, index: false, type: user_id_type
@@ -257,7 +265,7 @@ class CreateThredded < Thredded::BaseMigration
       t.string :notifier_key, null: false, limit: 90
       t.boolean :enabled, default: true, null: false
       t.index %i[user_id messageboard_id notifier_key],
-              name: 'thredded_messageboard_notifications_for_followed_topics_unique', unique: true
+              name: "thredded_messageboard_notifications_for_followed_topics_unique", unique: true
     end
 
     create_table :thredded_user_post_notifications do |t|
@@ -267,6 +275,7 @@ class CreateThredded < Thredded::BaseMigration
       t.index :post_id, name: :index_thredded_user_post_notifications_on_post_id
       t.index %i[user_id post_id], name: :index_thredded_user_post_notifications_on_user_id_and_post_id, unique: true
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
     add_foreign_key :thredded_user_post_notifications,
                     Thredded.user_class.table_name, column: :user_id, on_delete: :cascade
     add_foreign_key :thredded_user_post_notifications,
