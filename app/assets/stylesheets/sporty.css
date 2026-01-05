@@ -49,7 +49,7 @@ header.row {
   }
 }
 
-nav {
+nav#main-nav {
   background-color: var(--background-color);
   border-top: 3px solid var(--border-color);
   border-bottom: 3px solid var(--border-color);
@@ -64,9 +64,12 @@ nav {
   a {
     color: var(--main-link-color);
   }
+  .thredded--button {
+    color: #fff;
+  }
 }
 
-footer {
+footer#site-footer {
   background-color: var(--background-color);
   border-top: 3px solid var(--border-color);
   color: var(--footer-text-color);
