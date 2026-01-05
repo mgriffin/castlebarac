@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def committee?
     teams.exists?(name: "Committee")
   end
+
+  def thredded_admin?
+    admin?
+  end
 end

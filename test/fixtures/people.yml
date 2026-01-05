@@ -1,17 +1,20 @@
 admin:
   firstname: Ad
   surname: Min
+  slug: ad-min
   user: admin
   teams: [admins]
 
 bugsbunny:
   firstname: Bugs
   surname: Bunny
+  slug: bugs-bunny
   user: bugs
 
 coach:
   firstname: Coach
   surname: Watkins
+  slug: coach-watkins
   user: coach
   teams: [ coaches ]
 

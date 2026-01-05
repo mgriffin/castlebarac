@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     resources :memberships, only: %i[new create]
   end
 
+  mount Thredded::Engine => "/forum"
+
   get "404", to: "errors#not_found"
   get "500", to: "errors#internal_error"
 end
