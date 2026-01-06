@@ -57,7 +57,6 @@ gem "typhoeus"
 ### Need to include this now
 gem "csv"
 ### the thredded forum engine
-gem "sassc-embedded"
 gem "thredded", "~> 1.2"
 
 group :development, :test do
