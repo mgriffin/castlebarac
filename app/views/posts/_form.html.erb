@@ -1,11 +1,11 @@
 <%= form_with model: post do |form| %>
   <div class="mb-3">
-    <%= form.label :title, "Title: " %>
-    <%= form.text_field :title, required: true, autofocus: true, placeholder: "Post title" %>
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, required: true, autofocus: true, placeholder: "Post title", class: "form-control" %>
   </div>
 
   <div class="mb-3">
-  <%= form.label :content, "Body: " %>
+  <%= form.label :content, class: "form-label" %>
   <%= form.hidden_field :content, id: form.field_id(:content), value: form.object.content.try(:to_trix_html) || form.object.content %>
   <rhino-editor
     input="<%= form.field_id(:content) %>"

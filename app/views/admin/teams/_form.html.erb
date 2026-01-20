@@ -1,6 +1,8 @@
 <%= form_with model: [:admin, team] do |form| %>
-  <%= form.label :name, "Name: " %>
-  <%= form.text_field :name, required: true, autofocus: true, placeholder: "Team name" %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, required: true, autofocus: true, placeholder: "Team name", class: "form-control" %>
+  </div>
 
-  <%= form.submit "Save it" %>
+  <%= form.submit "Save it", class: "btn btn-primary" %>
 <% end %>

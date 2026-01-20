@@ -123,30 +123,8 @@ table.results {
     background-color: #ada;
   }
 }
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  transition: border-color 0.3s ease;
-}
-textarea {
-  color: #1d1d1d;
-  background-color: #efefef;
-  font-family: inherit;
-  font-size: inherit;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  outline: none;
-}
-textarea:not([cols]) {
-  width: 100%;
-}
-textarea:not([rows]) {
-  min-height: 40px;
-  height: 140px;
+input[type="datetime-local"] {
+  width: 22rem;
 }
 ul.autocomplete {
   position: relative;

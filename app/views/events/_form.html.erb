@@ -1,16 +1,16 @@
 <%= form_with model: event do |form| %>
   <div class="mb-3">
-    <%= form.label :title, "Title: " %>
-    <%= form.text_field :title, required: true, autofocus: true, placeholder: "Event title", size: "60" %>
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, required: true, autofocus: true, placeholder: "Event title", class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :start_time, "Date and time: " %>
-    <%= form.datetime_local_field :start_time %>
+    <%= form.label :start_time, "Date and time: ", class: "form-label" %>
+    <%= form.datetime_local_field :start_time, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :content, "Body: " %>
+    <%= form.label :content, class: "form-label" %>
     <%= form.hidden_field :content, id: form.field_id(:content), value: form.object.content.try(:to_trix_html) || form.object.content %>
     <rhino-editor
         input="<%= form.field_id(:content) %>"

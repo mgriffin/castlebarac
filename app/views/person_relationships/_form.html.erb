@@ -3,8 +3,8 @@
     controller: "autocomplete",
     autocomplete_url_value:  people_search_index_url
   } do |form| %>
-  <div class="auto my-3">
-    <%= form.label :child, "Link someone to their parent" %>
+  <div class="auto mb-3">
+    <%= form.label :child, "Link someone to their parent", class: "form-label" %>
     <%= form.text_field :child,
       required: true,
       autofocus: true,

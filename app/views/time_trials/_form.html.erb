@@ -1,18 +1,18 @@
 <%= form_with model: @time_trial, data: { controller: "nested-fields" } do |form| %>
   <div class="auto">
     <div class="mb-3">
-      <%= form.label :recorded_at, "Date: " %>
-      <%= form.date_field :recorded_at %>
+      <%= form.label :recorded_at, "Date: ", class: "form-label" %>
+      <%= form.date_field :recorded_at, class: "form-control" %>
     </div>
 
     <div class="mb-3">
-      <%= form.label :distance %>
-      <%= form.text_field :distance %>
+      <%= form.label :distance, class: "form-label" %>
+      <%= form.text_field :distance, class: "form-control" %>
     </div>
 
     <div class="mb-3">
-      <%= form.label :surface %>
-      <%= form.text_field :surface %>
+      <%= form.label :surface, class: "form-label" %>
+      <%= form.text_field :surface, class: "form-control" %>
     </div>
 
     <hr />

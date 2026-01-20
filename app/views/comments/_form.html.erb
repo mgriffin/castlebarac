@@ -1,5 +1,7 @@
 <%= form_for [commentable, Comment.new] do |form| %>
-  <%= form.textarea :body, placeholder: "Add a comment" %>
+  <div class="mb-3">
+    <%= form.textarea :body, placeholder: "Add a comment", class: "form-control" %>
+  </div>
 
-  <%= form.submit "Comment" %>
+  <%= form.submit "Comment", class: "btn btn-primary" %>
 <%- end %>

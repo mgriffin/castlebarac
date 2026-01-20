@@ -1,5 +1,5 @@
 <div class="mb-3">
-  <%= form.label :person %>
+  <%= form.label :person, class: "form-label" %>
   <%= form.text_field :person,
     required: true,
     autocomplete: "off",
@@ -7,9 +7,9 @@
       autocomplete_target: "input"
     } %>
   <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
+  <ul class="autocomplete" data-autocomplete-target="results"></ul>
 </div>
-<ul class="autocomplete" data-autocomplete-target="results"></ul>
 <div class="mb-3">
-  <%= form.label :seconds %>
-  <%= form.text_field :seconds %>
+  <%= form.label :seconds, class: "form-label" %>
+  <%= form.text_field :seconds, class: "form-control" %>
 </div>
