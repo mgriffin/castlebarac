@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   delegate :teams, to: :person
 
+  before_create :find_or_create_person
+
   def name
     person&.fullname
   end
@@ -30,5 +32,14 @@ class User < ApplicationRecord
 
   def thredded_admin?
     admin?
+  end
+
+  private
+
+  def find_or_create_person
+    firstname, surname = username.split
+    surname = "" if surname.nil?
+
+    self.person = Person.find_or_create_by(firstname:, surname:)
   end
 end
