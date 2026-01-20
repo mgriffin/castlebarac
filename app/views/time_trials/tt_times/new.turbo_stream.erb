@@ -7,6 +7,6 @@
     <%= fields_for "time_trial[tt_times_attributes][]", TtTime.new, index: Time.current.to_i do |form| %>
       <%= render "time_trials/tt_times_fields", form: %>
     <%- end %>
-    <%= form.submit "Save" %>
+    <%= form.submit "Save", class: "btn btn-primary" %>
   <% end %>
 <% end %>
