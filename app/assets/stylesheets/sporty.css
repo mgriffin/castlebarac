@@ -157,6 +157,7 @@ nav.admin-toolbar {
   color: hsl(0, 0%, 100%, 0.7);
   padding: 5px 10px;
   justify-content: normal;
+  margin: 0 -12px;
 
   svg {
     padding-right: 3px;
