@@ -44,9 +44,10 @@ en:
   sessions:
     create:
       alert: "Username or password was incorrect"
-  comments:
-    create:
-      notice: "Your comment was successfully posted"
+  posts:
+    comments:
+      create:
+        notice: "Your comment was successfully posted"
   person_relationships:
     create:
       already_done: "already linked"

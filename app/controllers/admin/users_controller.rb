@@ -4,7 +4,7 @@ module Admin
   class UsersController < ApplicationController
     include Pagy::Backend
 
-    before_action :admin_only!
+    before_action :admin_only!, except: :stop_impersonating
 
     def index
       @pagy, @users = pagy(User.order(created_at: :desc))
@@ -22,6 +22,17 @@ module Admin
       else
         render :new, status: :unprocessable_entity
       end
+    end
+
+    def impersonate
+      user = User.find(params[:id])
+      impersonate_user(user)
+      redirect_to root_path
+    end
+
+    def stop_impersonating
+      stop_impersonating_user
+      redirect_to root_path
     end
 
     private

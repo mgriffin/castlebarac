@@ -157,6 +157,7 @@ nav.admin-toolbar {
   color: hsl(0, 0%, 100%, 0.7);
   padding: 5px 10px;
   justify-content: normal;
+  margin: 0 -12px;
 
   svg {
     padding-right: 3px;
@@ -165,6 +166,24 @@ nav.admin-toolbar {
 
   a {
     color: #fff;
+    padding: 0 10px;
+  }
+}
+div.impersonate-bar {
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
+  border-bottom: 1px solid var(--bs-danger-border-subtle);
+  padding: 5px 10px;
+  justify-content: normal;
+  margin: 0 -12px;
+
+  svg {
+    padding-right: 3px;
+    fill: var(--bs-danger-text-emphasis);
+  }
+
+  a {
+    color: var(--bs-danger-text-emphasis);
     padding: 0 10px;
   }
 }
@@ -181,4 +200,45 @@ nav.admin-toolbar {
 .post-meta {
   margin-bottom: 1.25rem;
   color: #727272;
+}
+@keyframes appear-then-fade {
+  0%, 100% {
+    opacity:0
+  }
+  5%, 60% {
+    opacity:1
+  }
+}
+.flash {
+  position:fixed;
+  top: 11rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+
+  max-width: 100%;
+  width: max-content;
+  padding: 0 var(--space-m);
+}
+.flash__message {
+  font-size: var(--font-size-s);
+  color: var(--bs-primary-text-emphasis);
+  padding: var(--space-xs) var(--space-m);
+  background-color: var(--bs-primary-bg-subtle);
+  animation: appear-then-fade 4s both;
+  border-radius: 5px;
+}
+.flash__alert {
+  color: var(--bs-danger-text-emphasis);
+  background-color: var(--bs-danger-bg-subtle);
+  border: 1px solid var(--bs-danger-border-subtle);
+}
+.flash__notice {
+  color: var(--bs-success-text-emphasis);
+  background-color: var(--bs-success-bg-subtle);
+  border: 1px solid var(--bs-success-border-subtle);
 }

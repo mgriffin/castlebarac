@@ -303,6 +303,8 @@ GEM
       mime-types (>= 3.0)
     pp (0.6.3)
       prettyprint
+    pretender (0.6.0)
+      actionpack (>= 7.1)
     prettyprint (0.2.0)
     prism (1.6.0)
     psych (5.2.6)
@@ -529,6 +531,7 @@ DEPENDENCIES
   lograge
   mocha
   pagy
+  pretender
   puma (>= 5.0)
   pundit (~> 2.5)
   rails (~> 8.0)
