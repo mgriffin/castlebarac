@@ -18,6 +18,12 @@
   <body>
     <div class="container">
       <%= render AdminToolbarComponent.new(user: current_user) %>
+      <% if current_user != true_user %>
+        <div class="impersonate-bar" aria-label="Impersonation toolbar">
+          <%= inline_svg_tag "circle-slash.svg" %>
+          <%= link_to "Stop impersonating #{current_user.name}", main_app.stop_impersonating_admin_users_path, data: {turbo_method: :post} %>
+        </div>
+      <% end %>
       <header class="row">
         <%= link_to main_app.root_path, class: "logo col" do %>
           <%= inline_svg_tag "shield.svg" %>

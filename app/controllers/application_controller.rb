@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
+  impersonates :user
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   layout "sporty"

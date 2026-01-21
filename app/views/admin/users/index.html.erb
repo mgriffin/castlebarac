@@ -5,6 +5,7 @@
     <th>Username</th>
     <th>Name</th>
     <th>Admin?</th>
+    <th></th>
   </tr>
 <%- @users.each do |user| %>
   <tr>
@@ -20,6 +21,9 @@
           <%= f.check_box :admin, data: {action: "checkbox#submit" } %>
         <%- end %>
       <%- end %>
+    </td>
+    <td>
+      <%= button_to "Impersonate", impersonate_admin_user_path(user), data: {turbo: false}, class: "btn btn-link" %>
     </td>
   </tr>
 <%- end %>

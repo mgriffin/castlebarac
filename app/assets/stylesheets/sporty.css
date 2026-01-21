@@ -169,6 +169,24 @@ nav.admin-toolbar {
     padding: 0 10px;
   }
 }
+div.impersonate-bar {
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
+  border-bottom: 1px solid var(--bs-danger-border-subtle);
+  padding: 5px 10px;
+  justify-content: normal;
+  margin: 0 -12px;
+
+  svg {
+    padding-right: 3px;
+    fill: var(--bs-danger-text-emphasis);
+  }
+
+  a {
+    color: var(--bs-danger-text-emphasis);
+    padding: 0 10px;
+  }
+}
 
 .card-title {
   a {
