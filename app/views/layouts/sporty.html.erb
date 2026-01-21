@@ -45,6 +45,7 @@
         </div>
       </nav>
       <section class="main row py-3">
+        <%= render FlashComponent.new(flash: flash) %>
         <%= yield %>
       </section>
       <footer id="site-footer" class="row">
