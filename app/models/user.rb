@@ -6,6 +6,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :username, presence: true
+
   has_many :posts, dependent: :nullify
   has_one :person, dependent: :nullify
   accepts_nested_attributes_for :person
