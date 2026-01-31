@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root "site#index"
+  resources :training_times, only: :index
 
   resources :mailing_lists, only: %i[index create]
 
