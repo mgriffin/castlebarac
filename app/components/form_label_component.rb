@@ -13,7 +13,7 @@ class FormLabelComponent < ViewComponent::Base
   private
 
   def label_value
-    has_errors? ? field_error_message : @field.to_s.humanize
+    errors? ? field_error_message : @field.to_s.humanize
   end
 
   def css
@@ -21,12 +21,16 @@ class FormLabelComponent < ViewComponent::Base
     class_names(
       "form-label",
       {
-        "text-danger": has_errors?
+        "text-danger": errors?
       }
     )
   end
 
-  def field_error_message = @form.object.errors.full_messages_for(@field).first
+  def field_error_message
+    @form.object.errors.full_messages_for(@field).first
+  end
 
-  def has_errors? = @form.object.errors.full_messages_for(@field).any?
+  def errors?
+    @form.object.errors.full_messages_for(@field).any?
+  end
 end
