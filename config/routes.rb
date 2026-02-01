@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   devise_for :users
   root "site#index"
   resources :training_times, only: :index
+  namespace :training do
+    resources :little_athletics, only: :index
+  end
 
   resources :mailing_lists, only: %i[index create]
 
