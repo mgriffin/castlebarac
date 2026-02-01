@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FormLabelComponent < ViewComponent::Base
   def initialize(form:, field:)
     @form = form

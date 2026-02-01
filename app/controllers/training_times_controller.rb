@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
 class TrainingTimesController < ApplicationController
-  def index
-  end
+  def index; end
 end
