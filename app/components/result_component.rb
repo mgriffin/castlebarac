@@ -20,10 +20,10 @@ class ResultComponent < ViewComponent::Base
   end
 
   def edit_name
-    if render_edit_link?
-      link_to edit_admin_result_path(result) do
-        helpers.inline_svg_tag "pencil.svg"
-      end
+    return unless render_edit_link?
+
+    link_to edit_admin_result_path(result) do
+      helpers.inline_svg_tag "pencil.svg"
     end
   end
 
