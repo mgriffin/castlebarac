@@ -111,10 +111,10 @@ table.results {
   .county {
     width: 5em;
   }
-  .result {
+  .time {
     width: 2em;
   }
-  td.result {
+  td.time {
     text-align: right;
     font-family: monospace;
   }

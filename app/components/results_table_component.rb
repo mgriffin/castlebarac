@@ -14,7 +14,7 @@ class ResultsTableComponent < ViewComponent::Base
                   "name" => true,
                   "club" => true,
                   "county" => @first_result&.county.present?,
-                  "time" => @first_result&.seconds.nil?
+                  "time" => @first_result&.seconds.present?
                 }).split
   end
 end

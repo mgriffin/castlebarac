@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <%- headers.each do |header| %>
-        <th><%= header.humanize %></th>
+        <th class="<%= header %>"><%= header.humanize %></th>
       <%- end %>
     </tr>
   </thead>
