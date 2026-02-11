@@ -1,0 +1,12 @@
+<table class="results">
+  <thead>
+    <tr>
+      <%- headers.each do |header| %>
+        <th><%= header.humanize %></th>
+      <%- end %>
+    </tr>
+  </thead>
+  <%- results.each do |result| %>
+    <%= result %>
+  <%- end %>
+</table>

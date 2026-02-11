@@ -9,16 +9,8 @@
     </td>
   <%- end %>
   <td class="name">
-    <%- if policy(result).view_person? && result.person %>
-      <%= link_to result.name, person_path(result.person) %>
-    <%- else %>
-      <%= result.name %>
-    <%- end %>
-    <%- if policy([:admin, result]).edit? && result.castlebarac? %>
-      <%= link_to edit_admin_result_path(result) do
-        inline_svg_tag "pencil.svg"
-      end %>
-    <%- end %>
+    <%= name %>
+    <%= edit_name %>
   </td>
   <td class="club">
     <%= result.club %>
