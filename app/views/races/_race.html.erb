@@ -4,16 +4,9 @@
     inline_svg_tag "link.svg"
   end %>
 </h3>
-<table class="results">
-  <thead>
-    <tr>
-      <th class="position">Position</th>
-      <%- if race.bib_numbers_included? %><th class="bib">Bib</th><%- end %>
-      <th class="name">Name</th>
-      <th class="club">Club</th>
-      <%- if race.county_included? %><th class="county">County</th><%- end %>
-      <%- unless race.timed? %><th class="result">Time</th><%- end %>
-    </tr>
-  </thead>
-  <%= render race.results %>
+<%= render ResultsTableComponent.new(first_result: race.results.first) do |results_table_component| %>
+  <%- race.results.each do |result| %>
+    <%= results_table_component.with_result(result:, user: current_user) %>
+  <%- end %>
+<%- end %>
 </table>
