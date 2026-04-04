@@ -2,12 +2,10 @@
 
 module Admin
   class PostsController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!
 
     def index
-      @pagy, @posts = pagy(Post.order(created_at: :desc))
+      @posts = Post.order(created_at: :desc)
     end
 
     def show
@@ -29,7 +27,7 @@ module Admin
       if @post.save
         redirect_to post_path(@post), notice: "Added #{@post.title}"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -39,7 +37,7 @@ module Admin
       if @post.update(post_params)
         redirect_to post_path(@post), notice: "Edited #{@post.title}"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

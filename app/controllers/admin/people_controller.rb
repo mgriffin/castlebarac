@@ -29,7 +29,7 @@ module Admin
       if @person.save
         redirect_to admin_people_path, notice: "Added #{@person.firstname} #{@person.surname}"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -40,7 +40,7 @@ module Admin
       if @person.update(person_params)
         redirect_to admin_people_path, notice: "Edited #{@person.firstname} #{@person.surname}", status: :see_other
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

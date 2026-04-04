@@ -31,7 +31,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to event_path(@event), notice: "Added #{@event.title}"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       redirect_to event_path(@event), notice: "Updated #{@event.title}"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

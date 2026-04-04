@@ -25,7 +25,7 @@ module Admin
       if @team.save
         redirect_to admin_teams_path, notice: "Added #{@team.name}"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

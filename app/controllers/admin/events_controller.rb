@@ -2,12 +2,10 @@
 
 module Admin
   class EventsController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!
 
     def index
-      @pagy, @events = pagy(Event.order(start_time: :desc))
+      @events = Event.order(start_time: :desc)
     end
 
     def show
@@ -28,7 +26,7 @@ module Admin
       if @event.save
         redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -38,7 +36,7 @@ module Admin
       if @event.update(event_params)
         redirect_to admin_event_path(@event), notice: "Added #{@event.title}"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

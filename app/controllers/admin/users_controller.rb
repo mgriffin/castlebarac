@@ -2,12 +2,10 @@
 
 module Admin
   class UsersController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!, except: :stop_impersonating
 
     def index
-      @pagy, @users = pagy(User.order(created_at: :desc))
+      @users = User.order(created_at: :desc)
     end
 
     def show
@@ -20,7 +18,7 @@ module Admin
       if @user.update(:admin, user_params[:admin])
         redirect_to admin_users_path
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

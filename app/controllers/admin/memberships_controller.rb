@@ -20,7 +20,7 @@ module Admin
         redirect_to admin_team_path(membership.team),
                     notice: "Added #{membership.person.fullname} to #{membership.team.name}"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

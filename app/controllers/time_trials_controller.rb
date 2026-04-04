@@ -27,7 +27,7 @@ class TimeTrialsController < ApplicationController
     if @time_trial.save
       redirect_to time_trial_path(@time_trial), notice: t(".notice")
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -38,7 +38,7 @@ class TimeTrialsController < ApplicationController
     if @time_trial.update(time_trial_params)
       redirect_to time_trial_path(@time_trial), notice: t(".notice")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
