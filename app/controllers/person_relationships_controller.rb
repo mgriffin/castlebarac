@@ -14,7 +14,7 @@ class PersonRelationshipsController < ApplicationController
       redirect_to admin_people_path(person_relationship.parent),
                   notice: t(".good")
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

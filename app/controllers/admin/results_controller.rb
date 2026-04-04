@@ -20,7 +20,7 @@ module Admin
       if @result.update(person: person)
         redirect_to event_path(@result.race.event), notice: "Linked result to #{person.fullname}", status: :see_other
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
   end

@@ -20,7 +20,7 @@ module Admin
       if @user.update(:admin, user_params[:admin])
         redirect_to admin_users_path
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
