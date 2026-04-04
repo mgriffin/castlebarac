@@ -2,12 +2,10 @@
 
 module Admin
   class PostsController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!
 
     def index
-      @pagy, @posts = pagy(Post.order(created_at: :desc))
+      @posts = Post.order(created_at: :desc)
     end
 
     def show

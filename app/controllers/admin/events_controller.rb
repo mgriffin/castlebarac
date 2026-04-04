@@ -2,12 +2,10 @@
 
 module Admin
   class EventsController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!
 
     def index
-      @pagy, @events = pagy(Event.order(start_time: :desc))
+      @events = Event.order(start_time: :desc)
     end
 
     def show

@@ -52,8 +52,6 @@ gem "image_processing", "~> 1.2"
 ### For authentication
 gem "devise"
 gem "pretender"
-### For pagination
-gem "pagy"
 gem "typhoeus"
 ### Need to include this now
 gem "csv"

@@ -2,12 +2,10 @@
 
 module Admin
   class UsersController < ApplicationController
-    include Pagy::Backend
-
     before_action :admin_only!, except: :stop_impersonating
 
     def index
-      @pagy, @users = pagy(User.order(created_at: :desc))
+      @users = User.order(created_at: :desc)
     end
 
     def show
