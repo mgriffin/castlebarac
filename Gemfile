@@ -55,8 +55,6 @@ gem "pretender"
 gem "typhoeus"
 ### Need to include this now
 gem "csv"
-### the thredded forum engine
-gem "thredded", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

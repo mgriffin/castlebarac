@@ -32,10 +32,6 @@ class User < ApplicationRecord
     teams.exists?(name: "Committee")
   end
 
-  def thredded_admin?
-    admin?
-  end
-
   private
 
   def find_or_create_person
