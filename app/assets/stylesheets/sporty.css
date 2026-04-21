@@ -64,9 +64,6 @@ nav#main-nav {
   a {
     color: var(--main-link-color);
   }
-  .thredded--button {
-    color: #fff;
-  }
 }
 
 footer#site-footer {
