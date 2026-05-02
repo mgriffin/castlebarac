@@ -172,6 +172,8 @@ GEM
     flipper-active_record (1.4.1)
       activerecord (>= 4.2, < 9)
       flipper (~> 1.4.1)
+    friendly_id (5.5.1)
+      activerecord (>= 4.0.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
     hashdiff (1.2.1)
@@ -461,6 +463,7 @@ DEPENDENCIES
   faker
   faraday
   flipper-active_record (~> 1.3)
+  friendly_id (~> 5.5.0)
   image_processing (~> 1.2)
   inline_svg
   jbuilder
