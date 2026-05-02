@@ -1,0 +1,12 @@
+<h1>Hi Coaches</h1>
+
+<%= link_to "Time Trials", time_trials_url %>
+
+<h3>Info</h3>
+<%- if @coaches_posts.empty? %>
+  <p>There are no posts yet, why not <%= link_to "add one", new_coaches_post_path %></p>
+<%- else %>
+  <ul>
+  <%= render(CoachesPostComponent.with_collection(@coaches_posts)) %>
+  </ul>
+<%- end %>

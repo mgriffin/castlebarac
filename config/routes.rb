@@ -29,6 +29,11 @@ Rails.application.routes.draw do
     resources :tt_times, only: :new, module: :time_trials
   end
 
+  resources :coaches, only: :index
+  namespace :coaches do
+    resources :posts
+  end
+
   namespace :admin do
     root to: "admin#index"
 
