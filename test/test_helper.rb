@@ -14,5 +14,6 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+    set_fixture_class coach_posts: Coach::Post
   end
 end

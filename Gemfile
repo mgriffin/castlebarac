@@ -103,3 +103,5 @@ gem "lograge"
 gem "view_component"
 
 gem "pundit", "~> 2.5"
+
+gem "friendly_id", "~> 5.5.0"

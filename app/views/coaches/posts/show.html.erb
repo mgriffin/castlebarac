@@ -1,0 +1,12 @@
+<section class="content">
+  <article class="card mb-3">
+    <div class="card-body">
+      <h2 class="card-title"><%= @coach_post.title %></h2>
+      <div class="card-subtitle mb-2 text-body-tertiary">
+        by <%= @coach_post.user.name %>
+      on <%= @coach_post.created_at.strftime("%b %-d, %Y") %>
+      </div>
+      <span class="card-text"><%= @coach_post.content %></span>
+    </div>
+  </article>
+</section>
