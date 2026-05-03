@@ -5,6 +5,7 @@ class TimeTrialsController < ApplicationController
     @time_trials = TimeTrial
                    .select("STRFTIME('%Y-%m-%d', recorded_at) day, id")
                    .group("STRFTIME('%Y-%m-%d', recorded_at)")
+                   .order(day: :desc)
     authorize @time_trials
   end
 
