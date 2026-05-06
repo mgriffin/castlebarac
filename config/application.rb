@@ -30,4 +30,8 @@ module Castlebarac
     ### For Pundit
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :not_found
   end
+
+  def self.show_about?
+    Flipper.enabled?(:about)
+  end
 end
