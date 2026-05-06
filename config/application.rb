@@ -34,4 +34,8 @@ module Castlebarac
   def self.show_about?(user = nil)
     Flipper.enabled?(:about, user)
   end
+
+  def self.truncate_post?(user = nil)
+    Flipper.enabled?(:truncate_post, user)
+  end
 end

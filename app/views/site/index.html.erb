@@ -15,7 +15,14 @@
       <div class="card-body">
         <h2 class="card-title"><%= link_to post.title, post_path(post) %></h2>
         <div class="card-subtitle mb-2 text-body-tertiary"><%= post.created_at.strftime("%b %-d, %Y") %></div>
-        <span class="card-text"><%= post.content %></span>
+        <span class="card-text">
+          <%- if Castlebarac.truncate_post?(current_user) %>
+            <%= post.content.to_plain_text.truncate(150) %>
+            <br /><%= link_to "Read more", post_path(post) %>
+          <%- else %>
+            <%= post.content %>
+          <%- end %>
+        </span>
       </div>
     </article>
   <%- end %>
