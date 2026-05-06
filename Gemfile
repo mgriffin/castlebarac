@@ -96,6 +96,7 @@ group :test do
 end
 
 gem "flipper-active_record", "~> 1.3"
+gem "flipper-ui"
 
 gem "faraday"
 gem "inline_svg"
