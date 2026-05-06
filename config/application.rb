@@ -32,6 +32,6 @@ module Castlebarac
   end
 
   def self.show_about?
-    Flipper.enabled?(:about)
+    Flipper.enabled?(:about, user)
   end
 end
