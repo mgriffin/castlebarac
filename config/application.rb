@@ -31,7 +31,7 @@ module Castlebarac
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :not_found
   end
 
-  def self.show_about?
+  def self.show_about?(user = nil)
     Flipper.enabled?(:about, user)
   end
 end

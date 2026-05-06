@@ -1,6 +1,6 @@
 <%- content_for :title, "Home" %>
 <section class="content col-md-8">
-  <%- if Castlebarac.show_about? %>
+  <%- if Castlebarac.show_about?(current_user) %>
     <article class="card mb-3">
       <div class="card-body">
         <span class="card-text">
