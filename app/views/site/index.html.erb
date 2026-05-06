@@ -1,5 +1,15 @@
 <%- content_for :title, "Home" %>
 <section class="content col-md-8">
+  <%- if Castlebarac.show_about? %>
+    <article class="card mb-3">
+      <div class="card-body">
+        <span class="card-text">
+          Castlebar Athletic Club is based in Castlebar in Co Mayo and caters mainly to kids between 8 and 18 years of age.
+          We help athletes compete in track and field events as well as cross country races.
+        </span>
+      </div>
+    </article>
+  <%- end %>
   <%- @posts.each do |post| %>
     <article class="card mb-3">
       <div class="card-body">
