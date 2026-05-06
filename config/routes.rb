@@ -51,4 +51,8 @@ Rails.application.routes.draw do
 
   get "404", to: "errors#not_found"
   get "500", to: "errors#internal_error"
+
+  authenticate :user, ->(user) { user.admin? } do
+    mount Flipper::UI.app(Flipper) => "/flipper", as: :flipper
+  end
 end
