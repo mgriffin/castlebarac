@@ -16,6 +16,8 @@ class Result < ApplicationRecord
   scope :not_linked, -> { club_members.where(person_id: nil) }
 
   def net_time
+    return "" if seconds.negative?
+
     h = seconds.to_i / 3600
     m = (seconds.to_i % 3600) / 60
     s = seconds.to_i % 60

@@ -22,7 +22,7 @@
   <%- end %>
   <%- unless result.timed? %>
     <td class="result">
-      <%- if ["DNS", "DNF", "DQ", ""].include? result.result %>
+      <%- if ["DNS", "DNF", "DQ", "NM", ""].include? result.result %>
         <%= result.result %>
       <%- else %>
         <%= result.net_time %>
