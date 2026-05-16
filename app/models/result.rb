@@ -15,13 +15,24 @@ class Result < ApplicationRecord
   }
   scope :not_linked, -> { club_members.where(person_id: nil) }
 
+  def h
+    seconds.to_i / 3600
+  end
+
+  def m
+    (seconds.to_i % 3600) / 60
+  end
+
+  def s
+    seconds.to_i % 60
+  end
+
+  def ms
+    seconds.to_s.match(/(\.\d+)/)&.captures&.first || ""
+  end
+
   def net_time
     return "" if seconds.negative?
-
-    h = seconds.to_i / 3600
-    m = (seconds.to_i % 3600) / 60
-    s = seconds.to_i % 60
-    ms = seconds.to_s.match(/(\.\d+)/)&.captures&.first || ""
 
     if h.zero?
       h = ""
