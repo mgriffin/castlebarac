@@ -3,7 +3,7 @@
 module Coaches
   class PostsController < ApplicationController
     def show
-      @coach_post = Coach::Post.friendly.find(params[:id])
+      @coach_post = Coach::Post.friendly.find(params.expect(:id))
       authorize @coach_post
     end
 

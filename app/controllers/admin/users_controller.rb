@@ -9,7 +9,7 @@ module Admin
     end
 
     def show
-      @user = User.find(params[:id])
+      @user = User.find(params.expect(:id))
     end
 
     def update
@@ -23,7 +23,7 @@ module Admin
     end
 
     def impersonate
-      user = User.find(params[:id])
+      user = User.find(params.expect(:id))
       impersonate_user(user)
       redirect_to root_path
     end
