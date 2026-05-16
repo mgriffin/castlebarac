@@ -35,17 +35,17 @@ class Result < ApplicationRecord
     return "" if seconds.negative?
 
     if h.zero?
-      h = ""
+      hours = ""
 
-      m = m.zero? ? "" : "#{m}:"
+      mins = m.zero? ? "" : "#{m}:"
     else
-      h = "#{h}:"
-      m = format("%02d:", m)
+      hours = "#{h}:"
+      mins = format("%02d:", m)
     end
 
-    s = format("%02d", s) unless m == ""
+    secs = format("%02d", s) unless m == ""
 
-    "#{h}#{m}#{s}#{ms[0..2]}"
+    "#{hours}#{mins}#{secs}#{ms[0..2]}"
   end
 
   def castlebarac?
