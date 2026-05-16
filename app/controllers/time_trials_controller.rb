@@ -10,7 +10,7 @@ class TimeTrialsController < ApplicationController
   end
 
   def show
-    @time_trial = TimeTrial.includes(tt_times: [:person]).order("tt_times.seconds").find(params[:id])
+    @time_trial = TimeTrial.includes(tt_times: [:person]).order("tt_times.seconds").find(params.expect(:id))
     authorize @time_trial
   end
 
@@ -33,7 +33,7 @@ class TimeTrialsController < ApplicationController
   end
 
   def update
-    @time_trial = TimeTrial.find(params[:id])
+    @time_trial = TimeTrial.find(params.expect(:id))
     authorize @time_trial
 
     if @time_trial.update(time_trial_params)

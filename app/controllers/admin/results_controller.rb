@@ -3,15 +3,15 @@
 module Admin
   class ResultsController < ApplicationController
     def edit
-      @result = Result.find(params[:id])
+      @result = Result.find(params.expect(:id))
       authorize [:admin, @result]
     end
 
     def update
-      @result = Result.find(params[:id])
+      @result = Result.find(params.expect(:id))
       authorize [:admin, @result]
 
-      unless (person = Person.find(params[:result][:person_id]))
+      unless (person = Person.find(params.expect(:result)[:person_id]))
         redirect_to event_path(@result.race.event),
                     notice: "#{params[:result][:person]} wasn't found"
         return

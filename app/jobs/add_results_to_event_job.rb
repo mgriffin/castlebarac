@@ -8,10 +8,15 @@ class AddResultsToEventJob < ApplicationJob
     result_name = links.first.match(/(\w+)\.php/).captures.first
 
     ids_from(links).each do |id|
-      doc = Nokogiri::HTML(Typhoeus.get("#{url}/#{result_name}.php", params: { id: id }).body)
+      doc = Nokogiri::HTML(
+        Typhoeus.get(
+          "#{url}/#{result_name}.php",
+          params: { id: id },
+          followlocation: true
+        ).body
+      )
 
-      name = doc.css("title").text
-                .gsub(" - Results", "")
+      name = doc.css("title").text.gsub(" - Results", "")
 
       json = doc.css("script").text
                 .strip
