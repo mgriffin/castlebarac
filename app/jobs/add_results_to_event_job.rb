@@ -19,9 +19,9 @@ class AddResultsToEventJob < ApplicationJob
       name = doc.css("title").text.gsub(" - Results", "")
 
       json = doc.css("script").text
-                .strip
-                .split("\n")
-                .first
+        .match(/const roundData = ({.*?});/)
+        &.captures
+        &.first
 
       next if json.nil?
 
