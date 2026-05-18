@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class FormLabelComponent < ViewComponent::Base
-  def initialize(form:, field:)
+  def initialize(form:, field:, label: nil)
     @form = form
     @field = field
+    @label = label
   end
 
   erb_template <<-ERB
@@ -13,7 +14,9 @@ class FormLabelComponent < ViewComponent::Base
   private
 
   def label_value
-    errors? ? field_error_message : @field.to_s.humanize
+    return field_error_message if errors?
+
+    @label.nil? ? @field.to_s.humanize : @label
   end
 
   def css
