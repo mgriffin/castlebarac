@@ -4,6 +4,6 @@ class CoachesController < ApplicationController
   def index
     authorize :coach, :index?
 
-    @coaches_posts = Coach::Post.all
+    @coaches_posts = Coach::Post.order(created_at: :desc).all
   end
 end

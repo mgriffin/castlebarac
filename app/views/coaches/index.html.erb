@@ -3,6 +3,9 @@
 <%= link_to "Time Trials", time_trials_url %>
 
 <h3>Info</h3>
+<%- if policy(Coach::Post.new).new? %>
+  <%= link_to "Add a post", new_coaches_post_path %>
+<%- end %>
 <%- if @coaches_posts.empty? %>
   <p>There are no posts yet, why not <%= link_to "add one", new_coaches_post_path %></p>
 <%- else %>

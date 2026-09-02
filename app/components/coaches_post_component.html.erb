@@ -1,3 +1,8 @@
 <ul>
-  <li><%= link_to @coaches_post.title, coaches_post_path( @coaches_post) %></li>
+  <li>
+    <span class="text-body-tertiary">
+      <%= @coaches_post.created_at.strftime("%-d %B %Y") %> -&nbsp;
+    </span>
+    <%= link_to @coaches_post.title, coaches_post_path(@coaches_post) %>
+  </li>
 </ul>
