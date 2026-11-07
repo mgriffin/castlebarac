@@ -32,4 +32,10 @@ class ResultTest < ActiveSupport::TestCase
     result = Result.new(seconds: 69.059999999)
     assert_equal "1:09.05", result.net_time
   end
+
+  test "shows the result text when there's no time" do
+    result = Result.new(result: "DSQ", seconds: nil)
+
+    assert_equal "DSQ", result.net_time
+  end
 end
