@@ -5,7 +5,9 @@ class Event < ApplicationRecord
 
   has_rich_text :content
 
-  before_validation :create_url, if: :title_changed?
+  validates :title, :start_time, presence: true
+
+  before_validation :create_url, if: -> { title_changed? && start_time.present? }
 
   after_find do |event|
     if event.url.nil?
