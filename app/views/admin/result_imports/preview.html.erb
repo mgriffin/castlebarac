@@ -1,0 +1,77 @@
+<div class="content">
+  <h1>Import <%= @source.title %></h1>
+  <p>
+    From <%= link_to @source.site_name, @source.url, target: "_blank", rel: "noopener" %> ·
+    <%= link_to "Use a different page", new_admin_result_import_path(url: @source.url) %>
+  </p>
+
+  <%= form_with url: admin_result_imports_path do |form| %>
+    <%= form.hidden_field :url, value: @source.url %>
+
+    <h2>Event</h2>
+    <%- if @matching_events.none? %>
+      <p><strong>There's no event for these results yet.</strong> Check the details below and it'll be created when you import.</p>
+    <%- end %>
+
+    <%- @matching_events.each_with_index do |event, index| %>
+      <div class="form-check">
+        <%= form.radio_button :event_id, event.id, checked: index.zero?, class: "form-check-input" %>
+        <%= form.label "event_id_#{event.id}", class: "form-check-label" do %>
+          Add to <%= link_to event.title, event_path(event), target: "_blank", rel: "noopener" %>
+          (<%= event.human_date %>)
+        <% end %>
+      </div>
+    <%- end %>
+
+    <div class="form-check">
+      <%= form.radio_button :event_id, "new", checked: @matching_events.none?, class: "form-check-input" %>
+      <%= form.label :event_id_new, "Create a new event", class: "form-check-label" %>
+    </div>
+
+    <%= fields_for :event, @new_event do |event_form| %>
+      <div class="mb-3">
+        <%= event_form.label :title, class: "form-label" %>
+        <%= event_form.text_field :title, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= event_form.label :start_time, "Date and time", class: "form-label" %>
+        <%= event_form.datetime_local_field :start_time, class: "form-control" %>
+        <%- if @new_event.start_time.nil? %>
+          <div class="form-text">The results page doesn't say when this was, so fill in the date.</div>
+        <%- elsif !@source.start_time_known? %>
+          <div class="form-text">The results page doesn't give a start time, so check the time.</div>
+        <%- end %>
+      </div>
+      <div class="mb-3">
+        <%= event_form.hidden_field :content, value: @new_event.content.to_trix_html %>
+        <div class="form-text">Description: <%= @new_event.content %></div>
+      </div>
+    <% end %>
+
+    <h2>Races</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Import?</th>
+          <th>Race</th>
+          <th>Save as</th>
+          <th>Distance (metres)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- @races.each do |race| %>
+          <%= fields_for "races[#{race.key}]" do |race_form| %>
+            <tr>
+              <td><%= race_form.check_box :import, checked: race.selected, class: "form-check-input" %></td>
+              <td><%= race_form.label :import, race.label %></td>
+              <td><%= race_form.text_field :name, value: race.name, class: "form-control" %></td>
+              <td><%= race_form.number_field :distance, value: race.distance, min: 0, class: "form-control" %></td>
+            </tr>
+          <% end %>
+        <%- end %>
+      </tbody>
+    </table>
+
+    <%= form.submit "Import results", class: "btn btn-primary", data: { turbo_submits_with: "Importing…" } %>
+  <% end %>
+</div>

@@ -18,4 +18,12 @@ class EventTest < ActiveSupport::TestCase
       assert_equal expected, event.human_date
     end
   end
+
+  test "needs a title and a date" do
+    event = Event.new(title: "Race day")
+
+    assert_not event.valid?
+    assert_includes event.errors[:start_time], "can't be blank"
+    assert_not Event.new(start_time: Time.zone.now).valid?
+  end
 end

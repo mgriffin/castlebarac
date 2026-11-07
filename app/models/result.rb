@@ -32,6 +32,7 @@ class Result < ApplicationRecord
   end
 
   def net_time
+    return result.to_s if seconds.nil?
     return "" if seconds.negative?
 
     if h.zero?
