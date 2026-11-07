@@ -11,9 +11,10 @@ module Admin
       @result = Result.find(params.expect(:id))
       authorize [:admin, @result]
 
-      unless (person = Person.find(params.expect(:result)[:person_id]))
+      link = params.expect(result: %i[person person_id])
+      unless (person = Person.find_by(id: link[:person_id]))
         redirect_to event_path(@result.race.event),
-                    notice: "#{params[:result][:person]} wasn't found"
+                    notice: "#{link[:person]} wasn't found", status: :see_other
         return
       end
 
