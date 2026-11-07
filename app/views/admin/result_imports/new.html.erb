@@ -1,0 +1,14 @@
+<div class="content">
+  <h1>Import results</h1>
+  <p>Paste the address of a results page from <%= @sites %>.</p>
+
+  <%= form_with url: preview_admin_result_imports_path, method: :get do |form| %>
+    <div class="mb-3">
+      <%= form.label :url, "Results page", class: "form-label" %>
+      <%= form.url_field :url, value: @url, required: true, autofocus: true, class: "form-control",
+                               placeholder: "https://…" %>
+    </div>
+
+    <%= form.submit "Find results", class: "btn btn-primary", data: { turbo_submits_with: "Finding results…" } %>
+  <% end %>
+</div>

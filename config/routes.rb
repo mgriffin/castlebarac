@@ -44,6 +44,9 @@ Rails.application.routes.draw do
     resources :people
     resources :events
     resources :results, only: %i[edit update]
+    resources :result_imports, only: %i[new create] do
+      get :preview, on: :collection
+    end
     resources :posts
     resources :teams
     resources :memberships, only: %i[new create]

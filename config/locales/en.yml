@@ -28,6 +28,14 @@
 #       enabled: "ON"
 
 en:
+  admin:
+    result_imports:
+      create:
+        choose_a_race: "Choose at least one race to import"
+        event_invalid: "Couldn't create the event: %{errors}"
+        imported:
+          one: "Imported 1 result into %{title}"
+          other: "Imported %{count} results into %{title}"
   mailing_lists:
     create:
       notice: "You've been added"
