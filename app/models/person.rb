@@ -42,6 +42,16 @@ class Person < ApplicationRecord
         .downcase
   end
 
+  # { distance => [results] }, shortest distance first with races that have
+  # no distance last, and the most recent results first in each group
+  def results_by_distance
+    results
+      .includes(race: :event)
+      .order(Result.arel_table[:distance].asc.nulls_last, Event.arel_table[:start_time].desc)
+      .references(:events)
+      .group_by(&:distance)
+  end
+
   def to_param
     slug
   end

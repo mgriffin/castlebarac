@@ -9,8 +9,8 @@
     <%- end %>
   <%- end %>
   <ul>
-    <%- @person.results.group_by(&:distance).each do |distance,results| %>
-      <h3><%= distance_to_human(distance) %></h3>
+    <%- @person.results_by_distance.each do |distance, results| %>
+      <h3><%= distance ? distance_to_human(distance) : "Other races" %></h3>
       <%- results.each do |result| %>
         <li>
           <%= result.result_or_position %> --

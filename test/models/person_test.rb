@@ -50,4 +50,25 @@ class PersonTest < ActiveSupport::TestCase
 
     assert_equal result, person
   end
+
+  test "results are grouped by distance, newest first, with no distance last" do
+    person = people(:snori)
+    old_race = Event.create!(title: "Old", start_time: 2.years.ago).races.create!(name: "Old")
+    mid_race = Event.create!(title: "Mid", start_time: 1.year.ago).races.create!(name: "Mid")
+    new_race = Event.create!(title: "New", start_time: 1.day.ago).races.create!(name: "New")
+
+    old5k = person.results.create!(race: old_race, distance: 5000, position: 1)
+    no_distance = person.results.create!(race: new_race, distance: nil, position: 1)
+    new5k = person.results.create!(race: new_race, distance: 5000, position: 1)
+    mid800 = person.results.create!(race: mid_race, distance: 800, position: 1)
+    mid5k = person.results.create!(race: mid_race, distance: 5000, position: 1)
+    old_no_distance = person.results.create!(race: old_race, distance: nil, position: 2)
+
+    grouped = person.results_by_distance
+
+    assert_equal [800, 5000, nil], grouped.keys
+    assert_equal [mid800], grouped[800]
+    assert_equal [new5k, mid5k, old5k], grouped[5000]
+    assert_equal [no_distance, old_no_distance], grouped[nil]
+  end
 end
