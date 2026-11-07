@@ -1,0 +1,6 @@
+{"list":{"Fields":[{"Expression":"BIB","Label":"Bib"},{"Expression":"RANK1","Label":"Pos."},{"Expression":"displayname","Label":"Name"},{"Expression":"SchoolName","Label":"School"},{"Expression":"Finish","Label":"Gun Time"}]},
+ "DataFields":["BIB","ID","RANK1","displayname","SchoolName","Finish"],
+ "data":{"#1_3rd & 4th Class Girls":[
+  ["344","344","1","Juliette NIC SUIBHNE","Raifteirí","0:03:59"],
+  ["235","235","2","Ella Marie MILTON","Breaffy","0:04:05"],
+  ["60","60","","Chloe WALSH","Binghamstown","DNF"]]}}
