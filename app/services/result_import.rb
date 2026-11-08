@@ -36,6 +36,7 @@ class ResultImport
       result = race.results.find_or_initialize_by(bib: row.bib_number, name: row.name)
       result.update!(
         club: club_name(row.club),
+        county: row.county,
         position: row.position_number,
         result: row.time,
         seconds: row.seconds,

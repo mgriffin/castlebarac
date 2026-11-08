@@ -38,6 +38,13 @@ module ResultSources
       assert_equal ["Chloe McDonnell", "Lucy O'Keeffe"], results.map(&:name)
     end
 
+    test "reads counties separately from clubs" do
+      results = source(CONNAUGHT_XC_REGIONAL_URL).results_for("u9-boys")
+
+      assert_equal([["North Sligo AC", "Sligo"], ["Castlebar AC", "Mayo"]], results.map { |r| [r.club, r.county] })
+      assert_nil source.results_for("u9-girls").first.county
+    end
+
     test "only reads cross country results pages" do
       assert_raises(ResultSources::Error) { source("https://connaughtathletics.com/something-else") }
     end
