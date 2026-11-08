@@ -14,7 +14,7 @@ module ResultSources
   end
 
   # One person's result in a race
-  Row = Struct.new(:position, :name, :club, :bib, :time, keyword_init: true) do
+  Row = Struct.new(:position, :name, :club, :county, :bib, :time, keyword_init: true) do
     def position_number
       position.to_s[/\A\d+/]&.to_i
     end

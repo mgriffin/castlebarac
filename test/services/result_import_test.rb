@@ -49,4 +49,13 @@ class ResultImportTest < ActiveSupport::TestCase
     assert_equal 1, result.reload.position
     assert_equal people(:snori), result.person
   end
+
+  test "saves counties and recognises our club when the county is given" do
+    import(CONNAUGHT_XC_REGIONAL_URL, "u9-boys")
+
+    result = Result.find_by(name: "Lucy O'Keeffe")
+
+    assert_equal ["Castlebar A.C.", "Mayo"], [result.club, result.county]
+    assert_predicate result, :castlebarac?
+  end
 end

@@ -7,7 +7,7 @@ module ResultSources
   class ConnaughtXc < Base
     site "Connaught Athletics", hosts: %w[connaughtathletics.com www.connaughtathletics.com]
 
-    FIELD_CLASSES = { position: "pos", name: "name", club: "club", bib: "bib", time: "time" }.freeze
+    FIELD_CLASSES = { position: "pos", name: "name", bib: "bib", time: "time", county: "county" }.freeze
     PATH = %r{\A/XC/(?<competition>[\w-]+)(?:/(?<race>[\w-]+))?/?\z}
 
     def initialize(uri)
@@ -42,7 +42,7 @@ module ResultSources
 
     def results_for(key)
       get_html("#{competition_url}/#{key}").css("ol.results-list li.result-row").map do |li|
-        Row.new(%i[position name club bib time].index_with { |field| text(li, ".#{FIELD_CLASSES[field]}") })
+        Row.new(club: club(li), **FIELD_CLASSES.transform_values { |css_class| text(li, ".#{css_class}") })
       end
     end
 
@@ -51,6 +51,13 @@ module ResultSources
     # Every race, unless the link was to one race
     def selected?(key)
       @path[:race].nil? || @path[:race] == key
+    end
+
+    # Regional competitions put the county inside the club, e.g.
+    # <span class="club">Castlebar AC<span class="county">Mayo</span></span>
+    def club(result)
+      club = result.at_css(".club")
+      club.xpath("text()").text.squish.presence if club
     end
 
     def text(node, selector)
