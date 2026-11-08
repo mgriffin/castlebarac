@@ -71,4 +71,19 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal [new5k, mid5k, old5k], grouped[5000]
     assert_equal [no_distance, old_no_distance], grouped[nil]
   end
+
+  {
+    "Juliette NIC SUIBHNE" => ["Juliette", "Nic Suibhne"],
+    "Ella Marie MILTON" => ["Ella Marie", "Milton"],
+    "Lucy O'Keeffe" => %w[Lucy O'Keeffe],
+    "Jack O Brien" => ["Jack", "O Brien"],
+    "Aoife NÍ BHRIAIN" => ["Aoife", "Ní Bhriain"],
+    "Mary-Kate O'SULLIVAN" => %w[Mary-Kate O'Sullivan],
+    "O'KEEFFE, Lucy" => %w[Lucy O'Keeffe],
+    "Cher" => ["Cher", ""]
+  }.each do |name, (firstname, surname)|
+    test "splits #{name} into first name and surname" do
+      assert_equal({ firstname:, surname: }, Person.split_name(name))
+    end
+  end
 end

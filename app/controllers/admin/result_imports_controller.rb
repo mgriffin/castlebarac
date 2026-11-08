@@ -36,7 +36,14 @@ module Admin
       return if event.nil?
 
       count = ResultImport.new(source: @source, event:, selections:).call
-      redirect_to event_path(event), notice: t(".imported", count:, title: event.title), status: :see_other
+      linker = ResultLinker.new(Result.where(race: event.races.where(name: selections.map(&:name))))
+      notice = t(".imported", count:, title: event.title) + t(".linked", count: linker.link_matches.size)
+
+      if linker.unlinked.exists?
+        redirect_to admin_event_unlinked_results_path(event), notice:, status: :see_other
+      else
+        redirect_to event_path(event), notice:, status: :see_other
+      end
     end
 
     private

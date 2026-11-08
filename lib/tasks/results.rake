@@ -5,25 +5,31 @@ namespace :results do
   task link: :environment do
     $stdin.set_encoding("UTF-8", invalid: :replace, undef: :replace)
 
-    Result.not_linked.each do |unlinked_result|
-      puts "#{unlinked_result.name} came #{unlinked_result.position} in #{unlinked_result.race.name}"
-      unless (p = Person.match(unlinked_result.name))
-        puts "No matching person found, create one? y/n (y)"
-        answer = $stdin.gets.chomp
-        next if answer.downcase == "n"
+    linker = ResultLinker.new
+    linker.link_matches.each do |result|
+      puts "Linked #{result.name} in #{result.race.name} to #{result.person.fullname}"
+    end
 
-        puts "What's their firstname?"
-        firstname = $stdin.gets.chomp
-
-        puts "What's their surname?"
-        surname = $stdin.gets.chomp
-
-        p = Person.create!(firstname:, surname:)
-
+    linker.unlinked.includes(:race).find_each do |result|
+      puts "#{result.name} came #{result.position} in #{result.race.name}"
+      if (person = Person.match(result.name))
+        result.update!(person:)
+        puts "Linked #{person.fullname}"
+        next
       end
-      unlinked_result.person = p
-      unlinked_result.save
-      puts "Linked #{p.fullname}"
+
+      puts "No matching person found, create one? y/n (y)"
+      next if $stdin.gets.to_s.chomp.casecmp?("n")
+
+      guess = Person.split_name(result.name)
+      puts "What's their firstname? (#{guess[:firstname]})"
+      firstname = $stdin.gets.to_s.chomp.presence || guess[:firstname]
+
+      puts "What's their surname? (#{guess[:surname]})"
+      surname = $stdin.gets.to_s.chomp.presence || guess[:surname]
+
+      person = ResultLinker.link_to_new_person(result, firstname:, surname:)
+      puts "Linked #{person.fullname}"
     end
   end
 end
