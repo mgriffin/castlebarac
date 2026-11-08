@@ -13,36 +13,23 @@ module Admin
       { url: CONNAUGHT_XC_URL, event_id:, races: }
     end
 
-    test "anonymous users can't see or use the importer" do
-      get new_admin_result_import_url
+    { "anonymous users" => nil, "logged in users who aren't admins" => :bugs }.each do |who, user|
+      test "#{who} can't see or use the importer" do
+        sign_in users(user) if user
 
-      assert_response :not_found
+        get new_admin_result_import_url
 
-      get preview_admin_result_imports_url(url: CONNAUGHT_XC_URL)
+        assert_response :not_found
 
-      assert_response :not_found
+        get preview_admin_result_imports_url(url: CONNAUGHT_XC_URL)
 
-      assert_no_difference -> { Result.count } do
-        post admin_result_imports_url, params: import_params(events(:first).id)
+        assert_response :not_found
+
+        assert_no_difference -> { Result.count } do
+          post admin_result_imports_url, params: import_params(events(:first).id)
+        end
+        assert_response :not_found
       end
-      assert_response :not_found
-    end
-
-    test "logged in users who aren't admins can't see or use the importer" do
-      sign_in users(:bugs)
-
-      get new_admin_result_import_url
-
-      assert_response :not_found
-
-      get preview_admin_result_imports_url(url: CONNAUGHT_XC_URL)
-
-      assert_response :not_found
-
-      assert_no_difference -> { Result.count } do
-        post admin_result_imports_url, params: import_params(events(:first).id)
-      end
-      assert_response :not_found
     end
 
     test "admins can see the importer" do
@@ -102,7 +89,7 @@ module Admin
 
       event = Event.find_by(title: "Mayo XC Uneven Ages")
 
-      assert_redirected_to event_url(event)
+      assert_redirected_to admin_event_unlinked_results_url(event)
       assert_equal "Imported 2 results into Mayo XC Uneven Ages", flash[:notice]
       assert_equal ["U9 Girls"], event.races.map(&:name)
       assert_includes event.content.to_s, "Swinford"
@@ -116,7 +103,7 @@ module Admin
         post admin_result_imports_url, params: import_params(event.id)
       end
 
-      assert_redirected_to event_url(event)
+      assert_redirected_to admin_event_unlinked_results_url(event)
       assert_equal 2, event.races.find_by(name: "U9 Girls").results.count
     end
 
