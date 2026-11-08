@@ -36,6 +36,12 @@ en:
         imported:
           one: "Imported 1 result into %{title}"
           other: "Imported %{count} results into %{title}"
+    unlinked_results:
+      create:
+        linked:
+          zero: "No one was added"
+          one: "Added and linked 1 person"
+          other: "Added and linked %{count} people"
   mailing_lists:
     create:
       notice: "You've been added"

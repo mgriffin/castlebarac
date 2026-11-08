@@ -42,7 +42,9 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
     resources :people
-    resources :events
+    resources :events do
+      resources :unlinked_results, only: %i[index create]
+    end
     resources :results, only: %i[edit update]
     resources :result_imports, only: %i[new create] do
       get :preview, on: :collection

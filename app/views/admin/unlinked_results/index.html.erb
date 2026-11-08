@@ -1,0 +1,46 @@
+<div class="content">
+  <h1>New Castlebar athletes in <%= link_to @event.title, event_path(@event) %></h1>
+
+  <%- if @results.empty? %>
+    <p>All of the Castlebar A.C. results are linked to someone.</p>
+  <%- else %>
+    <p>
+      These Castlebar A.C. results don't match anyone on the site. Tick the
+      people to add, check their names, and their results will be linked to them.
+    </p>
+
+    <%= form_with url: admin_event_unlinked_results_path(@event) do |form| %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Add?</th>
+            <th>Race</th>
+            <th>Position</th>
+            <th>Name in results</th>
+            <th>First name</th>
+            <th>Surname</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @results.each do |result| %>
+            <%- name = Person.split_name(result.name) %>
+            <%= fields_for "people[#{result.id}]" do |person_form| %>
+              <tr>
+                <td><%= person_form.check_box :create, checked: true, class: "form-check-input" %></td>
+                <td><%= result.race.name %></td>
+                <td><%= result.position %></td>
+                <td><%= person_form.label :create, result.name %></td>
+                <td><%= person_form.text_field :firstname, value: name[:firstname], class: "form-control" %></td>
+                <td><%= person_form.text_field :surname, value: name[:surname], class: "form-control" %></td>
+              </tr>
+            <% end %>
+          <%- end %>
+        </tbody>
+      </table>
+
+      <%= form.submit "Add and link them", class: "btn btn-primary" %>
+    <% end %>
+  <%- end %>
+
+  <p><%= link_to "Skip this and go to the results", event_path(@event) %></p>
+</div>
