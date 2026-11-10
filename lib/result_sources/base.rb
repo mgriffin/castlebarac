@@ -87,6 +87,15 @@ module ResultSources
       raise Error, "Couldn't load #{url} (#{reason})"
     end
 
+    def post_json(url, body, **params)
+      response = Typhoeus.post(url, params:, body: body.to_json, headers: { "Content-Type" => "application/json" })
+      raise Error, "Couldn't load #{url} (HTTP #{response.code})" unless response.success?
+
+      JSON.parse(response.body)
+    rescue JSON::ParserError
+      raise Error, "#{url} didn't return any results"
+    end
+
     # The directory of the page in the URL, e.g. https://example.com/a/b/
     # for https://example.com/a/b/menu.html or https://example.com/a/b
     def directory_url

@@ -34,7 +34,7 @@ module ResultSources
   end
 
   def self.sources
-    [PopUpRaces, ConnaughtXc, ConnaughtPages, AthleticsIrelandResults]
+    [PopUpRaces, ConnaughtXc, ConnaughtPages, AthleticsIrelandResults, MyRunResults]
   end
 
   def self.for(url)
