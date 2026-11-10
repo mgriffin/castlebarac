@@ -29,7 +29,7 @@ module ResultSources
     # Lists of individual results shown on the results page
     def lists
       @lists ||= (config.dig("TabConfig", "Lists") || [])
-                 .reject { |list| list["Mode"] == "hidden" || list["Name"].to_s.match?(/team/i) }
+                 .reject { |list| list["Mode"] == "hidden" || team_results?(list["Name"]) }
                  .uniq { |list| list["ID"] }
                  .map do |list|
                    List.new(id: list["ID"], name: list["Name"], contest_id: list["Contest"],
@@ -51,6 +51,11 @@ module ResultSources
     end
 
     private
+
+    # "Result Lists|Team Results Girls", but not "Full Results - Teams Here"
+    def team_results?(name)
+      name.to_s.split("|").last.to_s.match?(/\Ateam/i)
+    end
 
     def config
       @config ||= @fetcher.call("#{HOST}/#{@event_id}/results/config", lang: "en", page: "results", noVisitor: 1)

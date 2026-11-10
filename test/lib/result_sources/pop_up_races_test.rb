@@ -42,6 +42,19 @@ module ResultSources
       assert_nil results.last.position_number
     end
 
+    test "keeps full results lists that mention teams" do
+      assert_equal "3rd & 4th Class Boys – Full Results - Teams Here", source.races.second.label
+      assert_predicate source.races.second, :selected
+    end
+
+    test "reads a date and start time without the day of the week" do
+      castlegar = source(POP_UP_RACES_CASTLEGAR_URL)
+
+      assert_equal Date.new(2026, 9, 19), castlegar.date
+      assert_equal Time.zone.local(2026, 9, 19, 11, 30), castlegar.start_time
+      assert_predicate castlegar, :start_time_known?
+    end
+
     test "converts distances to metres" do
       assert_equal 1200, PopUpRaces.distance_in_metres("1200m")
       assert_equal 5000, PopUpRaces.distance_in_metres("5km")
