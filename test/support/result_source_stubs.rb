@@ -6,6 +6,8 @@ module ResultSourceStubs
   CONNAUGHT_XC_URL = "https://connaughtathletics.com/XC/mayo-xc-uneven-ages-2026"
   # Regional competitions also give each runner's county
   CONNAUGHT_XC_REGIONAL_URL = "https://connaughtathletics.com/XC/ryvg3rgkpg"
+  # Pop Up Races page that gives the date without the day of the week
+  POP_UP_RACES_CASTLEGAR_URL = "https://www.popupraces.ie/race/castlegar-international-cross-country-2026/"
 
   def stub_result_sources
     stub_page(POP_UP_RACES_URL, "pop_up_races.html")
@@ -14,6 +16,7 @@ module ResultSourceStubs
     stub_page(CONNAUGHT_XC_URL, "connaught_xc.html")
     stub_page(%r{\A#{CONNAUGHT_XC_URL}/u9-(girls|boys)\z}, "connaught_xc_race.html")
     stub_page("#{CONNAUGHT_XC_REGIONAL_URL}/u9-boys", "connaught_xc_race_with_counties.html")
+    stub_page(POP_UP_RACES_CASTLEGAR_URL, "pop_up_races_castlegar.html")
   end
 
   private

@@ -8,8 +8,8 @@ module ResultSources
     site "Pop Up Races", hosts: %w[popupraces.ie www.popupraces.ie]
 
     DATE = /
-      (?:mon|tues|wednes|thurs|fri|satur|sun)day,?\s+(?:the\s+)?
-      (\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?(#{Date::MONTHNAMES.compact.join('|')})(?:,?\s+(\d{4}))?
+      (?:(?:mon|tues|wednes|thurs|fri|satur|sun)day,?\s+)?(?:the\s+)?
+      \b(\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?(#{Date::MONTHNAMES.compact.join('|')})\b(?:,?\s+(\d{4}))?
     /ix
     TIME = /(\d{1,2})(?:[:.](\d{2}))?\s*(am|pm)/i
     DISTANCE = /\A(\d+(?:\.\d+)?)\s*(m|metres?|meters?|km|k|miles?)\z/i
@@ -32,12 +32,12 @@ module ResultSources
     end
 
     # The date is only in the race description, e.g.
-    # "will take place in Belleek, Ballina, on Wednesday 23rd September"
+    # "will take place in Belleek, Ballina, on Wednesday 23rd September" or
+    # "hosting the Castlegar Open Cross Country on 19th September from 11.30am"
     def date
-      match = details.text.squish.match(DATE)
-      return if match.nil?
+      return if date_match.nil?
 
-      day, month, year = match.captures
+      day, month, year = date_match.captures
       year ||= title[/\b(20\d{2})\b/, 1] || Time.zone.today.year
       Date.new(year.to_i, Date::MONTHNAMES.index(month.capitalize), day.to_i)
     rescue Date::Error
@@ -123,8 +123,16 @@ module ResultSources
       { hour:, min: time[2].to_i }
     end
 
+    # From the "Event Order" table, or else a time just after the date
     def first_start
-      schedule.filter_map { |row| row[:start] }.first
+      schedule.filter_map { |row| row[:start] }.first ||
+        (date_match && start_from(date_match.post_match[0, 30].match(TIME)))
+    end
+
+    def date_match
+      return @date_match if defined?(@date_match)
+
+      @date_match = details.text.squish.match(DATE)
     end
   end
 end
