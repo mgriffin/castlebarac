@@ -13,8 +13,9 @@ module ResultSources
     end
   end
 
-  # One person's result in a race
-  Row = Struct.new(:position, :name, :club, :county, :bib, :time, keyword_init: true) do
+  # One person's result in a race. `time` is the result as shown, e.g.
+  # "3:59", "DNF" or, for field events (`field: true`), a distance or height.
+  Row = Struct.new(:position, :name, :club, :county, :bib, :time, :field, keyword_init: true) do
     def position_number
       position.to_s[/\A\d+/]&.to_i
     end
@@ -25,6 +26,7 @@ module ResultSources
 
     # "0:03:59", "3:59" or "45.63" in seconds; nil for "DNF" and the like
     def seconds
+      return if field
       return unless time.to_s.strip.match?(/\A\d+(:\d{1,2}){0,2}(\.\d+)?\z/)
 
       time.strip.split(":").reduce(0) { |total, part| (total * 60) + BigDecimal(part) }
@@ -32,7 +34,7 @@ module ResultSources
   end
 
   def self.sources
-    [PopUpRaces, ConnaughtXc]
+    [PopUpRaces, ConnaughtXc, ConnaughtPages]
   end
 
   def self.for(url)
@@ -42,12 +44,12 @@ module ResultSources
     source = sources.find { |s| s.handles?(uri) }
     raise Error, "Can't import results from #{uri.host} yet. Try #{supported_sites}." if source.nil?
 
-    source.new(uri)
+    source.build(uri)
   rescue URI::InvalidURIError
     raise Error, "Enter the web address of a results page"
   end
 
   def self.supported_sites
-    sources.map(&:site_name).to_sentence(two_words_connector: " or ", last_word_connector: ", or ")
+    sources.map(&:site_name).uniq.to_sentence(two_words_connector: " or ", last_word_connector: ", or ")
   end
 end

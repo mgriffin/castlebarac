@@ -10,6 +10,10 @@ module ResultSources
     FIELD_CLASSES = { position: "pos", name: "name", bib: "bib", time: "time", county: "county" }.freeze
     PATH = %r{\A/XC/(?<competition>[\w-]+)(?:/(?<race>[\w-]+))?/?\z}
 
+    def self.handles?(uri)
+      super && uri.path.start_with?("/XC/")
+    end
+
     def initialize(uri)
       super
       @path = uri.path.match(PATH)
