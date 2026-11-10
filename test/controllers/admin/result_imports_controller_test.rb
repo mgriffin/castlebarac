@@ -37,7 +37,7 @@ module Admin
       get new_admin_result_import_url
 
       assert_response :success
-      assert_select "p", /Pop Up Races or Connaught Athletics/
+      assert_select "p", /Pop Up Races, Connaught Athletics, or Athletics Ireland/
     end
 
     test "prompts to create the event, filled in from the results page" do

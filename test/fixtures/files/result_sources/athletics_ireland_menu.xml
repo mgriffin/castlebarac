@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<competition outdoor="1" indoor="0" nonstadium="0">
+  <id>1</id>
+  <name>National Juvenile Championships Day 1 and 2</name>
+  <location>Tullamore </location>
+  <startdate>27-06-2026</startdate>
+  <enddate>28-06-2026</enddate>
+  <events>
+    <event>
+      <ID>3</ID>
+      <name>Girls U19 400m Sprint</name>
+      <eventtype><fieldtype> </fieldtype><distance>400</distance><athletesquantity>1</athletesquantity></eventtype>
+      <rounds>
+        <round seqno="1"><name>Heats</name><datescheduled>2026-06-27</datescheduled></round>
+        <round seqno="2"><name>Final</name><datescheduled>2026-06-28</datescheduled></round>
+      </rounds>
+    </event>
+    <event>
+      <ID>14</ID>
+      <name>Girls U19 Discus Throw (1Kg)</name>
+      <eventtype><fieldtype>H</fieldtype><distance>0</distance><athletesquantity>1</athletesquantity></eventtype>
+      <rounds><round seqno="1"><name>*</name><datescheduled>2026-06-27</datescheduled></round></rounds>
+    </event>
+    <event>
+      <ID>73</ID>
+      <name>U13 Boys 4x100m</name>
+      <eventtype><fieldtype> </fieldtype><distance>400</distance><athletesquantity>4</athletesquantity></eventtype>
+      <rounds><round seqno="1"><name>*</name><datescheduled>2026-06-28</datescheduled></round></rounds>
+    </event>
+  </events>
+</competition>
