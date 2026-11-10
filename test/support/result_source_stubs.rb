@@ -8,6 +8,8 @@ module ResultSourceStubs
   CONNAUGHT_XC_REGIONAL_URL = "https://connaughtathletics.com/XC/ryvg3rgkpg"
   # Pop Up Races page that gives the date without the day of the week
   POP_UP_RACES_CASTLEGAR_URL = "https://www.popupraces.ie/race/castlegar-international-cross-country-2026/"
+  CONNAUGHT_TRACK_URL = "https://connaughtathletics.com/2026/conninday3/competition.php"
+  CONNAUGHT_LEGACY_XC_URL = "https://connaughtathletics.com/2025/connacht/XC/evens/"
 
   def stub_result_sources
     stub_page(POP_UP_RACES_URL, "pop_up_races.html")
@@ -17,6 +19,18 @@ module ResultSourceStubs
     stub_page(%r{\A#{CONNAUGHT_XC_URL}/u9-(girls|boys)\z}, "connaught_xc_race.html")
     stub_page("#{CONNAUGHT_XC_REGIONAL_URL}/u9-boys", "connaught_xc_race_with_counties.html")
     stub_page(POP_UP_RACES_CASTLEGAR_URL, "pop_up_races_castlegar.html")
+    stub_connaught_pages
+  end
+
+  def stub_connaught_pages
+    base = "https://connaughtathletics.com/2026/conninday3/competition.php"
+    stub_page(base, "connaught_track.html")
+    { 777 => "60m", 779 => "long_jump", 790 => "relay" }.each do |id, file|
+      stub_page("#{base}?id=#{id}", "connaught_track_#{file}.html")
+    end
+    stub_request(:get, "#{CONNAUGHT_LEGACY_XC_URL}competition.php").to_return(status: 404)
+    stub_page(CONNAUGHT_LEGACY_XC_URL, "connaught_legacy_xc.html")
+    stub_page(/\A#{CONNAUGHT_LEGACY_XC_URL}U10[GB]\.html\z/, "connaught_legacy_xc_race.html")
   end
 
   private

@@ -45,8 +45,11 @@ module ResultSources
       assert_nil source.results_for("u9-girls").first.county
     end
 
-    test "only reads cross country results pages" do
-      assert_raises(ResultSources::Error) { source("https://connaughtathletics.com/something-else") }
+    test "says when a Connaught Athletics page has no results it can read" do
+      stub_request(:get, %r{\Ahttps://connaughtathletics\.com/something-else}).to_return(status: 404)
+
+      error = assert_raises(ResultSources::Error) { source("https://connaughtathletics.com/something-else") }
+      assert_match "Couldn't find any results", error.message
     end
   end
 end
