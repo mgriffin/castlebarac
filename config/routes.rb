@@ -37,9 +37,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "admin#index"
 
-    resources :users, only: %i[index show update] do
+    resources :users, only: %i[index show] do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
+      resource :admin_membership, only: %i[create destroy], module: :users
     end
     resources :people
     resources :events do

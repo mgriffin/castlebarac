@@ -29,6 +29,14 @@
 
 en:
   admin:
+    users:
+      admin_memberships:
+        create:
+          added: "%{name} is now an admin"
+          no_person: "%{email} isn't linked to a person yet, so they can't be added to the Admins team"
+        destroy:
+          removed: "%{name} is no longer an admin"
+          not_yourself: "You can't remove yourself from the Admins team"
     result_imports:
       create:
         choose_a_race: "Choose at least one race to import"

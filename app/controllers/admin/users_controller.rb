@@ -5,21 +5,12 @@ module Admin
     before_action :admin_only!, except: :stop_impersonating
 
     def index
-      @users = User.order(created_at: :desc)
+      @users = User.includes(:person).order(created_at: :desc)
+      @admin_person_ids = Team.find_by(name: "Admins")&.person_ids.to_a
     end
 
     def show
       @user = User.find(params.expect(:id))
-    end
-
-    def update
-      @user = User.find(user_params[:id])
-
-      if @user.update(:admin, user_params[:admin])
-        redirect_to admin_users_path
-      else
-        render :new, status: :unprocessable_content
-      end
     end
 
     def impersonate
@@ -31,12 +22,6 @@ module Admin
     def stop_impersonating
       stop_impersonating_user
       redirect_to root_path
-    end
-
-    private
-
-    def user_params
-      params.expect(user: %i[id admin])
     end
   end
 end
