@@ -4,6 +4,8 @@
     <th>ID</th>
     <th>Username</th>
     <th>Name</th>
+    <th>Signed up</th>
+    <th>Last logged in</th>
     <th>Admin?</th>
     <th></th>
   </tr>
@@ -12,6 +14,8 @@
     <td><%= user.id %></td>
     <td><%= user.email %></td>
     <td><%= render "name", user: user %></td>
+    <td><%= time_ago_tag(user.created_at) %></td>
+    <td><%= time_ago_tag(user.current_sign_in_at) || "Not recorded" %></td>
     <td>
       <%- if user.id == current_user.id %>
         <%= inline_svg_tag "check.svg" %> (That's me)
