@@ -1,31 +1,54 @@
 <div class="content" data-controller="checkbox">
-<table class="table table-striped">
-  <tr>
-    <th>ID</th>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Admin?</th>
-    <th></th>
-  </tr>
-<%- @users.each do |user| %>
-  <tr>
-    <td><%= user.id %></td>
-    <td><%= user.email %></td>
-    <td><%= render "name", user: user %></td>
-    <td>
-      <%- if user.id == current_user.id %>
-        <%= inline_svg_tag "check.svg" %> (That's me)
-      <%- else %>
-        <%= form_with model: user, url: admin_user_path(user), data: {checkbox_target: "form"} do |f| %>
-          <%= f.hidden_field :id, value: user.id %>
-          <%= f.check_box :admin, data: {action: "checkbox#submit" } %>
+  <div class="d-flex align-items-baseline justify-content-between mb-3">
+    <h1 class="h3 mb-0">Users</h1>
+    <span class="text-body-secondary"><%= pluralize(@users.size, "user") %></span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle users-table">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Name</th>
+          <th scope="col">Signed up</th>
+          <th scope="col">Last logged in</th>
+          <th scope="col">Admin?</th>
+          <th scope="col"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- @users.each do |user| %>
+          <tr>
+            <td>
+              <div><%= user.email %></div>
+              <div class="small text-body-secondary">#<%= user.id %></div>
+            </td>
+            <td><%= render "name", user: user %></td>
+            <td class="text-nowrap"><%= time_ago_tag(user.created_at) %></td>
+            <td class="text-nowrap">
+              <%= time_ago_tag(user.current_sign_in_at) || tag.span("Not recorded", class: "text-body-secondary") %>
+            </td>
+            <td>
+              <%- if user.id == current_user.id %>
+                <span class="badge text-bg-success">You</span>
+              <%- else %>
+                <%= form_with model: user, url: admin_user_path(user), data: { checkbox_target: "form" } do |f| %>
+                  <%= f.hidden_field :id, value: user.id %>
+                  <div class="form-check form-switch mb-0">
+                    <%= f.check_box :admin, class: "form-check-input", role: "switch",
+                                            aria: { label: "#{user.email} is an admin" },
+                                            data: { action: "checkbox#submit" } %>
+                  </div>
+                <%- end %>
+              <%- end %>
+            </td>
+            <td class="text-end">
+              <%= button_to "Impersonate", impersonate_admin_user_path(user),
+                            data: { turbo: false }, class: "btn btn-sm btn-outline-secondary" %>
+            </td>
+          </tr>
         <%- end %>
-      <%- end %>
-    </td>
-    <td>
-      <%= button_to "Impersonate", impersonate_admin_user_path(user), data: {turbo: false}, class: "btn btn-link" %>
-    </td>
-  </tr>
-<%- end %>
-</table>
+      </tbody>
+    </table>
+  </div>
 </div>
