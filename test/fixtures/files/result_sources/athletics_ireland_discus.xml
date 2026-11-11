@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event><ID>14</ID><name>Girls U19 Discus Throw (1Kg)</name>
+  <eventtype><fieldtype>H</fieldtype></eventtype>
+  <rounds><round><name>*</name><heats><heat id="2"><participations>
+            <participation relay="false">
+              <participant><competitor>
+                <athlete><lastname>O'CONNELL</lastname><middlename></middlename><firstname>Méabh</firstname></athlete>
+                <bib>986</bib><team><name>Blarney/Inniscara A.C.</name></team>
+              </competitor></participant>
+              <currentorder>1</currentorder><currentorder_round>1</currentorder_round>
+              <results><result bestresult="1"><value>38.11</value></result></results>
+            </participation>
+  </participations></heat></heats></round></rounds>
+</event>

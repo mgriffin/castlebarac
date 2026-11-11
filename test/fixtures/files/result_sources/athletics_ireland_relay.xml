@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event><ID>73</ID><name>U13 Boys 4x100m</name>
+  <eventtype><fieldtype> </fieldtype></eventtype>
+  <rounds><round><name>*</name><heats><heat id="9"><participations>
+    <participation relay="true">
+      <teamname>Clonliffe Harriers A.C.  (1350)</teamname>
+      <participants><participant><competitor>
+        <athlete><lastname>KEOGH</lastname><firstname>Leon</firstname></athlete>
+        <bib>1350</bib><team><name>Clonliffe Harriers A.C.</name></team>
+      </competitor></participant></participants>
+      <currentorder>1</currentorder>
+      <results><result bestresult="1"><value>53.33</value></result></results>
+    </participation>
+  </participations></heat></heats></round></rounds>
+</event>

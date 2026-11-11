@@ -6,12 +6,16 @@ class ResultSourcesTest < ActiveSupport::TestCase
   test "picks the reader for the website" do
     assert_kind_of ResultSources::PopUpRaces, ResultSources.for("https://www.popupraces.ie/race/a-race/")
     assert_kind_of ResultSources::ConnaughtXc, ResultSources.for("https://connaughtathletics.com/XC/a-race")
+    assert_kind_of ResultSources::MyRunResults, ResultSources.for("https://myrunresults.com/events/a-race/1/results")
+    assert_kind_of ResultSources::AthleticsIrelandResults,
+                   ResultSources.for("http://results.athleticsireland.ie/results_2026/a_meet/menu.html")
   end
 
   test "says which websites it can read" do
     error = assert_raises(ResultSources::Error) { ResultSources.for("https://example.com/results") }
 
-    assert_equal "Can't import results from example.com yet. Try Pop Up Races or Connaught Athletics.", error.message
+    assert_equal "Can't import results from example.com yet. " \
+                 "Try Pop Up Races, Connaught Athletics, Athletics Ireland, or MyRunResults.", error.message
   end
 
   test "needs a web address" do

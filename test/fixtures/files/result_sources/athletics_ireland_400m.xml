@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event><ID>3</ID><name>Girls U19 400m Sprint</name>
+  <eventtype><fieldtype> </fieldtype></eventtype>
+  <rounds>
+    <round><name>Heats</name><heats><heat id="113"><participations>
+            <participation relay="false">
+              <participant><competitor>
+                <athlete><lastname>FRIEL</lastname><middlename></middlename><firstname>Erin</firstname></athlete>
+                <bib>958</bib><team><name>Letterkenny A.C.</name></team>
+              </competitor></participant>
+              <currentorder>1</currentorder><currentorder_round>1</currentorder_round>
+              <results><result bestresult="1"><value>55.92</value></result></results>
+            </participation>
+        </participations></heat></heats></round>
+    <round><name>Final</name><heats><heat id="130"><participations>
+            <participation relay="false">
+              <participant><competitor>
+                <athlete><lastname>GRANJO</lastname><middlename></middlename><firstname>Sofia</firstname></athlete>
+                <bib>963</bib><team><name>St. Laurence. O'Toole A.C.</name></team>
+              </competitor></participant>
+              <currentorder>2</currentorder><currentorder_round>2</currentorder_round>
+              <results><result bestresult="1"><value>55.60</value></result></results>
+            </participation>
+            <participation relay="false">
+              <participant><competitor>
+                <athlete><lastname>FRIEL</lastname><middlename></middlename><firstname>Erin</firstname></athlete>
+                <bib>958</bib><team><name>Letterkenny A.C.</name></team>
+              </competitor></participant>
+              <currentorder>1</currentorder><currentorder_round>1</currentorder_round>
+              <results><result bestresult="1"><value>54.92</value></result></results>
+            </participation>
+            <participation relay="false">
+              <participant><competitor>
+                <athlete><lastname>NIC SUIBHNE</lastname><middlename></middlename><firstname>Aoife</firstname></athlete>
+                <bib>961</bib><team><name>Castlebar A.C.</name></team>
+              </competitor></participant>
+              <currentorder>3</currentorder><currentorder_round>3</currentorder_round>
+              <results><result bestresult="1"><value>57.14</value></result></results>
+            </participation>
+        </participations></heat></heats></round>
+  </rounds>
+</event>
