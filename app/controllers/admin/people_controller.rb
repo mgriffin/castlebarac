@@ -6,7 +6,7 @@ module Admin
 
     # GET /admin/people
     def index
-      @people = Person.all
+      @people = Person.includes(:user).order(:surname, :firstname)
       authorize [:admin, @people]
     end
 
