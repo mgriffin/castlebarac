@@ -1,3 +1,5 @@
-  <%- unless user.nil? %>
-    <%= link_to user.email, admin_user_path(user) %>
+<%- if user.nil? %>
+  <span class="text-body-secondary">–</span>
+<%- else %>
+  <%= link_to user.email, admin_user_path(user) %>
 <%- end %>

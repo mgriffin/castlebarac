@@ -241,7 +241,7 @@ div.impersonate-bar {
 }
 
 /* Let columns size to their contents rather than sharing the width equally */
-table.users-table {
+table.admin-table {
   table-layout: auto;
 
   th {

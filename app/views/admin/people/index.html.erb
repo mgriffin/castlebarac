@@ -1,26 +1,38 @@
-<div class="content" data-controller="checkbox">
-  <table class="table table-striped table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Linked User</th>
-      <th></th>
-    </tr>
-    <% @people.each do |person| %>
-      <tr>
-        <td><%= person.id %></td>
-        <td><%= link_to(person.fullname, person_path(person)) %></td>
-        <td><%= render "user", user: person&.user %></td>
-        <td>
-          <%- unless person&.user&.id == current_user.id %>
-            <%= link_to edit_admin_person_path(person) do
-              inline_svg_tag "pencil.svg"
-            end %>
-          <%- end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+<div class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">
+      People <span class="fs-6 fw-normal text-body-secondary"><%= @people.size %></span>
+    </h1>
+    <%= link_to "New person", new_admin_person_path, class: "btn btn-sm btn-primary" %>
+  </div>
 
-  <%= link_to "New person", new_admin_person_path %>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle admin-table">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Linked user</th>
+          <th scope="col"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- @people.each do |person| %>
+          <tr>
+            <td>
+              <div><%= link_to person.fullname, person_path(person) %></div>
+              <div class="small text-body-secondary">#<%= person.id %></div>
+            </td>
+            <td><%= render "user", user: person.user %></td>
+            <td class="text-end">
+              <%- if person.user.present? && person.user == current_user %>
+                <span class="badge text-bg-success">You</span>
+              <%- else %>
+                <%= link_to "Edit", edit_admin_person_path(person), class: "btn btn-sm btn-outline-secondary" %>
+              <%- end %>
+            </td>
+          </tr>
+        <%- end %>
+      </tbody>
+    </table>
+  </div>
 </div>
