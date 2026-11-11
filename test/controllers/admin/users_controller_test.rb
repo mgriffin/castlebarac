@@ -26,5 +26,25 @@ module Admin
       assert_select "td time[title]", "about 2 hours ago"
       assert_select "td", "Not recorded"
     end
+
+    test "shows who's an admin and how to change it" do
+      sign_in users(:admin)
+
+      get admin_users_url
+
+      assert_select "form[action='#{admin_user_admin_membership_path(users(:bugs))}'] button", "Make admin"
+      assert_select "form[action='#{admin_user_admin_membership_path(users(:admin))}']", count: 0
+      assert_select "td", /No person linked/
+      assert_select ".badge", "Admin"
+    end
+
+    test "offers to remove other admins" do
+      teams(:admins).people << people(:bugsbunny)
+      sign_in users(:admin)
+
+      get admin_users_url
+
+      assert_select "form[action='#{admin_user_admin_membership_path(users(:bugs))}'] input[name=_method][value=delete]"
+    end
   end
 end
