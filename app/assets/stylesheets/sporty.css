@@ -61,7 +61,8 @@ nav#main-nav {
   background-color: var(--main-bg-color);
   color: #000;
 
-  a {
+  /* Links styled as buttons keep Bootstrap's colours */
+  a:not(.btn) {
     color: var(--main-link-color);
   }
 }
