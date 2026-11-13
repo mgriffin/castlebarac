@@ -23,6 +23,8 @@ class Competition < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: ->(attributes) { attributes[:name].blank? }
 
+  scope :upcoming, -> { where(date: Date.current..).order(:date) }
+
   validates :name, :date, :entries_close_at, presence: true
   validates :max_events_per_athlete, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :fee_per_event_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

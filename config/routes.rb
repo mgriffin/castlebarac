@@ -25,6 +25,16 @@ Rails.application.routes.draw do
   end
   resources :events, except: :destroy
 
+  resources :competitions, only: %i[index show] do
+    scope module: :competitions do
+      resource :entry, only: :show do
+        resources :athletes, only: %i[new create show update destroy] do
+          resource :details, only: :update
+        end
+      end
+    end
+  end
+
   resources :time_trials, except: :destroy do
     resources :tt_times, only: :new, module: :time_trials
   end

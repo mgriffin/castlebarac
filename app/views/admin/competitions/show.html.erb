@@ -41,6 +41,13 @@
     </dd>
   </dl>
 
+  <%- if @competition.entries_open? %>
+    <p>
+      Link for parents:
+      <%= link_to competition_url(@competition), competition_url(@competition) %>
+    </p>
+  <%- end %>
+
   <%= @competition.description %>
 
   <h2 class="h4 mt-4">Events</h2>

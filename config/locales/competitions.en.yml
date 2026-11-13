@@ -51,3 +51,12 @@ en:
           notice: "Entries are open"
         destroy:
           notice: "Entries are closed"
+  competitions:
+    entries_closed: "Entries for this competition are closed"
+    athletes:
+      create:
+        choose: "Choose someone from the list"
+      update:
+        notice: "Saved %{name}'s events"
+      destroy:
+        notice: "Removed %{name} from your entry"

@@ -1,0 +1,12 @@
+<% content_for :title, "Choose an athlete" %>
+<div class="content">
+  <h1>Is <%= @athlete.fullname %> your child?</h1>
+  <p>If they are, we'll link them to your profile so they're easier to enter next time.</p>
+
+  <div class="d-flex gap-2">
+    <%= button_to "Yes", competition_entry_athletes_path(@competition),
+                  params: { person_id: @athlete.id, child: "yes" }, class: "btn btn-primary" %>
+    <%= button_to "No, but I'm entering them", competition_entry_athletes_path(@competition),
+                  params: { person_id: @athlete.id, child: "no" }, class: "btn btn-outline-secondary" %>
+  </div>
+</div>
