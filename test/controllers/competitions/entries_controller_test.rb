@@ -31,8 +31,8 @@ module Competitions
       get competition_entry_url(competitions(:connacht))
 
       assert_equal(["Ciara Walsh", "Liam Walsh"], css_select(".entry-athlete h2").map { it.text.strip })
-      assert_select "li", "U12 Boys 600m"
-      assert_select "p", "Total: €10.00"
+      assert_select "li", /U12 Boys 600m\s+Not paid/
+      assert_select "p", "To pay: €10.00"
       assert_select "a", "Add another athlete"
     end
 

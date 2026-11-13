@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_13_002852) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_13_003200) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -115,10 +115,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_002852) do
     t.integer "competition_event_id", null: false
     t.datetime "created_at", null: false
     t.integer "entry_id", null: false
+    t.datetime "paid_at"
+    t.integer "payment_id"
     t.integer "person_id", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_event_id"], name: "index_entry_lines_on_competition_event_id"
     t.index ["entry_id"], name: "index_entry_lines_on_entry_id"
+    t.index ["payment_id"], name: "index_entry_lines_on_payment_id"
     t.index ["person_id", "competition_event_id"], name: "index_entry_lines_on_person_id_and_competition_event_id", unique: true
     t.index ["person_id"], name: "index_entry_lines_on_person_id"
   end
@@ -189,6 +192,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_002852) do
     t.index ["parent_id"], name: "index_messages_on_parent_id"
     t.index ["topic_id"], name: "index_messages_on_topic_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.integer "entry_id", null: false
+    t.datetime "paid_at"
+    t.string "status", default: "pending", null: false
+    t.string "stripe_checkout_session_id"
+    t.string "stripe_payment_intent_id"
+    t.datetime "updated_at", null: false
+    t.index ["entry_id"], name: "index_payments_on_entry_id"
+    t.index ["stripe_checkout_session_id"], name: "index_payments_on_stripe_checkout_session_id", unique: true
   end
 
   create_table "people", force: :cascade do |t|
@@ -552,12 +568,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_002852) do
   add_foreign_key "entries", "users"
   add_foreign_key "entry_lines", "competition_events"
   add_foreign_key "entry_lines", "entries"
+  add_foreign_key "entry_lines", "payments"
   add_foreign_key "entry_lines", "people"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "messages", "messages", column: "parent_id"
   add_foreign_key "messages", "topics"
   add_foreign_key "messages", "users"
+  add_foreign_key "payments", "entries"
   add_foreign_key "people", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "races", "events"

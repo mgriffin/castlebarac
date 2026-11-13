@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :competitions, only: %i[index show] do
     scope module: :competitions do
       resource :entry, only: :show do
+        resource :payment, only: %i[show create]
         resources :athletes, only: %i[new create show update destroy] do
           resource :details, only: :update
         end
@@ -70,6 +71,8 @@ Rails.application.routes.draw do
     end
     resources :memberships, only: %i[new create]
   end
+
+  post "stripe/webhooks", to: "stripe_webhooks#create"
 
   get "404", to: "errors#not_found"
   get "500", to: "errors#internal_error"

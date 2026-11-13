@@ -8,6 +8,7 @@ class Entry < ApplicationRecord
            dependent: :destroy,
            inverse_of: :entry
   has_many :people, -> { distinct }, through: :entry_lines
+  has_many :payments, dependent: :restrict_with_error
 
   validates :user_id, uniqueness: { scope: :competition_id }
 
@@ -18,7 +19,17 @@ class Entry < ApplicationRecord
     entry_lines.includes(:person).group_by(&:person)
   end
 
-  def total_cents
-    entry_lines.size * competition.fee_per_event_cents
+  # What's still to be paid. An entry isn't finished until it's paid for.
+  def amount_due_cents
+    entry_lines.unpaid.count * competition.fee_per_event_cents
+  end
+
+  def amount_paid_cents
+    payments.paid.sum(:amount_cents)
+  end
+
+  # Stops any checkout that's under way, as what it charges for is changing
+  def expire_pending_payments
+    payments.pending.find_each(&:expire!)
   end
 end

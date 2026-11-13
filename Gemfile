@@ -109,3 +109,5 @@ gem "pundit", "~> 2.5"
 gem "friendly_id", "~> 5.7.0"
 
 gem "solid_queue", "~> 1.7"
+
+gem "stripe", "~> 21.0"

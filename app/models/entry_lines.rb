@@ -10,7 +10,11 @@ class EntryLines
   # Enters the person into exactly these events, returning any errors. Nothing
   # changes if there are errors.
   def replace(event_ids)
+    paid = @entry.entry_lines.paid.where(person: @person).where.not(competition_event_id: event_ids)
+    return paid.map { paid_error(it) } if paid.any?
+
     errors = []
+    @entry.expire_pending_payments
 
     Entry.transaction do
       @entry.save! if @entry.new_record?
@@ -26,5 +30,17 @@ class EntryLines
     end
 
     errors.uniq
+  end
+
+  # Takes the person out of any events that haven't been paid for
+  def remove
+    @entry.expire_pending_payments
+    @entry.entry_lines.unpaid.where(person: @person).destroy_all
+  end
+
+  private
+
+  def paid_error(line)
+    I18n.t("entry_lines.paid", name: @person.firstname, event: line.competition_event.name)
   end
 end

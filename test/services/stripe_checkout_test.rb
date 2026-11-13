@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+class StripeCheckoutTest < ActiveSupport::TestCase
+  include StripeHelpers
+
+  setup do
+    @entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
+    @entry.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m))
+    @entry.entry_lines.create!(person: people(:liam), competition_event: competition_events(:u12_boys_600m))
+    @checkout = StripeCheckout.new(@entry, success_url: "https://example.com/paid", cancel_url: "https://example.com")
+  end
+
+  test "charges for each athlete in each event that isn't paid for" do
+    paid_entry_line(@entry, people(:ciara), competition_events(:u12_girls_long_jump))
+
+    Stripe::Checkout::Session.expects(:create).with do |params|
+      params[:line_items].map { it.dig(:price_data, :product_data, :name) } ==
+        ["Ciara Walsh: U12 Girls 600m", "Liam Walsh: U12 Boys 600m"] &&
+        params[:line_items].all? { it.dig(:price_data, :unit_amount) == 500 } &&
+        params[:customer_email] == "bugs@acme.fake"
+    end.returns(stripe_session)
+
+    assert_equal "https://checkout.stripe.com/c/pay/cs_test_123", @checkout.start
+
+    payment = @entry.payments.sole
+
+    assert_equal 1000, payment.amount_cents
+    assert_equal "cs_test_123", payment.stripe_checkout_session_id
+    assert_equal 2, payment.entry_lines.count
+  end
+
+  test "stops any earlier checkout" do
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_first"))
+    @checkout.start
+
+    Stripe::Checkout::Session.expects(:expire).with("cs_first")
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_second"))
+    @checkout.start
+
+    assert_equal %w[expired pending], @entry.payments.order(:id).pluck(:status)
+    assert_equal [@entry.payments.last.id], @entry.entry_lines.pluck(:payment_id).uniq
+  end
+
+  test "doesn't keep the payment if Stripe fails" do
+    Stripe::Checkout::Session.stubs(:create).raises(Stripe::APIConnectionError.new("Down"))
+
+    assert_raises(Stripe::APIConnectionError) { @checkout.start }
+    assert_empty @entry.payments.reload
+  end
+end

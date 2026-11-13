@@ -24,26 +24,51 @@
               <div class="d-flex gap-2">
                 <%= link_to "Change events", competition_entry_athlete_path(@competition, person.id),
                             class: "btn btn-sm btn-outline-secondary" %>
-                <%= button_to "Remove", competition_entry_athlete_path(@competition, person.id),
-                              method: :delete, class: "btn btn-sm btn-outline-danger",
-                              form: { data: { turbo_confirm: "Remove #{person.firstname} from this competition?" } } %>
+                <%- if lines.none?(&:paid?) %>
+                  <%= button_to "Remove", competition_entry_athlete_path(@competition, person.id),
+                                method: :delete, class: "btn btn-sm btn-outline-danger",
+                                form: { data: { turbo_confirm: "Remove #{person.firstname} from this competition?" } } %>
+                <%- end %>
               </div>
             <%- end %>
           </div>
           <ul class="mb-0">
             <%- lines.each do |line| %>
-              <li><%= line.competition_event.name %></li>
+              <li>
+                <%= line.competition_event.name %>
+                <%- if line.paid? %>
+                  <span class="badge text-bg-success">Paid</span>
+                <%- else %>
+                  <span class="badge text-bg-warning">Not paid</span>
+                <%- end %>
+              </li>
             <%- end %>
           </ul>
         </div>
       </section>
     <%- end %>
 
-    <p class="fs-5">Total: <strong><%= euros @entry.total_cents %></strong></p>
+    <%- if @entry.amount_due_cents.positive? %>
+      <p class="fs-5 mb-1">To pay: <strong><%= euros @entry.amount_due_cents %></strong></p>
+      <%- if @competition.accepting_entries? %>
+        <p>Your entry isn't finished until it's paid for.</p>
+      <%- else %>
+        <p>These events weren't paid for before entries closed, so they won't be entered.</p>
+      <%- end %>
+    <%- else %>
+      <p class="fs-5">Paid: <strong><%= euros @entry.amount_paid_cents %></strong>. Your entry is finished.</p>
+    <%- end %>
   <%- end %>
 
   <%- if @competition.accepting_entries? %>
-    <%= link_to lines_by_person.empty? ? "Add an athlete" : "Add another athlete",
-                new_competition_entry_athlete_path(@competition), class: "btn btn-primary" %>
+    <div class="d-flex flex-wrap gap-2">
+      <%- if @entry.persisted? && @entry.amount_due_cents.positive? %>
+        <%= button_to "Pay #{euros @entry.amount_due_cents} and finish",
+                      competition_entry_payment_path(@competition),
+                      class: "btn btn-success", form: { data: { turbo: false } } %>
+      <%- end %>
+      <%= link_to lines_by_person.empty? ? "Add an athlete" : "Add another athlete",
+                  new_competition_entry_athlete_path(@competition), class: "btn btn-outline-primary" %>
+    </div>
   <%- end %>
 </div>

@@ -5,6 +5,7 @@ class EntryLine < ApplicationRecord
   belongs_to :entry
   belongs_to :person
   belongs_to :competition_event
+  belongs_to :payment, optional: true
 
   validates :competition_event_id, uniqueness: { scope: :person_id }
   validate :event_is_in_competition
@@ -13,6 +14,17 @@ class EntryLine < ApplicationRecord
   validate :within_event_limit, on: :create
 
   delegate :competition, to: :entry
+
+  scope :paid, -> { where.not(paid_at: nil) }
+  scope :unpaid, -> { where(paid_at: nil) }
+
+  def paid?
+    paid_at.present?
+  end
+
+  def unpaid?
+    !paid?
+  end
 
   # Lines for this person in this competition, whoever entered them
   scope :for_person_in, lambda { |person, competition|

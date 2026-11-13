@@ -60,3 +60,14 @@ en:
         notice: "Saved %{name}'s events"
       destroy:
         notice: "Removed %{name} from your entry"
+    payments:
+      show:
+        paid: "Thanks, your entry is paid for and finished. We've emailed you a confirmation."
+        waiting: "We're waiting for Stripe to confirm your payment. We'll email you when it's done."
+      create:
+        failed: "Sorry, we couldn't start the payment. Please try again."
+  entry_lines:
+    paid: "%{name} is already paid for in %{event}. Please contact the club to change this."
+  competition_mailer:
+    confirmation:
+      subject: "Your entry for %{name}"
