@@ -1,0 +1,23 @@
+en:
+  activerecord:
+    attributes:
+      competition:
+        entries_close_at: "Closing date for entries"
+        fee_per_event: "Fee per event"
+        max_events_per_athlete: "Maximum events per athlete"
+      person:
+        year: "Year of birth"
+    errors:
+      models:
+        competition:
+          attributes:
+            base:
+              no_events: "Add at least one event before opening entries"
+              no_fee: "Set the fee per event before opening entries"
+            entries_close_at:
+              after_competition: "must be on or before the day of the competition"
+              in_the_past: "must be in the future to open entries"
+        competition_event:
+          attributes:
+            max_age:
+              less_than_min_age: "must be at least the minimum age"
