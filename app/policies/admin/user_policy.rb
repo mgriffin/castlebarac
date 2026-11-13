@@ -3,11 +3,11 @@
 module Admin
   class UserPolicy < ApplicationPolicy
     def index?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
 
     def update?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
   end
 end

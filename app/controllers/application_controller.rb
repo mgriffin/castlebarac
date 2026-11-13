@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   layout "sporty"
 
   def admin?
-    current_user.present? && current_user.teams.exists?(name: "Admins")
+    current_user&.admin? || false
   end
   helper_method :admin?
 
