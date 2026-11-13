@@ -1,4 +1,4 @@
-<%= form_with model: [:admin, membership],
+<%= form_with model: [:admin, team, Membership.new],
   data: {
     controller: "autocomplete",
     autocomplete_url_value:  people_search_index_url
@@ -13,7 +13,6 @@
         autocomplete_target: "input"
       } %>
     <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
-    <%= form.hidden_field :team_id, value: team.id %>
     <ul class="autocomplete" data-autocomplete-target="results"></ul>
   </div>
   <%= form.submit "Add them", class: "btn btn-primary" %>

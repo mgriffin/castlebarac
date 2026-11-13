@@ -8,9 +8,9 @@ module Admin
     end
 
     def show
-      @team = Team.find_by(slug: params[:id])
-      @membership = Membership.new
+      @team = Team.find_by!(slug: params.expect(:id))
       authorize [:admin, @team]
+      @memberships = @team.memberships.includes(:person)
     end
 
     def new
