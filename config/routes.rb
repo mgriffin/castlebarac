@@ -51,8 +51,9 @@ Rails.application.routes.draw do
       get :preview, on: :collection
     end
     resources :posts
-    resources :teams
-    resources :memberships, only: %i[new create]
+    resources :teams do
+      resources :memberships, only: %i[create destroy], module: :teams
+    end
   end
 
   get "404", to: "errors#not_found"

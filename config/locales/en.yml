@@ -29,6 +29,15 @@
 
 en:
   admin:
+    teams:
+      memberships:
+        create:
+          added: "Added %{name} to %{team}"
+          already_a_member: "%{name} is already a member of %{team}"
+          choose: "Choose someone from the list to add them to the team"
+        destroy:
+          removed: "Removed %{name} from %{team}"
+          not_yourself: "You can't remove yourself from the Admins team"
     users:
       admin_memberships:
         create:
