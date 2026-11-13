@@ -12,12 +12,15 @@ class User < ApplicationRecord
   has_one :person, dependent: :nullify
   accepts_nested_attributes_for :person
 
-  delegate :teams, to: :person
-
   before_create :find_or_create_person
 
   def name
     person&.fullname
+  end
+
+  # Teams belong to people, so a user without a person isn't in any
+  def teams
+    person ? person.teams : Team.none
   end
 
   def admin?
