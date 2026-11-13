@@ -21,3 +21,20 @@ en:
           attributes:
             max_age:
               less_than_min_age: "must be at least the minimum age"
+        entry_line:
+          attributes:
+            base:
+              entries_closed: "Entries for this competition are closed"
+              event_limit:
+                one: "%{name} can only be entered into 1 event"
+                other: "%{name} can only be entered into %{count} events"
+            competition_event:
+              not_in_competition: "isn't part of this competition"
+              taken: "has already been entered"
+            competition_event_id:
+              taken: "already has this person entered"
+            person:
+              missing_details: "needs a year of birth and gender first"
+              gender: "can't enter this event"
+              too_young: "is too young for this event"
+              too_old: "is too old for this event"

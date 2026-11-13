@@ -24,6 +24,8 @@ class Person < ApplicationRecord
            through: :child_parent_relationships,
            source: :child
 
+  has_many :entry_lines, dependent: :restrict_with_error
+
   GENDERS = %w[female male].freeze
 
   # Asked for the first time someone is entered into a competition

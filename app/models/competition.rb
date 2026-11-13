@@ -14,6 +14,8 @@ class Competition < ApplicationRecord
   has_many :competition_events, -> { order(:position, :id) },
            dependent: :destroy,
            inverse_of: :competition
+  has_many :entries, dependent: :restrict_with_error
+  has_many :entry_lines, through: :entries
 
   has_rich_text :description
 
