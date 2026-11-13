@@ -49,6 +49,7 @@
       </nav>
       <section class="main row py-3">
         <%= render FlashComponent.new(flash: flash) %>
+        <%= render FillOutProfileComponent.new(user: current_user) %>
         <%= yield %>
       </section>
       <footer id="site-footer" class="row">
