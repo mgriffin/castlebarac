@@ -12,6 +12,8 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bund
        "public/uploads", "storage"
 
 set :migration_role, :app
+# db:prepare also creates the Solid Queue database from db/queue_schema.rb
+set :migration_command, "db:prepare"
 
 set :rbenv_type, :user
 set :rbenv_prefix,
@@ -22,6 +24,8 @@ set :rbenv_roles, :production
 set :puma_enable_socket_service, true
 set :puma_service_unit_name, "puma_castlebarac_ie_production"
 set :puma_systemctl_user, :system
+# Run the Solid Queue supervisor inside Puma (see config/puma.rb)
+set :puma_service_unit_env_vars, ["SOLID_QUEUE_IN_PUMA=true"]
 
 append :linked_files, "config/master.key"
 
