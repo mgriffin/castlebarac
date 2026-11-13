@@ -12,4 +12,14 @@ class CompetitionMailer < ApplicationMailer
 
     mail(to: @entry.user.email, subject: t(".subject", name: @competition.name))
   end
+
+  # Sent a few days before the competition
+  def reminder
+    @entry = params[:entry]
+    @competition = @entry.competition
+    @lines_by_person = @entry.entry_lines.paid.includes(:person).group_by(&:person)
+
+    mail(to: @entry.user.email,
+         subject: t(".subject", name: @competition.name, date: l(@competition.date, format: :long)))
+  end
 end

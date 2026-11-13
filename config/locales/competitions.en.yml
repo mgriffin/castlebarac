@@ -74,3 +74,5 @@ en:
   competition_mailer:
     confirmation:
       subject: "Your entry for %{name}"
+    reminder:
+      subject: "Reminder: %{name} on %{date}"
