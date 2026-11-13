@@ -26,6 +26,14 @@ class CompetitionEvent < ApplicationRecord
     age_reason(person.age_on(competition.age_reference_date))
   end
 
+  def earliest_birth_year
+    competition.age_reference_date.year - max_age if max_age
+  end
+
+  def latest_birth_year
+    competition.age_reference_date.year - min_age if min_age
+  end
+
   private
 
   def age_reason(age)

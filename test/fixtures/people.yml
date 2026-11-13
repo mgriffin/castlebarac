@@ -47,3 +47,10 @@ aoife:
   firstname: Aoife
   surname: Moran
   slug: aoife-moran
+
+secretary:
+  firstname: Sec
+  surname: Retary
+  slug: sec-retary
+  user: secretary
+  teams: [committee]

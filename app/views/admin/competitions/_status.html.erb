@@ -1,0 +1,7 @@
+<%- if competition.accepting_entries? %>
+  <span class="badge text-bg-success">Open until <%= l competition.entries_close_at, format: :short %></span>
+<%- elsif competition.entries_open? || competition.entries_closed? %>
+  <span class="badge text-bg-secondary">Closed</span>
+<%- else %>
+  <span class="badge text-bg-light">Not open yet</span>
+<%- end %>

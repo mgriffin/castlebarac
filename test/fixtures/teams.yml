@@ -5,3 +5,7 @@ admins:
 coaches:
   name: Coaches
   slug: coaches
+
+committee:
+  name: Committee
+  slug: committee

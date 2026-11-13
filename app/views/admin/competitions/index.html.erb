@@ -1,0 +1,34 @@
+<div class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Competitions</h1>
+    <%= link_to "New competition", new_admin_competition_path, class: "btn btn-sm btn-primary" %>
+  </div>
+
+  <%- if @competitions.empty? %>
+    <p>There are no competitions yet.</p>
+  <%- else %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Competition</th>
+            <th scope="col">Date</th>
+            <th scope="col">Entries</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @competitions.each do |competition| %>
+            <tr>
+              <td>
+                <div><%= link_to competition.name, admin_competition_path(competition) %></div>
+                <div class="small text-body-secondary"><%= competition.level.humanize %></div>
+              </td>
+              <td><%= l competition.date, format: :long %></td>
+              <td><%= render "status", competition: %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
+</div>

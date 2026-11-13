@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table align-middle">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">Event</th>
+        <th scope="col">Age group</th>
+        <th scope="col">Born in</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- competition.competition_events.each do |event| %>
+        <tr>
+          <td><%= event.name %></td>
+          <td><%= event.age_group %></td>
+          <td><%= birth_years(event) %></td>
+          <td><%= event.start_time&.strftime("%H:%M") %></td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+</div>

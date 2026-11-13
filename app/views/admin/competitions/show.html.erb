@@ -1,0 +1,54 @@
+<div class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0"><%= @competition.name %></h1>
+    <%= link_to "Edit", edit_admin_competition_path(@competition), class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+
+  <dl class="row">
+    <dt class="col-sm-4">Date</dt>
+    <dd class="col-sm-8"><%= l @competition.date, format: :long %></dd>
+    <dt class="col-sm-4">Level</dt>
+    <dd class="col-sm-8"><%= @competition.level.humanize %></dd>
+    <%- if @competition.venue.present? %>
+      <dt class="col-sm-4">Venue</dt>
+      <dd class="col-sm-8"><%= @competition.venue %></dd>
+    <%- end %>
+    <dt class="col-sm-4">Entries close</dt>
+    <dd class="col-sm-8"><%= l @competition.entries_close_at, format: :long %></dd>
+    <dt class="col-sm-4">Fee per event</dt>
+    <dd class="col-sm-8"><%= number_to_currency @competition.fee_per_event, unit: "€" %></dd>
+    <dt class="col-sm-4">Events per athlete</dt>
+    <dd class="col-sm-8"><%= @competition.max_events_per_athlete || "No limit" %></dd>
+    <dt class="col-sm-4">Results</dt>
+    <dd class="col-sm-8">
+      <%= @competition.event ? link_to(@competition.event.title, event_path(@competition.event)) : "Not linked yet" %>
+    </dd>
+    <dt class="col-sm-4">Entries</dt>
+    <dd class="col-sm-8">
+      <%= render "status", competition: @competition %>
+      <%- if @competition.entries_open? %>
+        <%= button_to "Close entries", admin_competition_opening_path(@competition), method: :delete,
+                                       class: "btn btn-sm btn-outline-danger mt-2",
+                                       form: { data: { turbo_confirm: "Close entries now?" } } %>
+      <%- else %>
+        <%= button_to "Open entries", admin_competition_opening_path(@competition),
+                                      class: "btn btn-sm btn-success mt-2" %>
+      <%- end %>
+    </dd>
+  </dl>
+
+  <%= @competition.description %>
+
+  <h2 class="h4 mt-4">Events</h2>
+  <%- if @competition.competition_events.empty? %>
+    <p>No events yet. <%= link_to "Add some", edit_admin_competition_path(@competition) %></p>
+  <%- else %>
+    <%= render "competitions/events_table", competition: @competition %>
+  <%- end %>
+
+  <%- if @competition.entries.none? %>
+    <%= button_to "Delete competition", admin_competition_path(@competition), method: :delete,
+                                        class: "btn btn-sm btn-outline-danger mt-4",
+                                        form: { data: { turbo_confirm: "Delete #{@competition.name}?" } } %>
+  <%- end %>
+</div>

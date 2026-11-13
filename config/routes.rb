@@ -52,6 +52,11 @@ Rails.application.routes.draw do
     end
     resources :posts
     resources :teams
+    resources :competitions do
+      scope module: :competitions do
+        resource :opening, only: %i[create destroy]
+      end
+    end
     resources :memberships, only: %i[new create]
   end
 

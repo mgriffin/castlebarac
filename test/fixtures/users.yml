@@ -13,3 +13,7 @@ coach:
 gabby:
   email: gabbygabby@acme.fake
   encrypted_password: <%= BCrypt::Password.create("carrots") %>
+
+secretary:
+  email: secretary@acme.fake
+  encrypted_password: <%= BCrypt::Password.create("carrots") %>
