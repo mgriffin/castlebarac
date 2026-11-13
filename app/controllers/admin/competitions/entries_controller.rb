@@ -4,7 +4,8 @@ require "csv"
 
 module Admin
   module Competitions
-    # Everyone entered into a competition, to send on to the organisers
+    # Everyone entered into a competition, to send on to the organisers. Only
+    # paid entries count.
     class EntriesController < ApplicationController
       def index
         @competition = Competition.friendly.find(params.expect(:competition_id))
@@ -18,7 +19,7 @@ module Admin
         respond_to do |format|
           format.html
           format.csv do
-            send_data to_csv(@entry_lines), filename: "#{@competition.slug}-entries.csv", type: "text/csv"
+            send_data to_csv(@entry_lines.paid), filename: "#{@competition.slug}-entries.csv", type: "text/csv"
           end
         end
       end

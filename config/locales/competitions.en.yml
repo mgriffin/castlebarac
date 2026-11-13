@@ -46,6 +46,9 @@ en:
         notice: "Updated %{name}"
       destroy:
         notice: "Deleted %{name}"
+      entry_lines:
+        destroy:
+          notice: "Took %{name} out of %{event}"
       openings:
         create:
           notice: "Entries are open"

@@ -11,6 +11,7 @@ module Admin
     def open_entries? = manage?
     def close_entries? = manage?
     def entries? = manage?
+    def remove_entry? = manage?
 
     private
 
