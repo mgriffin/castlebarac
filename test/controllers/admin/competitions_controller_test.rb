@@ -120,5 +120,22 @@ module Admin
         delete admin_competition_url(competitions(:county))
       end
     end
+
+    test "lists the entries and downloads them" do
+      sign_in users(:secretary)
+      entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
+      entry.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m))
+
+      get admin_competition_entries_url(competitions(:connacht))
+
+      assert_response :success
+      assert_select "td", "Ciara Walsh"
+
+      get admin_competition_entries_url(competitions(:connacht), format: :csv)
+
+      assert_response :success
+      assert_equal "U12 Girls 600m,Ciara,Walsh,female,#{people(:ciara).year},bugs@acme.fake",
+                   response.body.lines.second.chomp
+    end
   end
 end

@@ -10,6 +10,7 @@ module Admin
     def destroy? = manage?
     def open_entries? = manage?
     def close_entries? = manage?
+    def entries? = manage?
 
     private
 
