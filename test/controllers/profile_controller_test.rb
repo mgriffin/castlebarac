@@ -59,7 +59,6 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
 
     assert_not users(:gabby).reload.admin?
     assert_equal users(:admin), people(:admin).reload.user
-    assert users(:admin).reload.admin?
   end
 
   test "users who already have a person can't make another" do

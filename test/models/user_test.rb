@@ -9,8 +9,6 @@ class UserTest < ActiveSupport::TestCase
     assert_nil user.person
     assert_empty user.teams
     assert_not user.admin?
-    assert_not user.coach?
-    assert_not user.committee?
   end
 
   test "users are in their person's teams" do

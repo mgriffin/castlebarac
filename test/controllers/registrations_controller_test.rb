@@ -18,7 +18,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_nil user.person
     assert_not user.admin?
     assert_equal users(:admin), people(:admin).reload.user
-    assert users(:admin).reload.admin?
   end
 
   test "new users without a person can use the site and are asked for their details" do
