@@ -9,15 +9,17 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   has_many :posts, dependent: :nullify
+  # A user's person is only ever one they created themselves or one an admin
+  # linked them to. It's never matched up by name, as anyone can type a name.
   has_one :person, dependent: :nullify
-  accepts_nested_attributes_for :person
-
-  delegate :teams, to: :person
-
-  before_create :find_or_create_person
 
   def name
     person&.fullname
+  end
+
+  # Teams belong to people, so a user without a person isn't in any
+  def teams
+    person ? person.teams : Team.none
   end
 
   def admin?
@@ -30,14 +32,5 @@ class User < ApplicationRecord
 
   def committee?
     teams.exists?(name: "Committee")
-  end
-
-  private
-
-  def find_or_create_person
-    firstname, surname = username.split
-    surname = "" if surname.nil?
-
-    self.person = Person.find_or_create_by(firstname:, surname:)
   end
 end

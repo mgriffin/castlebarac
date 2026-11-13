@@ -3,23 +3,23 @@
 module Admin
   class PersonPolicy < ApplicationPolicy
     def index?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
 
     def show?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
 
     def new?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
 
     def create?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
 
     def update?
-      user&.teams&.exists?(name: "Admins")
+      admin?
     end
   end
 end
