@@ -116,4 +116,11 @@ class PersonTest < ActiveSupport::TestCase
       assert_equal({ firstname:, surname: }, Person.split_name(name))
     end
   end
+
+  test "an account can only be linked to one person" do
+    person = Person.new(firstname: "Bugs", surname: "Again", user: users(:bugs))
+
+    assert_not person.valid?
+    assert_includes person.errors[:user_id], "has already been taken"
+  end
 end
