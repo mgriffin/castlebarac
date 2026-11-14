@@ -24,7 +24,7 @@ class Person < ApplicationRecord
            through: :child_parent_relationships,
            source: :child
 
-  before_validation :create_slug
+  before_validation :create_slug, if: -> { slug.blank? || firstname_changed? || surname_changed? }
 
   # People whose first name or surname starts with the name, ignoring case
   # (SQLite's LIKE does). % and _ in the name are matched literally.
@@ -33,8 +33,12 @@ class Person < ApplicationRecord
           name: "#{sanitize_sql_like(name.to_s)}%")
   }
 
+  # e.g. "john-smith", or "john-smith-2" if there's already a John Smith
   def create_slug
-    self.slug = slugify("#{firstname} #{surname}")
+    base = slugify("#{firstname} #{surname}")
+    self.slug = base
+    count = 1
+    self.slug = "#{base}-#{count += 1}" while Person.where.not(id:).exists?(slug:)
   end
 
   def slugify(name)
