@@ -35,7 +35,6 @@ module Admin
 
       def set_team
         @team = Team.find_by!(slug: params.expect(:team_id))
-        authorize [:admin, @team], :update?
       end
 
       # Stops admins locking themselves out

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
-  resource :profile do
+  resource :profile, only: %i[show new create edit update] do
     resource :claim, only: :destroy, module: :profiles
   end
 
@@ -23,17 +23,17 @@ Rails.application.routes.draw do
   resource :impersonation, only: :destroy
 
   resources :posts, except: :destroy do
-    resources :comments, module: :posts
+    resources :comments, only: :create, module: :posts
   end
   resources :events, except: :destroy
 
-  resources :time_trials, except: :destroy do
+  resources :time_trials, only: %i[index show new create update] do
     resources :tt_times, only: :new, module: :time_trials
   end
 
   resources :coaches, only: :index
   namespace :coaches do
-    resources :posts
+    resources :posts, only: %i[show new create]
   end
 
   namespace :admin do
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       post :impersonate, on: :member
       resource :admin_membership, only: %i[create destroy], module: :users
     end
-    resources :people do
+    resources :people, only: %i[index new create edit update] do
       resources :relationships, only: :create, module: :people
       resource :account, only: %i[create destroy], module: :people
     end
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
         patch :reject
       end
     end
-    resources :events do
+    resources :events, except: :destroy do
       resources :unlinked_results, only: %i[index create]
     end
     resources :results, only: %i[edit update]
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       get :preview, on: :collection
     end
     resources :posts, only: %i[index new create edit update]
-    resources :teams do
+    resources :teams, only: %i[index show new create] do
       resources :memberships, only: %i[create destroy], module: :teams
     end
   end
