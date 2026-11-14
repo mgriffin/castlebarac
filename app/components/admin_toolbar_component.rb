@@ -11,6 +11,6 @@ class AdminToolbarComponent < ViewComponent::Base
   def render?
     return false if @current_user.nil?
 
-    policy(:admin_toolbar).show?
+    policy(:admin).access?
   end
 end

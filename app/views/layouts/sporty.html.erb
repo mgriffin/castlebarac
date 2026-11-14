@@ -19,7 +19,7 @@
       <% if current_user != true_user %>
         <div class="impersonate-bar" aria-label="Impersonation toolbar">
           <%= inline_svg_tag "circle-slash.svg" %>
-          <%= link_to "Stop impersonating #{current_user.name}", stop_impersonating_admin_users_path, data: {turbo_method: :post} %>
+          <%= link_to "Stop impersonating #{current_user.name}", impersonation_path, data: {turbo_method: :delete} %>
         </div>
       <% end %>
       <header class="row">

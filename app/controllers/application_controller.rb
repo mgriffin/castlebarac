@@ -7,16 +7,16 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # Every action has to check what the user is allowed to do with Pundit, or
+  # say it's public with skip_after_action. Devise's controllers are public.
+  after_action :verify_authorized, unless: :devise_controller?
+
   layout "sporty"
 
   def admin?
     current_user&.admin? || false
   end
   helper_method :admin?
-
-  def admin_only!
-    render plain: "404 Not Found", status: :not_found unless admin?
-  end
 
   protected
 

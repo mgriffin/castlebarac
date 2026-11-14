@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ErrorsController < ApplicationController
+  # Public pages
+  skip_after_action :verify_authorized
+
   def not_found
     render "errors/not_found", status: :not_found
   end

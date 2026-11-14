@@ -3,7 +3,7 @@
 module Admin
   module Teams
     # Adds people to a team and takes them off it, from the team's page
-    class MembershipsController < ApplicationController
+    class MembershipsController < BaseController
       before_action :set_team
 
       def create
