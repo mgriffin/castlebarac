@@ -23,19 +23,32 @@ class User < ApplicationRecord
   end
 
   def admin?
-    teams.exists?(name: "Admins")
+    team_names.include?("Admins")
   end
 
   def coach?
-    teams.exists?(name: "Coaches")
+    team_names.include?("Coaches")
   end
 
   def committee?
-    teams.exists?(name: "Committee")
+    team_names.include?("Committee")
   end
 
   # Admins, coaches and committee members
   def staff?
-    teams.exists?(name: %w[Admins Coaches Committee])
+    team_names.intersect?(%w[Admins Coaches Committee])
+  end
+
+  def reload(...)
+    @team_names = nil
+    super
+  end
+
+  private
+
+  # Pages check these roles many times, e.g. once for each result, so the
+  # names are loaded once. current_user is a new object on every request.
+  def team_names
+    @team_names ||= teams.pluck(:name)
   end
 end
