@@ -16,4 +16,14 @@ class UserTest < ActiveSupport::TestCase
     assert users(:coach).coach?
     assert_not users(:bugs).admin?
   end
+
+  test "admins, coaches and committee members are staff" do
+    assert users(:admin).staff?
+    assert users(:coach).staff?
+    assert_not users(:bugs).staff?
+    assert_not users(:gabby).staff?
+
+    make_committee_member(users(:bugs))
+    assert users(:bugs).staff?
+  end
 end

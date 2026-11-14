@@ -33,4 +33,9 @@ class User < ApplicationRecord
   def committee?
     teams.exists?(name: "Committee")
   end
+
+  # Admins, coaches and committee members
+  def staff?
+    teams.exists?(name: %w[Admins Coaches Committee])
+  end
 end

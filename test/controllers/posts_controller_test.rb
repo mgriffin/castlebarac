@@ -13,10 +13,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     patch post_url(posts(:one)), params: { post: { title: } }
   end
 
-  def make_committee_member(user)
-    Team.create!(name: "Committee").people << user.person
-  end
-
   test "anyone can read posts" do
     get posts_url
     assert_response :success

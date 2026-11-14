@@ -1,5 +1,5 @@
-<% if @people.any? %>
+<% if @people.present? %>
   <%= render partial: "person", collection: @people %>
 <% else %>
-  <li role="option">No results</li>
+  <li role="option" aria-disabled="true"><%= @hint || "No results" %></li>
 <% end %>

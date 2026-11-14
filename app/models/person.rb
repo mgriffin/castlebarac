@@ -26,7 +26,12 @@ class Person < ApplicationRecord
 
   before_validation :create_slug
 
-  scope :search, ->(name) { where("LOWER(firstname) LIKE :name OR LOWER(surname) LIKE :name", { name: "#{name}%" }) }
+  # People whose first name or surname starts with the name, ignoring case
+  # (SQLite's LIKE does). % and _ in the name are matched literally.
+  scope :search, lambda { |name|
+    where("firstname LIKE :name ESCAPE '\\' OR surname LIKE :name ESCAPE '\\'",
+          name: "#{sanitize_sql_like(name.to_s)}%")
+  }
 
   def create_slug
     self.slug = slugify("#{firstname} #{surname}")
