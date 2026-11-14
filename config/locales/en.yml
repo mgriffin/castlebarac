@@ -28,6 +28,15 @@
 #       enabled: "ON"
 
 en:
+  activerecord:
+    errors:
+      models:
+        person_relationship:
+          attributes:
+            child_id:
+              taken: "is already linked to this parent"
+            child:
+              own_parent: "can't be the same person as the parent"
   admin:
     teams:
       memberships:
