@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_14_233743) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_14_233745) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -205,17 +205,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_233743) do
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_results_on_person_id"
     t.index ["race_id"], name: "index_results_on_race_id"
-  end
-
-  create_table "sessions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "ip_address"
-    t.datetime "last_active_at", null: false
-    t.string "token", null: false
-    t.datetime "updated_at", null: false
-    t.string "user_agent"
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -516,7 +505,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_233743) do
   add_foreign_key "posts", "users"
   add_foreign_key "races", "events"
   add_foreign_key "results", "races"
-  add_foreign_key "sessions", "users"
   add_foreign_key "thredded_messageboard_users", "thredded_messageboards", on_delete: :cascade
   add_foreign_key "thredded_messageboard_users", "thredded_user_details", on_delete: :cascade
   add_foreign_key "thredded_user_post_notifications", "thredded_posts", column: "post_id", on_delete: :cascade
