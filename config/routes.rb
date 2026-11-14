@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :little_athletics, only: :index
   end
 
-  resources :mailing_lists, only: %i[index create]
+  resources :mailing_lists, only: :index
 
   get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
