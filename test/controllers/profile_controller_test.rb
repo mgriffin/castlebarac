@@ -48,7 +48,7 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_url
     person = users(:gabby).reload.person
     assert_not_equal people(:gabby), person
-    assert_equal "gabby-gabby", person.slug
+    assert_equal "gabby-gabby-2", person.slug
     assert_nil people(:gabby).reload.user
   end
 

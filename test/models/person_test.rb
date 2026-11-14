@@ -11,20 +11,37 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test "changing a name changes the slug" do
-    person = Person.new(firstname: "Bugs", surname: "O'Bunny")
-    person.validate
+    person = Person.create!(firstname: "Bugs", surname: "O'Bunny")
 
-    person.surname = "Bunny"
-    person.validate
+    person.update!(surname: "Hare")
 
-    assert_equal "bugs-bunny", person.slug
+    assert_equal "bugs-hare", person.slug
+  end
+
+  test "people with the same name get different slugs" do
+    second = Person.create!(firstname: "Bugs", surname: "Bunny")
+    third = Person.create!(firstname: "Bugs", surname: "Bunny")
+
+    assert_equal "bugs-bunny", people(:bugsbunny).slug
+    assert_equal "bugs-bunny-2", second.slug
+    assert_equal "bugs-bunny-3", third.slug
+  end
+
+  test "a slug only changes when the name does" do
+    second = Person.create!(firstname: "Bugs", surname: "Bunny")
+
+    second.update!(year: "2015")
+    people(:bugsbunny).update!(gender: "M")
+
+    assert_equal "bugs-bunny-2", second.reload.slug
+    assert_equal "bugs-bunny", people(:bugsbunny).reload.slug
   end
 
   test "slug uses the transliterated version of a name" do
-    person = Person.new(firstname: "Snörí", surname: "Snöríssøň")
+    person = Person.new(firstname: "Snörí", surname: "Björkssøň")
     person.validate
 
-    assert_equal "snori-snorisson", person.slug
+    assert_equal "snori-bjorksson", person.slug
   end
 
   test "can match a full name" do
@@ -49,6 +66,19 @@ class PersonTest < ActiveSupport::TestCase
     result = Person.match("SNÖRÍSSØŇ, Snörí")
 
     assert_equal result, person
+  end
+
+  test "finds everyone with a name, but not longer names" do
+    second = Person.create!(firstname: "Bugs", surname: "Bunny")
+    Person.create!(firstname: "Bugs", surname: "Bunny Hare")
+
+    assert_equal [people(:bugsbunny), second].sort, Person.named("Bugs BUNNY").sort
+  end
+
+  test "doesn't match anyone when more than one person has the name" do
+    Person.create!(firstname: "Bugs", surname: "Bunny")
+
+    assert_nil Person.match("Bugs Bunny")
   end
 
   test "results are grouped by distance, newest first, with no distance last" do

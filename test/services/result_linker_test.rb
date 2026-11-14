@@ -24,6 +24,14 @@ class ResultLinkerTest < ActiveSupport::TestCase
     assert_equal [no_match], ResultLinker.new.unlinked.to_a
   end
 
+  test "leaves results unlinked when more than one person has the name" do
+    Person.create!(firstname: "Bugs", surname: "Bunny")
+    bugs = result("Bugs BUNNY")
+
+    assert_empty ResultLinker.new.link_matches
+    assert_nil bugs.reload.person
+  end
+
   test "only looks at the results it's given" do
     elsewhere = Event.create!(title: "Other", start_time: Time.zone.now).races.create!(name: "x")
                      .results.create!(name: "Snörí Snöríssøň", club: "Castlebar A.C.", position: 1)
@@ -49,5 +57,15 @@ class ResultLinkerTest < ActiveSupport::TestCase
     assert_no_difference -> { Person.count } do
       ResultLinker.link_to_new_person(result("x"), firstname: "Snörí", surname: "Snöríssøň")
     end
+  end
+
+  test "doesn't link or add anyone when more than one person has the name" do
+    Person.create!(firstname: "Bugs", surname: "Bunny")
+    bugs = result("Bugs BUNNY")
+
+    assert_no_difference -> { Person.count } do
+      assert_nil ResultLinker.link_to_new_person(bugs, firstname: "Bugs", surname: "Bunny")
+    end
+    assert_nil bugs.reload.person
   end
 end
