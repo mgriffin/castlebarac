@@ -91,6 +91,11 @@ en:
   wrong_email_or_password: "Wrong email or password"
   profiles:
     thanks: "Thanks for updating your info"
+    create:
+      claimed: "Thanks. An admin will check that you're %{name}, and link them to your account"
+    claims:
+      destroy:
+        cancelled: "Cancelled. You can fill out your details now"
   registrations:
     create:
       notice: "Signed up successfully"

@@ -38,20 +38,6 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='profile[surname]'][value='Nic Suibhne']"
   end
 
-  test "creating a profile makes a new person even if someone has that name" do
-    sign_in users(:gabby)
-
-    assert_difference -> { Person.count } => 1 do
-      create_profile("Gabby", "Gabby")
-    end
-
-    assert_redirected_to profile_url
-    person = users(:gabby).reload.person
-    assert_not_equal people(:gabby), person
-    assert_equal "gabby-gabby-2", person.slug
-    assert_nil people(:gabby).reload.user
-  end
-
   test "using an admin's name doesn't take over their person or make you an admin" do
     sign_in users(:gabby)
 
