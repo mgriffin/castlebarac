@@ -7,24 +7,19 @@ module Admin
     # GET /admin/people
     def index
       @people = Person.includes(:user).order(:surname, :firstname)
-      authorize [:admin, @people]
     end
 
     # GET /admin/people/new
     def new
       @person = Person.new
-      authorize [:admin, @person]
     end
 
     # GET /admin/people/1/edit
-    def edit
-      authorize [:admin, @person]
-    end
+    def edit; end
 
     # POST /admin/people
     def create
       @person = Person.new(person_params)
-      authorize [:admin, @person]
 
       if @person.save
         redirect_to admin_people_path, notice: "Added #{@person.firstname} #{@person.surname}"
@@ -35,8 +30,6 @@ module Admin
 
     # PATCH/PUT /admin/people/1
     def update
-      authorize [:admin, @person]
-
       if @person.update(person_params)
         redirect_to admin_people_path, notice: "Edited #{@person.firstname} #{@person.surname}", status: :see_other
       else
