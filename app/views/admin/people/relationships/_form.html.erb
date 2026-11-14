@@ -1,10 +1,10 @@
-<%= form_with model: person_relationship,
+<%= form_with model: PersonRelationship.new, url: admin_person_relationships_path(parent),
   data: {
     controller: "autocomplete",
     autocomplete_url_value:  people_search_index_url
   } do |form| %>
   <div class="auto mb-3">
-    <%= form.label :child, "I'm the parent of...", class: "form-label" %>
+    <%= form.label :child, "#{parent.firstname} is the parent of...", class: "form-label" %>
     <%= form.text_field :child,
       required: true,
       autofocus: true,
@@ -13,7 +13,6 @@
         autocomplete_target: "input"
       } %>
     <%= form.hidden_field :child_id, data: { autocomplete_target: "hidden" } %>
-    <%= form.hidden_field :parent_id, value: parent.id %>
     <ul class="autocomplete" data-autocomplete-target="results"></ul>
   </div>
   <%= form.submit "Link them", class: "btn btn-primary" %>
