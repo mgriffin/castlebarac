@@ -2,7 +2,7 @@
 
 module Admin
   class UsersController < ApplicationController
-    before_action :admin_only!, except: :stop_impersonating
+    before_action :admin_only!
 
     def index
       @users = User.includes(:person).order(created_at: :desc)
@@ -16,11 +16,6 @@ module Admin
     def impersonate
       user = User.find(params.expect(:id))
       impersonate_user(user)
-      redirect_to root_path
-    end
-
-    def stop_impersonating
-      stop_impersonating_user
       redirect_to root_path
     end
   end
