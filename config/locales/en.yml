@@ -77,13 +77,6 @@ en:
           zero: "No one was added"
           one: "Added and linked 1 person"
           other: "Added and linked %{count} people"
-  mailing_lists:
-    create:
-      notice: "You've been added"
-      error: "Couldn't add your email address"
-  mailing_list_mailer:
-    welcome:
-      subject: "Thanks for signing up to the mailing list"
   wrong_email_or_password: "Wrong email or password"
   profiles:
     thanks: "Thanks for updating your info"

@@ -27,9 +27,12 @@ class MailingListsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "can save an email address" do
-    assert_difference("MailingList.count") do
+  test "no one can sign up any more" do
+    assert_no_difference("MailingList.count") do
       post mailing_lists_url, params: { mailing_list: { address: "bugs@acme.fake" } }
     end
+
+    assert_response :not_found
+    assert_enqueued_emails 0
   end
 end
