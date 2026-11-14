@@ -93,7 +93,6 @@ en:
           zero: "No one was added"
           one: "Added and linked 1 person"
           other: "Added and linked %{count} people"
-  wrong_email_or_password: "Wrong email or password"
   profiles:
     thanks: "Thanks for updating your info"
     create:
@@ -101,12 +100,6 @@ en:
     claims:
       destroy:
         cancelled: "Cancelled. You can fill out your details now"
-  registrations:
-    create:
-      notice: "Signed up successfully"
-  sessions:
-    create:
-      alert: "Username or password was incorrect"
   posts:
     comments:
       create:
