@@ -22,7 +22,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find_by(url: params[:id])
+    @event = Event.find_by!(url: params.expect(:id))
     authorize @event
   end
 
@@ -38,7 +38,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by(url: params[:id])
+    @event = Event.find_by!(url: params.expect(:id))
     authorize @event
 
     if @event.update(event_params)

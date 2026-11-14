@@ -7,7 +7,7 @@ module Posts
     private
 
     def set_commentable
-      @commentable = Post.find_by(url: params[:post_id])
+      @commentable = Post.find_by!(url: params.expect(:post_id))
     end
   end
 end
