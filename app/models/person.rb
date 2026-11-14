@@ -67,6 +67,12 @@ class Person < ApplicationRecord
     slug
   end
 
+  # Nothing hangs off this person: no results, time trial times, teams,
+  # parents or children
+  def unused?
+    [results, tt_times, memberships, parents, children].none?(&:exists?)
+  end
+
   def fullname
     [firstname, surname].join(" ")
   end
