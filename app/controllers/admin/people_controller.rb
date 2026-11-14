@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class PeopleController < ApplicationController
+  class PeopleController < BaseController
     before_action :set_person, only: %i[edit update]
 
     # GET /admin/people

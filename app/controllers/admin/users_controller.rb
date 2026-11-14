@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
-    before_action :admin_only!
-
+  class UsersController < BaseController
     def index
       @users = User.includes(:person).order(created_at: :desc)
       @admin_person_ids = Team.find_by(name: "Admins")&.person_ids.to_a

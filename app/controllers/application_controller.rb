@@ -14,10 +14,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :admin?
 
-  def admin_only!
-    render plain: "404 Not Found", status: :not_found unless admin?
-  end
-
   protected
 
   def configure_permitted_parameters

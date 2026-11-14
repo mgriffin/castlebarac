@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class TeamsController < ApplicationController
+  class TeamsController < BaseController
     def index
       @teams = Team.all
       authorize [:admin, @teams]
