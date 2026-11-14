@@ -12,6 +12,9 @@ class User < ApplicationRecord
   # A user's person is only ever one they created themselves or one an admin
   # linked them to. It's never matched up by name, as anyone can type a name.
   has_one :person, dependent: :nullify
+  has_many :person_claims, dependent: :destroy
+  has_many :reviewed_person_claims, class_name: "PersonClaim", foreign_key: :reviewed_by_id,
+                                    inverse_of: :reviewed_by, dependent: :nullify
 
   def name
     person&.fullname
