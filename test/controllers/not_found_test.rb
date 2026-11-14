@@ -13,7 +13,7 @@ class NotFoundTest < ActionDispatch::IntegrationTest
   test "pages for something that doesn't exist are not found" do
     [edit_event_path("missing"), person_path("missing"),
      admin_event_path("missing"), edit_admin_event_path("missing"),
-     admin_post_path("missing"), edit_admin_post_path("missing"),
+     edit_admin_post_path("missing"),
      edit_admin_person_path("missing")].each do |page|
       get page
       assert_response :not_found, page

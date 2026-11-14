@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     resources :result_imports, only: %i[new create] do
       get :preview, on: :collection
     end
-    resources :posts
+    resources :posts, only: %i[index new create edit update]
     resources :teams do
       resources :memberships, only: %i[create destroy], module: :teams
     end

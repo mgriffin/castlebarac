@@ -6,10 +6,6 @@ module Admin
       @posts = Post.order(created_at: :desc)
     end
 
-    def show
-      @post = Post.find_by!(url: params.expect(:id))
-    end
-
     def new
       @post = Post.new
     end

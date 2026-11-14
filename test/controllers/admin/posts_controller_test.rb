@@ -28,6 +28,14 @@ module Admin
       assert_response :success
     end
 
+    test "there's no admin page for a single post" do
+      sign_in users(:admin)
+
+      get "/admin/posts/#{posts(:one).url}"
+
+      assert_response :not_found
+    end
+
     test "anonymous user can't create new post" do
       post admin_posts_url, params: { post: { title: Faker::String.random, content: Faker::Markdown.sandwich } }
 
