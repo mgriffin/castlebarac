@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # Every action has to check what the user is allowed to do with Pundit, or
+  # say it's public with skip_after_action. Devise's controllers are public.
+  after_action :verify_authorized, unless: :devise_controller?
+
   layout "sporty"
 
   def admin?

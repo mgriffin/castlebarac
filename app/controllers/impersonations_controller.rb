@@ -3,6 +3,8 @@
 # Stopping impersonating someone. While an admin impersonates someone, the
 # current user is that person, so anyone can do this.
 class ImpersonationsController < ApplicationController
+  skip_after_action :verify_authorized
+
   def destroy
     stop_impersonating_user
     redirect_to root_path
