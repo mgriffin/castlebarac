@@ -56,4 +56,8 @@ class ApplicationPolicy
   def admin?
     user.present? && user.admin?
   end
+
+  def staff?
+    user.present? && user.staff?
+  end
 end
