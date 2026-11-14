@@ -28,8 +28,11 @@ namespace :results do
       puts "What's their surname? (#{guess[:surname]})"
       surname = $stdin.gets.to_s.chomp.presence || guess[:surname]
 
-      person = ResultLinker.link_to_new_person(result, firstname:, surname:)
-      puts "Linked #{person.fullname}"
+      if (person = ResultLinker.link_to_new_person(result, firstname:, surname:))
+        puts "Linked #{person.fullname}"
+      else
+        puts "More than one person is called #{firstname} #{surname}, so link it on the site"
+      end
     end
   end
 end

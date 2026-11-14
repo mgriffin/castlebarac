@@ -68,6 +68,19 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal result, person
   end
 
+  test "finds everyone with a name, but not longer names" do
+    second = Person.create!(firstname: "Bugs", surname: "Bunny")
+    Person.create!(firstname: "Bugs", surname: "Bunny Hare")
+
+    assert_equal [people(:bugsbunny), second].sort, Person.named("Bugs BUNNY").sort
+  end
+
+  test "doesn't match anyone when more than one person has the name" do
+    Person.create!(firstname: "Bugs", surname: "Bunny")
+
+    assert_nil Person.match("Bugs Bunny")
+  end
+
   test "results are grouped by distance, newest first, with no distance last" do
     person = people(:snori)
     old_race = Event.create!(title: "Old", start_time: 2.years.ago).races.create!(name: "Old")

@@ -107,9 +107,19 @@ class Person < ApplicationRecord
     word.downcase.capitalize.gsub(/(['’-])(\p{L})/) { "#{Regexp.last_match(1)}#{Regexp.last_match(2).upcase}" }
   end
 
-  def self.match(name)
+  # Everyone with this name, e.g. "Lucy O'Keeffe" or "O'KEEFFE, Lucy". There
+  # can be more than one, with slugs like lucy-o-keeffe-2.
+  def self.named(name)
     name = name.split(",").map(&:chomp).reverse.join(" ") if name.include?(", ")
+    slug = new.slugify(name)
 
-    Person.find_by(slug: Person.new.slugify(name))
+    candidates = where(slug:).or(where("slug LIKE ? ESCAPE '\\'", "#{sanitize_sql_like(slug)}-%"))
+    candidates.select { it.slugify(it.fullname) == slug }
+  end
+
+  # The person with this name, or nil if there's no one or more than one
+  def self.match(name)
+    people = named(name)
+    people.first if people.one?
   end
 end
