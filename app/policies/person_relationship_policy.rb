@@ -2,14 +2,10 @@
 
 class PersonRelationshipPolicy < ApplicationPolicy
   def show?
-    return false unless user
-
-    user.admin? || user.coach? || user.committee?
+    staff?
   end
 
   def create?
-    return false unless user
-
-    user.admin? || user.coach? || user.committee?
+    staff?
   end
 end

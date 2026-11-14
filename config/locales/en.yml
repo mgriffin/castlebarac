@@ -28,7 +28,21 @@
 #       enabled: "ON"
 
 en:
+  activerecord:
+    errors:
+      models:
+        person_relationship:
+          attributes:
+            child_id:
+              taken: "is already linked to this parent"
+            child:
+              own_parent: "can't be the same person as the parent"
   admin:
+    people:
+      relationships:
+        create:
+          already_linked: "%{parent} is already linked as the parent of %{child}"
+          linked: "Linked %{parent} as the parent of %{child}"
     teams:
       memberships:
         create:
@@ -83,10 +97,6 @@ en:
     comments:
       create:
         notice: "Your comment was successfully posted"
-  person_relationships:
-    create:
-      already_done: "already linked"
-      good: "Linked"
   time_trials:
     create:
       notice: "Created Time Trial"

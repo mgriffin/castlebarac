@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     resources :search, only: :index
   end
   resources :people, only: :show
-  resources :person_relationships, only: :create
 
   resources :posts, except: :destroy do
     resources :comments, module: :posts
@@ -42,7 +41,9 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
       resource :admin_membership, only: %i[create destroy], module: :users
     end
-    resources :people
+    resources :people do
+      resources :relationships, only: :create, module: :people
+    end
     resources :events do
       resources :unlinked_results, only: %i[index create]
     end
