@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_14_230432) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_14_231434) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -147,6 +147,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_230432) do
     t.string "year"
     t.index ["slug"], name: "index_people_on_slug", unique: true
     t.index ["user_id"], name: "index_people_on_user_id", unique: true
+  end
+
+  create_table "person_claims", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "person_id", null: false
+    t.datetime "reviewed_at"
+    t.integer "reviewed_by_id"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["person_id"], name: "index_person_claims_on_person_id"
+    t.index ["reviewed_by_id"], name: "index_person_claims_on_reviewed_by_id"
+    t.index ["user_id"], name: "index_person_claims_on_pending_user_id", unique: true, where: "status = 'pending'"
+    t.index ["user_id"], name: "index_person_claims_on_user_id"
   end
 
   create_table "person_relationships", force: :cascade do |t|
@@ -497,6 +511,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_230432) do
   add_foreign_key "messages", "topics"
   add_foreign_key "messages", "users"
   add_foreign_key "people", "users"
+  add_foreign_key "person_claims", "people"
+  add_foreign_key "person_claims", "users"
+  add_foreign_key "person_claims", "users", column: "reviewed_by_id"
   add_foreign_key "posts", "users"
   add_foreign_key "races", "events"
   add_foreign_key "results", "races"

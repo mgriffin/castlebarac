@@ -1,5 +1,21 @@
 <%= form_with model: profile, scope: :profile, url: profile_path do |form| %>
   <%= render "form_fields", form: %>
 
+  <%- if local_assigns[:matches].present? %>
+    <fieldset class="mb-3">
+      <legend class="fs-6">
+        There's already someone called <%= profile.fullname %> on the site. Is one of these you?
+      </legend>
+      <%- matches.each do |person| %>
+        <%= render "match", form:, person: %>
+      <%- end %>
+      <div class="form-check">
+        <%= form.radio_button :claim, "new", required: true, class: "form-check-input" %>
+        <%= form.label :claim, "None of these, I'm new to the site", value: "new", class: "form-check-label" %>
+      </div>
+      <p class="form-text">If you pick someone, an admin will check before linking them to your account.</p>
+    </fieldset>
+  <%- end %>
+
   <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>

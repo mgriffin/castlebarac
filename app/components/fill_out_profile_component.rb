@@ -6,6 +6,6 @@ class FillOutProfileComponent < ViewComponent::Base
   end
 
   def render?
-    !@user.nil? && @user.person.nil?
+    !@user.nil? && @user.person.nil? && !@user.person_claims.pending.exists?
   end
 end

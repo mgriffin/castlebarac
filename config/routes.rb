@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
-  resource :profile
+  resource :profile do
+    resource :claim, only: :destroy, module: :profiles
+  end
 
   namespace :people do
     resources :search, only: :index
@@ -44,6 +46,12 @@ Rails.application.routes.draw do
     resources :people do
       resources :relationships, only: :create, module: :people
       resource :account, only: %i[create destroy], module: :people
+    end
+    resources :person_claims, only: :index do
+      member do
+        patch :approve
+        patch :reject
+      end
     end
     resources :events do
       resources :unlinked_results, only: %i[index create]

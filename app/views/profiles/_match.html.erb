@@ -1,0 +1,16 @@
+<%- latest = person.results.joins(race: :event).includes(race: :event).order("events.start_time DESC").first %>
+<div class="form-check">
+  <%= form.radio_button :claim, person.id, required: true, class: "form-check-input" %>
+  <%= form.label :claim, value: person.id, class: "form-check-label" do %>
+    <%= person.fullname %>
+    <span class="text-body-secondary">
+      <%- if latest %>
+        (<%= pluralize(person.results.size, "result") %>, most recently <%= latest.race.event.title %>
+        in <%= latest.race.event.start_time.strftime("%B %Y") %>)
+      <%- else %>
+        (no results yet)
+      <%- end %>
+    </span>
+  <% end %>
+  <%= link_to "See their page", person_path(person), target: "_blank", rel: "noopener", class: "small" %>
+</div>

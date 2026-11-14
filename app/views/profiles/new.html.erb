@@ -1,4 +1,19 @@
 <div class="content">
-  <h1>Edit your profile</h1>
-  <%= render "form", profile: @profile %>
+  <%- if @claim&.pending? %>
+    <h1>Waiting for an admin</h1>
+    <p>
+      You asked to be linked to <%= link_to @claim.person.fullname, person_path(@claim.person) %>.
+      An admin will check, and link them to your account.
+    </p>
+    <%= button_to "Cancel and fill out my details instead", profile_claim_path, method: :delete,
+                  class: "btn btn-outline-secondary" %>
+  <%- else %>
+    <h1>Fill out your details</h1>
+    <%- if @claim&.rejected? %>
+      <p class="alert alert-warning">
+        An admin couldn't confirm that you're <%= @claim.person.fullname %>. You can fill out your details below.
+      </p>
+    <%- end %>
+    <%= render "form", profile: @profile, matches: @matches %>
+  <%- end %>
 </div>
