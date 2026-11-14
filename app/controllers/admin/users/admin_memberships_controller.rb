@@ -4,8 +4,7 @@ module Admin
   module Users
     # Adds a user to, or removes them from, the Admins team. Teams are made
     # of people, so the user needs to be linked to a person.
-    class AdminMembershipsController < ApplicationController
-      before_action :admin_only!
+    class AdminMembershipsController < BaseController
       before_action :load_user
 
       def create

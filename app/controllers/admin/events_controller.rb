@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class EventsController < ApplicationController
-    before_action :admin_only!
-
+  class EventsController < BaseController
     def index
       @events = Event.order(start_time: :desc)
     end

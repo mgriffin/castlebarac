@@ -4,8 +4,7 @@ module Admin
   # Imports results from another website in three steps: enter the address of
   # the results page (new), choose the event and races (preview), then import
   # them (create).
-  class ResultImportsController < ApplicationController
-    before_action :admin_only!
+  class ResultImportsController < BaseController
     before_action :load_source, except: :new
 
     rescue_from ResultSources::Error do |error|

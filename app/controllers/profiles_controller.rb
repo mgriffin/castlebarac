@@ -4,6 +4,9 @@
 # person: anyone can type a name, so an existing person (with their results,
 # children and teams) is only ever linked to a user by an admin.
 class ProfilesController < ApplicationController
+  # Every action only uses the signed in user's own person
+  skip_after_action :verify_authorized
+
   before_action :authenticate_user!
   before_action :set_profile, only: %i[show edit update]
   before_action :redirect_if_profile_exists, only: %i[new create]

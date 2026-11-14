@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class PostsController < ApplicationController
-    before_action :admin_only!
-
+  class PostsController < BaseController
     def index
       @posts = Post.order(created_at: :desc)
     end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class MailingListsController < ApplicationController
-  before_action :admin_only!, only: :index
-
   def index
+    authorize MailingList
     @entries = MailingList.all
   end
 
   def create
+    authorize MailingList
     email = MailingList.new(mailing_list_params)
 
     if email.save
