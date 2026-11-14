@@ -24,6 +24,8 @@ class Person < ApplicationRecord
            through: :child_parent_relationships,
            source: :child
 
+  validates :user_id, uniqueness: true, allow_nil: true
+
   before_validation :create_slug, if: -> { slug.blank? || firstname_changed? || surname_changed? }
 
   # People whose first name or surname starts with the name, ignoring case
@@ -63,6 +65,12 @@ class Person < ApplicationRecord
 
   def to_param
     slug
+  end
+
+  # Nothing hangs off this person: no results, time trial times, teams,
+  # parents or children
+  def unused?
+    [results, tt_times, memberships, parents, children].none?(&:exists?)
   end
 
   def fullname

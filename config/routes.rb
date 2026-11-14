@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     end
     resources :people do
       resources :relationships, only: :create, module: :people
+      resource :account, only: %i[create destroy], module: :people
     end
     resources :events do
       resources :unlinked_results, only: %i[index create]

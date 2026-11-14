@@ -1,0 +1,20 @@
+<section class="mt-4" aria-labelledby="account-heading">
+  <h2 id="account-heading" class="h5">Account</h2>
+  <%- if person.user %>
+    <p><%= person.firstname %> is linked to <%= link_to person.user.email, admin_user_path(person.user) %>.</p>
+    <%= button_to "Unlink account", admin_person_account_path(person), method: :delete,
+                  class: "btn btn-outline-danger",
+                  form: { data: { turbo_confirm: "Unlink #{person.user.email} from #{person.fullname}?" } } %>
+  <%- else %>
+    <%= form_with url: admin_person_account_path(person) do |form| %>
+      <div class="mb-3">
+        <%= form.label :email, "Link #{person.firstname} to the account with the email address", class: "form-label" %>
+        <%= form.email_field :email, required: true, class: "form-control", aria: { describedby: "account-hint" } %>
+        <div id="account-hint" class="form-text">
+          If that account already has a person of its own with no results, teams or family, it's deleted.
+        </div>
+      </div>
+      <%= form.submit "Link account", class: "btn btn-primary" %>
+    <%- end %>
+  <%- end %>
+</section>

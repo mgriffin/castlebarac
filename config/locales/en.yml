@@ -31,6 +31,11 @@ en:
   activerecord:
     errors:
       models:
+        person:
+          attributes:
+            base:
+              linked_to_someone_else: "%{name} is already linked to another account"
+              account_has_a_person: "%{email} is already linked to %{name}, who has results, teams or family on the site"
         person_relationship:
           attributes:
             child_id:
@@ -39,6 +44,12 @@ en:
               own_parent: "can't be the same person as the parent"
   admin:
     people:
+      accounts:
+        create:
+          linked: "Linked %{email} to %{name}"
+          no_account: "There's no account with that email address"
+        destroy:
+          unlinked: "Unlinked %{email} from %{name}"
       relationships:
         create:
           already_linked: "%{parent} is already linked as the parent of %{child}"
