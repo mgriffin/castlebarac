@@ -13,7 +13,7 @@ module Admin
 
         @entry_lines = @competition.entry_lines
                                    .includes(:person, :competition_event, entry: :user)
-                                   .order("competition_events.position, competition_events.id, people.surname")
+                                   .reorder("competition_events.position, competition_events.id, people.surname")
                                    .references(:competition_events, :people)
 
         respond_to do |format|
