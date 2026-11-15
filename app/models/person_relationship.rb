@@ -6,9 +6,7 @@ class PersonRelationship < ApplicationRecord
   belongs_to :child,
              class_name: "Person"
 
-  # A unique index on [parent_id, child_id] needs a migration that first checks
-  # production for existing duplicates
-  validates :child_id, uniqueness: { scope: :parent_id } # rubocop:disable Rails/UniqueValidationWithoutIndex
+  validates :child_id, uniqueness: { scope: :parent_id }
   validate :not_their_own_parent
 
   private
