@@ -11,51 +11,49 @@ module Competitions
       sign_in users(:bugs)
     end
 
-    test "offers you and your children first" do
+    test "offers you and your children" do
       get new_competition_entry_athlete_url(@competition)
 
       assert_response :success
-      assert_equal(["Bugs Bunny", "Ciara Walsh"], css_select("form button").map { it.text.strip })
+      assert_equal ["Bugs Bunny", "Aoife Moran", "Ciara Walsh"], css_select("a.btn").map { it.text.strip }
+      assert_select "a[href=?]", new_profile_child_claim_path
     end
 
-    test "goes straight to the events for your child" do
-      post competition_entry_athletes_url(@competition), params: { person_id: people(:ciara).id }
+    test "asks you to fill out your details if you haven't" do
+      sign_in users(:gabby)
 
-      assert_redirected_to competition_entry_athlete_url(@competition, people(:ciara).id)
+      get new_competition_entry_athlete_url(@competition)
+
+      assert_select "a.btn", count: 0
+      assert_select "a[href=?]", new_profile_path
     end
 
-    test "asks if someone else is your child" do
-      post competition_entry_athletes_url(@competition), params: { person_id: people(:liam).id }
+    test "can't enter someone who isn't your child" do
+      liam = people(:liam)
+      # sign_in only lasts past the first request if that one succeeds
+      get competition_entry_url(@competition)
 
-      assert_redirected_to new_competition_entry_athlete_url(@competition, person_id: people(:liam).id)
-      follow_redirect!
+      get competition_entry_athlete_url(@competition, liam.id)
+      assert_response :not_found
 
-      assert_select "h1", "Is Liam Walsh your child?"
+      patch competition_entry_athlete_url(@competition, liam.id),
+            params: { competition_event_ids: [competition_events(:u12_boys_600m).id] }
+      assert_response :not_found
+      assert_equal 0, EntryLine.count
+
+      delete competition_entry_athlete_url(@competition, liam.id)
+      assert_response :not_found
     end
 
-    test "asks you to choose someone if you didn't" do
-      post competition_entry_athletes_url(@competition), params: { person_search: "Nobody", person_id: "" }
+    test "can't set the details of someone who isn't your child" do
+      liam = people(:liam).tap { it.update!(year: nil, gender: nil) }
+      get competition_entry_url(@competition)
 
-      assert_redirected_to new_competition_entry_athlete_url(@competition)
-      assert_equal "Choose someone from the list", flash[:alert]
-    end
+      patch competition_entry_athlete_details_url(@competition, liam.id),
+            params: { person: { year: "2015", gender: "female" } }
 
-    test "links your child if you say so" do
-      assert_difference -> { PersonRelationship.count } do
-        post competition_entry_athletes_url(@competition), params: { person_id: people(:liam).id, child: "yes" }
-      end
-
-      assert_redirected_to competition_entry_athlete_url(@competition, people(:liam).id)
-      assert_includes people(:bugsbunny).children, people(:liam)
-      assert PersonRelationship.find_by(child: people(:liam)).self_declared
-    end
-
-    test "can enter someone who isn't your child" do
-      assert_no_difference -> { PersonRelationship.count } do
-        post competition_entry_athletes_url(@competition), params: { person_id: people(:liam).id, child: "no" }
-      end
-
-      assert_redirected_to competition_entry_athlete_url(@competition, people(:liam).id)
+      assert_response :not_found
+      assert_nil liam.reload.year
     end
 
     test "shows the events they can enter" do

@@ -6,26 +6,21 @@
   <%- if @linked_people.any? %>
     <div class="d-flex flex-wrap gap-2 mb-4">
       <%- @linked_people.each do |person| %>
-        <%= button_to person.fullname, competition_entry_athletes_path(@competition),
-                      params: { person_id: person.id }, class: "btn btn-outline-primary" %>
+        <%= link_to person.fullname, competition_entry_athlete_path(@competition, person.id),
+                    class: "btn btn-outline-primary" %>
       <%- end %>
     </div>
-  <%- end %>
 
-  <%= form_with url: competition_entry_athletes_path(@competition) do |form| %>
-    <div class="mb-3" data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>" role="combobox">
-      <%= form.label :person_search, @linked_people.any? ? "Or search for someone else" : "Search for an athlete",
-                     class: "form-label" %>
-      <%= form.text_field :person_search, autocomplete: "off", class: "form-control",
-                                          placeholder: "Start typing their name",
-                                          data: { autocomplete_target: "input" } %>
-      <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
-      <ul class="autocomplete list-group" data-autocomplete-target="results"></ul>
-    </div>
-    <%= form.submit "Choose", class: "btn btn-primary" %>
+    <p>
+      You can enter yourself and your children. Not seeing one of them?
+      <%= link_to "Link your child to your account", new_profile_child_claim_path %>, and once an admin has checked,
+      you can enter them here.
+    </p>
+  <%- else %>
+    <p>
+      You can enter yourself and your children.
+      <%= link_to "Fill out your details", new_profile_path %> first, and then you can link your children to your
+      account.
+    </p>
   <%- end %>
-
-  <p class="mt-4">
-    Can't find them? Ask a committee member to add them to the website.
-  </p>
 </div>

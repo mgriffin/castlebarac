@@ -22,7 +22,16 @@ module CompetitionEntry
     redirect_to competition_entry_path(@competition), alert: t("competitions.entries_closed")
   end
 
+  # The user and their children, who are the only people they can enter
+  def linked_people
+    person = current_user.person
+    return [] if person.nil?
+
+    [person, *person.children.order(:firstname)]
+  end
+
   def set_athlete
-    @athlete = Person.find(params.expect(params.key?(:athlete_id) ? :athlete_id : :id))
+    id = params.expect(params.key?(:athlete_id) ? :athlete_id : :id).to_s
+    @athlete = linked_people.find { it.id.to_s == id } || raise(ActiveRecord::RecordNotFound)
   end
 end

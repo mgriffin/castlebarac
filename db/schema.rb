@@ -234,7 +234,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
     t.integer "child_id"
     t.datetime "created_at", null: false
     t.integer "parent_id"
-    t.boolean "self_declared", default: false, null: false
     t.datetime "updated_at", null: false
     t.index ["child_id"], name: "index_person_relationships_on_child_id"
     t.index ["parent_id", "child_id"], name: "index_person_relationships_on_parent_id_and_child_id", unique: true

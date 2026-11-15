@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     scope module: :competitions do
       resource :entry, only: :show do
         resource :payment, only: %i[show create]
-        resources :athletes, only: %i[new create show update destroy] do
+        resources :athletes, only: %i[new show update destroy] do
           resource :details, only: :update
         end
       end

@@ -18,27 +18,9 @@ module Competitions
       end
     end
 
-    # Pick someone to enter, and if they aren't linked to the user, ask if
-    # they're the user's child
+    # Pick someone to enter: the user or one of their children
     def new
       @linked_people = linked_people
-      return if params[:person_id].blank?
-
-      @athlete = Person.find(params.expect(:person_id))
-      render :confirm_child if @linked_people.exclude?(@athlete)
-    end
-
-    def create
-      @athlete = Person.find_by(id: params[:person_id])
-      return redirect_to new_competition_entry_athlete_path(@competition), alert: t(".choose") if @athlete.nil?
-
-      # Turbo needs a redirect after a form submission, so ask on its own page
-      if linked_people.exclude?(@athlete) && params[:child].blank?
-        return redirect_to new_competition_entry_athlete_path(@competition, person_id: @athlete.id)
-      end
-
-      PersonRelationship.declare(parent: current_user.person, child: @athlete) if params[:child] == "yes"
-      redirect_to competition_entry_athlete_path(@competition, @athlete.id)
     end
 
     def update
@@ -59,14 +41,6 @@ module Competitions
     end
 
     private
-
-    # The user and their children
-    def linked_people
-      person = current_user.person
-      return [] if person.nil?
-
-      [person, *person.children.order(:firstname)]
-    end
 
     def set_events(selected_ids: nil)
       @events = @competition.competition_events.select { it.eligible?(@athlete) }
