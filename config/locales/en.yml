@@ -28,7 +28,60 @@
 #       enabled: "ON"
 
 en:
+  activerecord:
+    errors:
+      models:
+        person:
+          attributes:
+            base:
+              linked_to_someone_else: "%{name} is already linked to another account"
+              account_has_a_person: "%{email} is already linked to %{name}, who has results, teams or family on the site"
+        child_claim:
+          attributes:
+            user:
+              no_person: "needs to fill out their own details first"
+            child:
+              themselves: "can't be yourself"
+              already_linked: "is already linked to you"
+            child_id:
+              taken: "has already been asked for"
+        person_relationship:
+          attributes:
+            child_id:
+              taken: "is already linked to this parent"
+            child:
+              own_parent: "can't be the same person as the parent"
   admin:
+    child_claims:
+      approve:
+        approved: "Linked %{parent} as the parent of %{child}"
+      reject:
+        rejected: "Rejected %{email}'s request to be linked to %{child}"
+    person_claims:
+      approve:
+        approved: "Linked %{email} to %{name}"
+      reject:
+        rejected: "Rejected %{email}'s claim to be %{name}"
+    people:
+      accounts:
+        create:
+          linked: "Linked %{email} to %{name}"
+          no_account: "There's no account with that email address"
+        destroy:
+          unlinked: "Unlinked %{email} from %{name}"
+      relationships:
+        create:
+          already_linked: "%{parent} is already linked as the parent of %{child}"
+          linked: "Linked %{parent} as the parent of %{child}"
+    teams:
+      memberships:
+        create:
+          added: "Added %{name} to %{team}"
+          already_a_member: "%{name} is already a member of %{team}"
+          choose: "Choose someone from the list to add them to the team"
+        destroy:
+          removed: "Removed %{name} from %{team}"
+          not_yourself: "You can't remove yourself from the Admins team"
     users:
       admin_memberships:
         create:
@@ -54,30 +107,22 @@ en:
           zero: "No one was added"
           one: "Added and linked 1 person"
           other: "Added and linked %{count} people"
-  mailing_lists:
-    create:
-      notice: "You've been added"
-      error: "Couldn't add your email address"
-  mailing_list_mailer:
-    welcome:
-      subject: "Thanks for signing up to the mailing list"
-  wrong_email_or_password: "Wrong email or password"
   profiles:
     thanks: "Thanks for updating your info"
-  registrations:
     create:
-      notice: "Signed up successfully"
-  sessions:
-    create:
-      alert: "Username or password was incorrect"
+      claimed: "Thanks. An admin will check that you're %{name}, and link them to your account"
+    claims:
+      destroy:
+        cancelled: "Cancelled. You can fill out your details now"
+    child_claims:
+      create:
+        claimed: "Thanks. An admin will check, and then link %{name} to your account"
+      destroy:
+        cancelled: "Cancelled your request to be linked to %{name}"
   posts:
     comments:
       create:
         notice: "Your comment was successfully posted"
-  person_relationships:
-    create:
-      already_done: "already linked"
-      good: "Linked"
   time_trials:
     create:
       notice: "Created Time Trial"

@@ -2,6 +2,7 @@
 
 class EventsController < ApplicationController
   def index
+    authorize Event
     @future_events = Event.order(start_time: :asc).where(start_time: Time.zone.now...).group_by do |event|
       event.start_time.beginning_of_month
     end
@@ -11,7 +12,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.includes(races: { results: [:person] }).find_by(url: params[:id])
+    @event = Event.includes(races: { results: [:person] }).find_by!(url: params.expect(:id))
+    authorize @event
   end
 
   def new
@@ -20,7 +22,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find_by(url: params[:id])
+    @event = Event.find_by!(url: params.expect(:id))
     authorize @event
   end
 
@@ -36,7 +38,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by(url: params[:id])
+    @event = Event.find_by!(url: params.expect(:id))
     authorize @event
 
     if @event.update(event_params)

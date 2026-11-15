@@ -1,15 +1,9 @@
 # frozen_string_literal: true
 
 module Admin
-  class PostsController < ApplicationController
-    before_action :admin_only!
-
+  class PostsController < BaseController
     def index
       @posts = Post.order(created_at: :desc)
-    end
-
-    def show
-      @post = Post.find_by(url: params[:id])
     end
 
     def new
@@ -17,7 +11,7 @@ module Admin
     end
 
     def edit
-      @post = Post.find_by(url: params[:id])
+      @post = Post.find_by!(url: params.expect(:id))
     end
 
     def create
@@ -32,7 +26,7 @@ module Admin
     end
 
     def update
-      @post = Post.find_by(url: params[:id])
+      @post = Post.find_by!(url: params.expect(:id))
 
       if @post.update(post_params)
         redirect_to post_path(@post), notice: "Edited #{@post.title}"

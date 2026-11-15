@@ -3,11 +3,11 @@
 module Admin
   class ResultPolicy < ApplicationPolicy
     def edit?
-      user.present? && user.teams.exists?(name: "Admins")
+      admin?
     end
 
     def update?
-      user.present? && user.teams.exists?(name: "Admins")
+      admin?
     end
   end
 end

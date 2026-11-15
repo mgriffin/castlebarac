@@ -1,0 +1,67 @@
+<div class="content">
+  <h1 class="h3">Claims</h1>
+  <p>
+    People who asked to be linked to someone already on the site. Anyone can type a name, so check that it's
+    really them before approving. Approving gives them that person's results, family and teams.
+  </p>
+
+  <h2 class="h5">Waiting for approval</h2>
+  <%- if @pending.empty? %>
+    <p>There are no claims waiting.</p>
+  <%- else %>
+    <div class="table-responsive">
+      <table class="table align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Account</th>
+            <th scope="col">Wants to be</th>
+            <th scope="col">Teams</th>
+            <th scope="col">Asked</th>
+            <th scope="col"><span class="visually-hidden">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @pending.each do |claim| %>
+            <tr id="<%= dom_id claim %>">
+              <td>
+                <div><%= link_to claim.user.email, admin_user_path(claim.user) %></div>
+                <div class="small text-body-secondary">
+                  Signed up as <%= claim.user.username %> on <%= claim.user.created_at.to_date.to_fs(:long) %>
+                </div>
+              </td>
+              <td><%= link_to claim.person.fullname, person_path(claim.person) %></td>
+              <td>
+                <%- if claim.person.teams.any? %>
+                  <span class="badge text-bg-warning"><%= claim.person.teams.map(&:name).to_sentence %></span>
+                <%- else %>
+                  <span class="text-body-secondary">–</span>
+                <%- end %>
+              </td>
+              <td><%= time_ago_in_words(claim.created_at) %> ago</td>
+              <td class="text-end text-nowrap">
+                <%= button_to "Approve", approve_admin_person_claim_path(claim), method: :patch,
+                              class: "btn btn-sm btn-primary", form_class: "d-inline-block",
+                              form: { data: { turbo_confirm: "Link #{claim.user.email} to #{claim.person.fullname}?" } } %>
+                <%= button_to "Reject", reject_admin_person_claim_path(claim), method: :patch,
+                              class: "btn btn-sm btn-outline-danger", form_class: "d-inline-block" %>
+              </td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
+
+  <%- if @reviewed.any? %>
+    <h2 class="h5 mt-4">Recently reviewed</h2>
+    <ul>
+      <%- @reviewed.each do |claim| %>
+        <li>
+          <%= claim.user.email %> as <%= claim.person.fullname %>:
+          <%= claim.status %> by <%= claim.reviewed_by&.name || "someone" %>
+          <%= time_ago_in_words(claim.reviewed_at) %> ago
+        </li>
+      <%- end %>
+    </ul>
+  <%- end %>
+</div>

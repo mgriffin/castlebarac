@@ -8,20 +8,23 @@ Rails.application.routes.draw do
     resources :little_athletics, only: :index
   end
 
-  resources :mailing_lists, only: %i[index create]
+  resources :mailing_lists, only: :index
 
   get "rss", to: "feeds#rss", defaults: { format: "xml" }
 
-  resource :profile
+  resource :profile, only: %i[show new create edit update] do
+    resource :claim, only: :destroy, module: :profiles
+    resources :child_claims, only: %i[new create destroy], module: :profiles
+  end
 
   namespace :people do
     resources :search, only: :index
   end
   resources :people, only: :show
-  resources :person_relationships, only: :create
+  resource :impersonation, only: :destroy
 
   resources :posts, except: :destroy do
-    resources :comments, module: :posts
+    resources :comments, only: :create, module: :posts
   end
   resources :events, except: :destroy
 
@@ -36,13 +39,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :time_trials, except: :destroy do
+  resources :time_trials, only: %i[index show new create update] do
     resources :tt_times, only: :new, module: :time_trials
   end
 
   resources :coaches, only: :index
   namespace :coaches do
-    resources :posts
+    resources :posts, only: %i[show new create]
   end
 
   namespace :admin do
@@ -50,19 +53,35 @@ Rails.application.routes.draw do
 
     resources :users, only: %i[index show] do
       post :impersonate, on: :member
-      post :stop_impersonating, on: :collection
       resource :admin_membership, only: %i[create destroy], module: :users
     end
-    resources :people
-    resources :events do
+    resources :people, only: %i[index new create edit update] do
+      resources :relationships, only: :create, module: :people
+      resource :account, only: %i[create destroy], module: :people
+    end
+    resources :child_claims, only: :index do
+      member do
+        patch :approve
+        patch :reject
+      end
+    end
+    resources :person_claims, only: :index do
+      member do
+        patch :approve
+        patch :reject
+      end
+    end
+    resources :events, except: :destroy do
       resources :unlinked_results, only: %i[index create]
     end
     resources :results, only: %i[edit update]
     resources :result_imports, only: %i[new create] do
       get :preview, on: :collection
     end
-    resources :posts
-    resources :teams
+    resources :posts, only: %i[index new create edit update]
+    resources :teams, only: %i[index show new create] do
+      resources :memberships, only: %i[create destroy], module: :teams
+    end
     resources :competitions do
       scope module: :competitions do
         resource :opening, only: %i[create destroy]
@@ -70,7 +89,6 @@ Rails.application.routes.draw do
         resources :entry_lines, only: :destroy
       end
     end
-    resources :memberships, only: %i[new create]
   end
 
   post "stripe/webhooks", to: "stripe_webhooks#create"

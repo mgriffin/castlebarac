@@ -21,6 +21,7 @@ module Competitions
     end
 
     def create
+      authorize @entry, :show?
       return redirect_to competition_entry_path(@competition), alert: t("competitions.entries_closed") unless
         @competition.accepting_entries?
 

@@ -2,7 +2,7 @@
 
 class PeopleController < ApplicationController
   def show
-    @person = Person.find_by(slug: params[:id])
+    @person = Person.find_by!(slug: params.expect(:id))
     authorize @person
   end
 end

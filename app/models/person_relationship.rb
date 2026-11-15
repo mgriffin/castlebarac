@@ -12,4 +12,13 @@ class PersonRelationship < ApplicationRecord
   def self.declare(parent:, child:)
     find_or_create_by!(parent:, child:) { it.self_declared = true }
   end
+
+  validates :child_id, uniqueness: { scope: :parent_id }
+  validate :not_their_own_parent
+
+  private
+
+  def not_their_own_parent
+    errors.add(:child, :own_parent) if child_id.present? && child_id == parent_id
+  end
 end

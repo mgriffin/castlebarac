@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class ResultsController < ApplicationController
+  class ResultsController < BaseController
     def edit
       @result = Result.find(params.expect(:id))
       authorize [:admin, @result]
