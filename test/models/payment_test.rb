@@ -70,4 +70,20 @@ class PaymentTest < ActiveSupport::TestCase
     assert_predicate @payment.reload, :pending?
     assert_equal @payment, @line.reload.payment
   end
+
+  test "a checkout that's still being started can't be stopped" do
+    starting = @entry.payments.create!(amount_cents: 500)
+
+    assert_raises(Payment::InProgress) { starting.expire! }
+    assert_predicate starting.reload, :pending?
+  end
+
+  test "a checkout that failed to start a while ago is expired" do
+    stale = @entry.payments.create!(amount_cents: 500, created_at: 2.minutes.ago)
+    Stripe::Checkout::Session.expects(:expire).never
+
+    stale.expire!
+
+    assert_predicate stale.reload, :expired?
+  end
 end

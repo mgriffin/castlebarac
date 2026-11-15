@@ -19,16 +19,45 @@ class StripeCheckout
     lines = @entry.entry_lines.unpaid.includes(:person, :competition_event).to_a
     return if lines.empty?
 
-    Payment.transaction do
-      payment = @entry.payments.create!(amount_cents: lines.size * fee)
-      session = Stripe::Checkout::Session.create(session_params(payment, lines))
-      payment.update!(stripe_checkout_session_id: session.id)
-      EntryLine.where(id: lines).update_all(payment_id: payment.id) # rubocop:disable Rails/SkipsModelValidations
-      session.url
-    end
+    # Stripe is called outside the transaction, so other writes aren't held
+    # up waiting for it
+    payment = claim(lines)
+    session = create_session(payment, lines)
+    record(payment, session)
+    session.url
   end
 
   private
+
+  # A pending payment for the lines. Raises Payment::InProgress if another
+  # checkout took any of them in the meantime, e.g. from a second tab.
+  def claim(lines)
+    Payment.transaction do
+      payment = @entry.payments.create!(amount_cents: lines.size * fee)
+      unclaimed = EntryLine.where(id: lines, payment_id: nil)
+      claimed = unclaimed.update_all(payment_id: payment.id) # rubocop:disable Rails/SkipsModelValidations
+      raise Payment::InProgress if claimed != lines.size
+
+      payment
+    end
+  end
+
+  def create_session(payment, lines)
+    Stripe::Checkout::Session.create(session_params(payment, lines))
+  rescue StandardError
+    payment.destroy! # its lines can be paid for again
+    raise
+  end
+
+  # If the session can't be saved, it's stopped so it can't be paid for
+  # without us knowing
+  def record(payment, session)
+    payment.update!(stripe_checkout_session_id: session.id)
+  rescue StandardError
+    Stripe::Checkout::Session.expire(session.id)
+    payment.destroy!
+    raise
+  end
 
   def fee
     @entry.competition.fee_per_event_cents

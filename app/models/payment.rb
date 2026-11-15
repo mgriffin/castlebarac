@@ -6,6 +6,9 @@ class Payment < ApplicationRecord
   # transfer, so its lines can't be moved to a new checkout
   class InProgress < StandardError; end
 
+  # How long starting a checkout can take, i.e. creating it on Stripe
+  STARTING_FOR = 1.minute
+
   belongs_to :entry
   has_many :entry_lines, dependent: :nullify
 
@@ -43,7 +46,14 @@ class Payment < ApplicationRecord
   # turns out to have been paid already, it's marked as paid instead, and if
   # the payment is still going through this raises InProgress.
   def expire!
-    Stripe::Checkout::Session.expire(stripe_checkout_session_id) if stripe_checkout_session_id
+    # The checkout is still being started, unless that failed a while ago
+    if stripe_checkout_session_id.nil?
+      raise InProgress if created_at > STARTING_FOR.ago
+
+      return mark_expired!
+    end
+
+    Stripe::Checkout::Session.expire(stripe_checkout_session_id)
     mark_expired!
   rescue Stripe::InvalidRequestError
     # It's already finished, e.g. paid before the webhook told us

@@ -14,7 +14,12 @@ class StripeWebhooksController < ActionController::API
 
   def handle(type, session)
     payment = Payment.find_by(stripe_checkout_session_id: session.id)
-    return if payment.nil?
+    if payment.nil?
+      # Nothing we know of, e.g. a checkout that was stopped because it
+      # couldn't be saved. If it was paid, it needs refunding by hand.
+      return Rails.logger.error("Stripe #{type} for unknown checkout #{session.id} " \
+                                "(payment status #{session.payment_status})")
+    end
 
     case type
     when "checkout.session.completed", "checkout.session.async_payment_succeeded"

@@ -75,4 +75,35 @@ class StripeCheckoutTest < ActiveSupport::TestCase
     assert_raises(Payment::InProgress) { @checkout.start }
     assert_equal [first.id], @entry.entry_lines.pluck(:payment_id).uniq
   end
+
+  test "doesn't hold up the database while Stripe is called" do
+    # Each test runs in a transaction of its own
+    outside = ActiveRecord::Base.connection.open_transactions
+    Stripe::Checkout::Session.expects(:create).with do
+      assert_equal outside, ActiveRecord::Base.connection.open_transactions, "Stripe was called inside a transaction"
+      true
+    end.returns(stripe_session)
+
+    @checkout.start
+  end
+
+  test "stops the checkout if it can't be saved" do
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_lost"))
+    Payment.any_instance.stubs(:update!).raises(ActiveRecord::RecordInvalid)
+    Stripe::Checkout::Session.expects(:expire).with("cs_lost")
+
+    assert_raises(ActiveRecord::RecordInvalid) { @checkout.start }
+    assert_empty @entry.payments.reload
+    assert_equal [nil], @entry.entry_lines.pluck(:payment_id).uniq
+  end
+
+  test "won't take lines another checkout has taken in the meantime" do
+    other = @entry.payments.create!(amount_cents: 500, stripe_checkout_session_id: "cs_other")
+    Entry.any_instance.stubs(:expire_pending_payments)
+    @entry.entry_lines.first.update!(payment: other)
+    Stripe::Checkout::Session.expects(:create).never
+
+    assert_raises(Payment::InProgress) { @checkout.start }
+    assert_equal [other], @entry.payments.reload.to_a
+  end
 end

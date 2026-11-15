@@ -35,6 +35,15 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_predicate @payment.reload, :expired?
   end
 
+  test "logs events for checkouts it doesn't know" do
+    @payment.update!(stripe_checkout_session_id: "cs_other")
+    Rails.logger.expects(:error).with(regexp_matches(/unknown checkout cs_test_123 \(payment status paid\)/))
+
+    send_event("checkout.session.completed", payment_status: "paid")
+
+    assert_response :ok
+  end
+
   test "ignores events without a valid signature" do
     post stripe_webhooks_url, params: event_json("checkout.session.completed", payment_status: "paid"),
                               headers: { "Stripe-Signature" => "t=1,v1=nope", "Content-Type" => "application/json" }
