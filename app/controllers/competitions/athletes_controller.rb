@@ -18,9 +18,19 @@ module Competitions
       end
     end
 
-    # Pick someone to enter: the user or one of their children
+    # Pick someone to enter: the user or one of their children, or for staff,
+    # anyone
     def new
       @linked_people = linked_people
+    end
+
+    # Staff searching for someone to enter
+    def create
+      return redirect_to new_competition_entry_athlete_path(@competition), alert: t(".choose") if
+        params[:person_id].blank?
+
+      athlete = find_athlete(params[:person_id])
+      redirect_to competition_entry_athlete_path(@competition, athlete.id)
     end
 
     def update

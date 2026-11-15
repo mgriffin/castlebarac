@@ -3,6 +3,21 @@
   <h1>Who are you entering?</h1>
   <p class="subtle"><%= @competition.name %></p>
 
+  <%- if policy(@entry).enter_anyone? %>
+    <%= form_with url: competition_entry_athletes_path(@competition), class: "mb-4" do |form| %>
+      <div class="mb-3" data-controller="autocomplete" data-autocomplete-url-value="<%= people_search_index_url %>"
+           role="combobox">
+        <%= form.label :person_search, "Search for anyone in the club", class: "form-label" %>
+        <%= form.text_field :person_search, autocomplete: "off", class: "form-control",
+                                            placeholder: "Start typing their name",
+                                            data: { autocomplete_target: "input" } %>
+        <%= form.hidden_field :person_id, data: { autocomplete_target: "hidden" } %>
+        <ul class="autocomplete list-group" data-autocomplete-target="results"></ul>
+      </div>
+      <%= form.submit "Choose", class: "btn btn-primary" %>
+    <%- end %>
+  <%- end %>
+
   <%- if @linked_people.any? %>
     <div class="d-flex flex-wrap gap-2 mb-4">
       <%- @linked_people.each do |person| %>

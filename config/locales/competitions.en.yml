@@ -58,6 +58,8 @@ en:
     entries_closed: "Entries for this competition are closed"
     payment_in_progress: "Your last payment is still going through. You can change your entry once it has."
     athletes:
+      create:
+        choose: "Choose someone from the list"
       update:
         notice: "Saved %{name}'s events"
       destroy:

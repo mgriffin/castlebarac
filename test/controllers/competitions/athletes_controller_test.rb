@@ -15,7 +15,8 @@ module Competitions
       get new_competition_entry_athlete_url(@competition)
 
       assert_response :success
-      assert_equal ["Bugs Bunny", "Aoife Moran", "Ciara Walsh"], css_select("a.btn").map { it.text.strip }
+      assert_select "input[name=person_search]", count: 0
+      assert_equal(["Bugs Bunny", "Aoife Moran", "Ciara Walsh"], css_select("a.btn").map { it.text.strip })
       assert_select "a[href=?]", new_profile_child_claim_path
     end
 
@@ -42,6 +43,14 @@ module Competitions
       assert_equal 0, EntryLine.count
 
       delete competition_entry_athlete_url(@competition, liam.id)
+      assert_response :not_found
+    end
+
+    test "can't choose someone who isn't your child" do
+      get competition_entry_url(@competition)
+
+      post competition_entry_athletes_url(@competition), params: { person_id: people(:liam).id }
+
       assert_response :not_found
     end
 

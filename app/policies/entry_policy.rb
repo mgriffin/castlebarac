@@ -8,4 +8,9 @@ class EntryPolicy < ApplicationPolicy
   def update?
     show? && record.accepting_entries?
   end
+
+  # Anyone else can only enter themselves and their children
+  def enter_anyone?
+    staff?
+  end
 end
