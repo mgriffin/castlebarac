@@ -44,6 +44,16 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
   end
 
+  test "says why when the signing secret isn't set" do
+    ENV.delete("STRIPE_WEBHOOK_SECRET")
+    Rails.logger.expects(:error).with(regexp_matches(/STRIPE_WEBHOOK_SECRET/))
+
+    send_event("checkout.session.completed", payment_status: "paid")
+
+    assert_response :internal_server_error
+    assert_predicate @payment.reload, :pending?
+  end
+
   test "ignores events without a valid signature" do
     post stripe_webhooks_url, params: event_json("checkout.session.completed", payment_status: "paid"),
                               headers: { "Stripe-Signature" => "t=1,v1=nope", "Content-Type" => "application/json" }

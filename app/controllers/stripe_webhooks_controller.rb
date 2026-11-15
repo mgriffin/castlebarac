@@ -3,6 +3,8 @@
 # Stripe tells us here when a checkout has been paid for or has expired
 class StripeWebhooksController < ActionController::API
   def create
+    return missing_secret if secret.blank?
+
     event = Stripe::Webhook.construct_event(request.raw_post, request.headers["Stripe-Signature"], secret)
     handle(event.type, event.data.object)
     head :ok
@@ -27,6 +29,13 @@ class StripeWebhooksController < ActionController::API
     when "checkout.session.expired", "checkout.session.async_payment_failed"
       payment.mark_expired!
     end
+  end
+
+  # Stripe keeps retrying, so these go through once the secret is set
+  def missing_secret
+    Rails.logger.error("Can't check Stripe webhooks: set stripe.webhook_secret in the credentials " \
+                       "or STRIPE_WEBHOOK_SECRET")
+    head :internal_server_error
   end
 
   def secret
