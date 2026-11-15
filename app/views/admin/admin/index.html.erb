@@ -15,6 +15,10 @@
     <li>
       <%= link_to "Claims waiting for approval (#{PersonClaim.pending.count})", admin_person_claims_path %>
     </li>
+    <li>
+      <%= link_to "Parents waiting to be linked to their children (#{ChildClaim.pending.count})",
+                  admin_child_claims_path %>
+    </li>
   </ul>
 
   <h2>Posts</h2>

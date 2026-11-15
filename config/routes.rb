@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[show new create edit update] do
     resource :claim, only: :destroy, module: :profiles
+    resources :child_claims, only: %i[new create destroy], module: :profiles
   end
 
   namespace :people do
@@ -46,6 +47,12 @@ Rails.application.routes.draw do
     resources :people, only: %i[index new create edit update] do
       resources :relationships, only: :create, module: :people
       resource :account, only: %i[create destroy], module: :people
+    end
+    resources :child_claims, only: :index do
+      member do
+        patch :approve
+        patch :reject
+      end
     end
     resources :person_claims, only: :index do
       member do

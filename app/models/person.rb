@@ -7,6 +7,7 @@ class Person < ApplicationRecord
   has_many :results, dependent: :nullify
   has_many :tt_times, dependent: :nullify, inverse_of: :person
   has_many :person_claims, dependent: :destroy
+  has_many :child_claims, foreign_key: :child_id, inverse_of: :child, dependent: :destroy
   has_many :parent_child_relationships,
            class_name: "PersonRelationship",
            foreign_key: :child_id,

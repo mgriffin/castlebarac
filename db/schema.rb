@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_15_000031) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -47,6 +47,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_000031) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "child_claims", force: :cascade do |t|
+    t.integer "child_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "reviewed_at"
+    t.integer "reviewed_by_id"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["child_id"], name: "index_child_claims_on_child_id"
+    t.index ["reviewed_by_id"], name: "index_child_claims_on_reviewed_by_id"
+    t.index ["user_id", "child_id"], name: "index_child_claims_on_pending_user_id_and_child_id", unique: true, where: "status = 'pending'"
+    t.index ["user_id"], name: "index_child_claims_on_user_id"
   end
 
   create_table "coach_posts", force: :cascade do |t|
@@ -236,6 +250,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_000031) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "child_claims", "people", column: "child_id"
+  add_foreign_key "child_claims", "users"
+  add_foreign_key "child_claims", "users", column: "reviewed_by_id"
   add_foreign_key "coach_posts", "users"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"

@@ -1,0 +1,31 @@
+<% content_for :title, "Link your child" %>
+<div class="content">
+  <h1>Link your child</h1>
+  <p>
+    Once your child is linked to your account, you can see all their results in one place.
+    An admin checks each request first.
+  </p>
+
+  <%= form_with url: profile_child_claims_path do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, "Your child's full name", class: "form-label" %>
+      <%= form.text_field :name, value: @name, required: true, autocomplete: "off", class: "form-control" %>
+    </div>
+
+    <%- if @matches.present? %>
+      <fieldset class="mb-3">
+        <legend class="fs-6">Which one is your child?</legend>
+        <%- @matches.each do |person| %>
+          <%= render "profiles/match", form:, person:, field: :child_id %>
+        <%- end %>
+      </fieldset>
+    <%- elsif @name.present? %>
+      <p class="alert alert-warning">
+        We couldn't find anyone called <%= @name %> to link to you. Check the spelling, or ask a committee member to
+        add them to the website.
+      </p>
+    <%- end %>
+
+    <%= form.submit @matches.present? ? "Ask to be linked" : "Find them", class: "btn btn-primary" %>
+  <%- end %>
+</div>

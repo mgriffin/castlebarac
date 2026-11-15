@@ -36,6 +36,15 @@ en:
             base:
               linked_to_someone_else: "%{name} is already linked to another account"
               account_has_a_person: "%{email} is already linked to %{name}, who has results, teams or family on the site"
+        child_claim:
+          attributes:
+            user:
+              no_person: "needs to fill out their own details first"
+            child:
+              themselves: "can't be yourself"
+              already_linked: "is already linked to you"
+            child_id:
+              taken: "has already been asked for"
         person_relationship:
           attributes:
             child_id:
@@ -43,6 +52,11 @@ en:
             child:
               own_parent: "can't be the same person as the parent"
   admin:
+    child_claims:
+      approve:
+        approved: "Linked %{parent} as the parent of %{child}"
+      reject:
+        rejected: "Rejected %{email}'s request to be linked to %{child}"
     person_claims:
       approve:
         approved: "Linked %{email} to %{name}"
@@ -100,6 +114,11 @@ en:
     claims:
       destroy:
         cancelled: "Cancelled. You can fill out your details now"
+    child_claims:
+      create:
+        claimed: "Thanks. An admin will check, and then link %{name} to your account"
+      destroy:
+        cancelled: "Cancelled your request to be linked to %{name}"
   posts:
     comments:
       create:
