@@ -26,15 +26,7 @@ class Person < ApplicationRecord
            through: :child_parent_relationships,
            source: :child
 
-  has_many :entry_lines, dependent: :restrict_with_error
-
-  GENDERS = %w[female male].freeze
-
-  # Asked for the first time someone is entered into a competition
-  with_options on: :entry_details do
-    validates :gender, inclusion: { in: GENDERS }
-    validates :year, format: { with: /\A(19|20)\d\d\z/ }
-  end
+  include Competitor
 
   validates :user_id, uniqueness: true, allow_nil: true
 
@@ -77,19 +69,6 @@ class Person < ApplicationRecord
 
   def to_param
     slug
-  end
-
-  def birth_year
-    year.to_i if year.to_s.match?(/\A\d{4}\z/)
-  end
-
-  # Age on the given date, going by birth year only
-  def age_on(date)
-    date.year - birth_year
-  end
-
-  def entry_details_complete?
-    birth_year.present? && GENDERS.include?(gender)
   end
 
   # Nothing hangs off this person: no results, time trial times, teams,
