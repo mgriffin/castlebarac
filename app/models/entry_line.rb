@@ -53,6 +53,10 @@ class EntryLine < ApplicationRecord
     errors.add(:person, reason) if reason
   end
 
+  # Two parents entering the same child at once can't both get under the
+  # limit: SQLite has one writer at a time, and this runs inside the
+  # transaction that saves the line (Rails starts SQLite transactions with
+  # BEGIN IMMEDIATE), so the second count waits for the first save.
   def within_event_limit
     return if person.nil? || entry.nil?
 
