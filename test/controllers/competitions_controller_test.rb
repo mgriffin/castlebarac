@@ -38,4 +38,13 @@ class CompetitionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test "links the committee to managing competitions" do
+    get competitions_url
+    assert_select "a[href=?]", admin_competitions_path, count: 0
+
+    sign_in users(:secretary)
+    get competitions_url
+    assert_select "a[href=?]", admin_competitions_path
+  end
 end

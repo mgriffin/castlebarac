@@ -1,6 +1,9 @@
 <% content_for :title, "Competitions" %>
 <div class="content">
   <h1>Competitions</h1>
+  <%- if policy([:admin, Competition]).index? %>
+    <p><%= link_to "Manage competitions", admin_competitions_path %></p>
+  <%- end %>
 
   <%- if @competitions.empty? %>
     <p>There are no competitions coming up.</p>

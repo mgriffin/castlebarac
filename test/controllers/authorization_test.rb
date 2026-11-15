@@ -16,7 +16,8 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
   end
 
   def public_pages
-    [root_path, events_path, event_path(@event), rss_path, training_times_path, training_little_athletics_path]
+    [root_path, events_path, event_path(@event), rss_path, training_times_path, training_little_athletics_path,
+     competitions_path, competition_path(competitions(:connacht))]
   end
 
   def staff_pages
@@ -28,7 +29,9 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
     [admin_root_path, admin_events_path, admin_event_path(@event), edit_admin_event_path(@event),
      admin_posts_path, edit_admin_post_path(posts(:one)),
      new_admin_person_path, edit_admin_result_path(@result), admin_teams_path, new_admin_team_path,
-     admin_user_path(users(:bugs)), admin_person_claims_path, admin_child_claims_path]
+     admin_user_path(users(:bugs)), admin_person_claims_path, admin_child_claims_path,
+     admin_competitions_path, admin_competition_path(competitions(:connacht)), new_admin_competition_path,
+     edit_admin_competition_path(competitions(:connacht)), admin_competition_entries_path(competitions(:connacht))]
   end
 
   test "admins can open every page" do
