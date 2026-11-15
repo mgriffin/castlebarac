@@ -10,11 +10,13 @@ class EntryLines
   # Enters the person into exactly these events, returning any errors. Nothing
   # changes if there are errors.
   def replace(event_ids)
+    # First, as an earlier checkout may turn out to have been paid
+    @entry.expire_pending_payments
+
     paid = @entry.entry_lines.paid.where(person: @person).where.not(competition_event_id: event_ids)
     return paid.map { paid_error(it) } if paid.any?
 
     errors = []
-    @entry.expire_pending_payments
 
     Entry.transaction do
       @entry.save! if @entry.new_record?

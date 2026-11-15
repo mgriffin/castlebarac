@@ -49,12 +49,25 @@ class PaymentTest < ActiveSupport::TestCase
     assert_predicate @payment.reload, :expired?
   end
 
-  test "a checkout that was paid before it could be stopped isn't expired" do
+  test "a checkout that was paid before it could be stopped is marked as paid" do
     Stripe::Checkout::Session.expects(:expire).raises(Stripe::InvalidRequestError.new("Already complete", nil))
-    Stripe::Checkout::Session.expects(:retrieve).returns(stripe_session(status: "complete"))
+    paid = stripe_session(status: "complete", payment_status: "paid", payment_intent: "pi_1")
+    Stripe::Checkout::Session.expects(:retrieve).returns(paid)
 
     @payment.expire!
 
+    assert_predicate @payment.reload, :paid?
+    assert_equal "pi_1", @payment.stripe_payment_intent_id
+    assert_predicate @line.reload, :paid?
+  end
+
+  test "a checkout whose payment is still going through can't be stopped" do
+    Stripe::Checkout::Session.expects(:expire).raises(Stripe::InvalidRequestError.new("Already complete", nil))
+    Stripe::Checkout::Session.expects(:retrieve).returns(stripe_session(status: "complete", payment_status: "unpaid"))
+
+    assert_raises(Payment::InProgress) { @payment.expire! }
+
     assert_predicate @payment.reload, :pending?
+    assert_equal @payment, @line.reload.payment
   end
 end

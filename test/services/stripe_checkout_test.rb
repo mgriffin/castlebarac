@@ -49,4 +49,30 @@ class StripeCheckoutTest < ActiveSupport::TestCase
     assert_raises(Stripe::APIConnectionError) { @checkout.start }
     assert_empty @entry.payments.reload
   end
+
+  test "doesn't charge again for a checkout that was paid before it could be stopped" do
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_first"))
+    @checkout.start
+
+    Stripe::Checkout::Session.expects(:expire).raises(Stripe::InvalidRequestError.new("Already complete", nil))
+    paid = stripe_session(id: "cs_first", status: "complete", payment_status: "paid")
+    Stripe::Checkout::Session.expects(:retrieve).returns(paid)
+    Stripe::Checkout::Session.expects(:create).never
+
+    assert_nil @checkout.start
+    assert_equal %w[paid], @entry.payments.pluck(:status)
+    assert_equal 0, @entry.amount_due_cents
+  end
+
+  test "doesn't start another checkout while a payment is going through" do
+    Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_first"))
+    @checkout.start
+    first = @entry.payments.sole
+
+    Stripe::Checkout::Session.expects(:expire).raises(Stripe::InvalidRequestError.new("Already complete", nil))
+    Stripe::Checkout::Session.expects(:retrieve).returns(stripe_session(id: "cs_first", status: "complete"))
+
+    assert_raises(Payment::InProgress) { @checkout.start }
+    assert_equal [first.id], @entry.entry_lines.pluck(:payment_id).uniq
+  end
 end

@@ -28,7 +28,10 @@ module Competitions
       authorize @entry, :update?
       return redirect_to competition_entry_path(@competition) if @entry.new_record? || @entry.amount_due_cents.zero?
 
-      redirect_to checkout_url, allow_other_host: true, status: :see_other
+      url = checkout_url
+      return redirect_to competition_entry_path(@competition), notice: t(".paid") if url.nil?
+
+      redirect_to url, allow_other_host: true, status: :see_other
     rescue Stripe::StripeError => e
       Rails.logger.error("Couldn't start a Stripe checkout: #{e.message}")
       redirect_to competition_entry_path(@competition), alert: t(".failed")

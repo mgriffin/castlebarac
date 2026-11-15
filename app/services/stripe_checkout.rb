@@ -11,12 +11,13 @@ class StripeCheckout
     @cancel_url = cancel_url
   end
 
-  # Returns the URL to send the user to
+  # Returns the URL to send the user to, or nil if there's nothing to pay for,
+  # e.g. because an earlier checkout turned out to have been paid
   def start
-    @entry.payments.pending.find_each(&:expire!)
+    @entry.expire_pending_payments
 
     lines = @entry.entry_lines.unpaid.includes(:person, :competition_event).to_a
-    raise ArgumentError, "Nothing to pay for" if lines.empty?
+    return if lines.empty?
 
     Payment.transaction do
       payment = @entry.payments.create!(amount_cents: lines.size * fee)

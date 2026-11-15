@@ -7,6 +7,10 @@ module CompetitionEntry
   included do
     before_action :authenticate_user!
     before_action :set_competition_and_entry
+
+    rescue_from Payment::InProgress do
+      redirect_to competition_entry_path(@competition), alert: t("competitions.payment_in_progress")
+    end
   end
 
   private

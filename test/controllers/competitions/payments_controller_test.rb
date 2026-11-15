@@ -33,6 +33,19 @@ module Competitions
       assert_equal "Sorry, we couldn't start the payment. Please try again.", flash[:alert]
     end
 
+    test "says if the last payment is still going through" do
+      Stripe::Checkout::Session.stubs(:create).returns(stripe_session(id: "cs_first"))
+      post competition_entry_payment_url(@competition)
+      Stripe::Checkout::Session.stubs(:expire).raises(Stripe::InvalidRequestError.new("Already complete", nil))
+      Stripe::Checkout::Session.stubs(:retrieve).returns(stripe_session(id: "cs_first", status: "complete"))
+
+      post competition_entry_payment_url(@competition)
+
+      assert_redirected_to competition_entry_url(@competition)
+      assert_equal "Your last payment is still going through. You can change your entry once it has.", flash[:alert]
+      assert_equal 1, @entry.payments.count
+    end
+
     test "can't pay once entries close" do
       @competition.update!(entries_close_at: 1.minute.ago)
 
