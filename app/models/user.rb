@@ -13,8 +13,11 @@ class User < ApplicationRecord
   # linked them to. It's never matched up by name, as anyone can type a name.
   has_one :person, dependent: :nullify
   has_many :person_claims, dependent: :destroy
+  has_many :child_claims, dependent: :destroy
   has_many :reviewed_person_claims, class_name: "PersonClaim", foreign_key: :reviewed_by_id,
                                     inverse_of: :reviewed_by, dependent: :nullify
+  has_many :reviewed_child_claims, class_name: "ChildClaim", foreign_key: :reviewed_by_id,
+                                   inverse_of: :reviewed_by, dependent: :nullify
 
   def name
     person&.fullname

@@ -17,11 +17,27 @@
       </tr>
     </tbody>
   </table>
-  <%- unless @profile.children.empty? %>
+
+  <h2 class="h5 mt-4">Your children</h2>
+  <%- if @profile.children.any? %>
     <ul>
       <%- @profile.children.each do |child| %>
         <li><%= link_to child.fullname, person_path(child) %></li>
       <%- end %>
     </ul>
   <%- end %>
+  <%- pending = current_user.child_claims.pending.includes(:child) %>
+  <%- if pending.any? %>
+    <p class="mb-1">Waiting for an admin to check:</p>
+    <ul>
+      <%- pending.each do |claim| %>
+        <li id="<%= dom_id claim %>">
+          <%= claim.child.fullname %>
+          <%= button_to "Cancel", profile_child_claim_path(claim), method: :delete,
+                        class: "btn btn-sm btn-link p-0 align-baseline", form_class: "d-inline" %>
+        </li>
+      <%- end %>
+    </ul>
+  <%- end %>
+  <%= link_to "Link your child", new_profile_child_claim_path, class: "btn btn-outline-primary" %>
 </div>
