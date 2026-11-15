@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_14_233747) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_15_000031) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -150,6 +150,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_233747) do
     t.datetime "created_at", null: false
     t.integer "parent_id"
     t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_person_relationships_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_person_relationships_on_parent_id_and_child_id", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
