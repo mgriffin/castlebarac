@@ -32,6 +32,11 @@ class Payment < ApplicationRecord
     completed
   end
 
+  # Marks the payment as paid if Stripe says its checkout has been
+  def complete_if_paid!(session)
+    complete!(payment_intent: session.payment_intent) if session.payment_status == "paid"
+  end
+
   # The checkout ended without being paid, so its lines can be paid for again
   def mark_expired!
     with_lock do
@@ -61,7 +66,7 @@ class Payment < ApplicationRecord
     if session.status != "complete"
       mark_expired!
     elsif session.payment_status == "paid"
-      complete!(payment_intent: session.payment_intent)
+      complete_if_paid!(session)
     else
       raise InProgress
     end

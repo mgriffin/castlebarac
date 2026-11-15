@@ -25,7 +25,7 @@ class StripeWebhooksController < ActionController::API
 
     case type
     when "checkout.session.completed", "checkout.session.async_payment_succeeded"
-      payment.complete!(payment_intent: session.payment_intent) if session.payment_status == "paid"
+      payment.complete_if_paid!(session)
     when "checkout.session.expired", "checkout.session.async_payment_failed"
       payment.mark_expired!
     end

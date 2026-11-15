@@ -5,13 +5,15 @@ module Competitions
   class PaymentsController < ApplicationController
     include CompetitionEntry
 
+    before_action :require_accepting_entries, only: :create
+
     # Where Stripe sends people back to once they've paid. The webhook usually
     # gets there first, but this means they see that it's paid straight away.
     def show
       authorize @entry
       payment = @entry.payments.find_by!(stripe_checkout_session_id: params.expect(:session_id))
       session = Stripe::Checkout::Session.retrieve(payment.stripe_checkout_session_id)
-      payment.complete!(payment_intent: session.payment_intent) if session.payment_status == "paid"
+      payment.complete_if_paid!(session)
 
       if payment.reload.paid?
         redirect_to competition_entry_path(@competition), notice: t(".paid")
@@ -21,10 +23,6 @@ module Competitions
     end
 
     def create
-      authorize @entry, :show?
-      return redirect_to competition_entry_path(@competition), alert: t("competitions.entries_closed") unless
-        @competition.accepting_entries?
-
       authorize @entry, :update?
       return redirect_to competition_entry_path(@competition) if @entry.new_record? || @entry.amount_due_cents.zero?
 
