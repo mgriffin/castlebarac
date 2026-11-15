@@ -3,7 +3,7 @@
 class CompetitionsController < ApplicationController
   def index
     authorize Competition
-    @competitions = Competition.upcoming.where.not(status: :draft)
+    @competitions = Competition.upcoming.published
   end
 
   def show

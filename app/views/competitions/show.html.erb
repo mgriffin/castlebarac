@@ -8,7 +8,7 @@
   <%= render "entries_status", competition: @competition %>
   <%- if @competition.accepting_entries? %>
     <p>
-      <%= number_to_currency @competition.fee_per_event, unit: "€" %> per athlete for each event.
+      <%= euros @competition.fee_per_event_cents %> per athlete for each event.
       <%- if @competition.max_events_per_athlete %>
         Each athlete can be entered into up to <%= pluralize @competition.max_events_per_athlete, "event" %>.
       <%- end %>

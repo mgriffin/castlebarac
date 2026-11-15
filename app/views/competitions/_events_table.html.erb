@@ -14,7 +14,7 @@
           <td><%= event.name %></td>
           <td><%= event.age_group %></td>
           <td><%= birth_years(event) %></td>
-          <td><%= event.start_time&.strftime("%H:%M") %></td>
+          <td><%= event_time(event) %></td>
         </tr>
       <%- end %>
     </tbody>

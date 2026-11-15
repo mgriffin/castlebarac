@@ -15,8 +15,12 @@ class Entry < ApplicationRecord
   delegate :accepting_entries?, to: :competition
 
   # { person => [entry lines] }
-  def lines_by_person
-    entry_lines.includes(:person).group_by(&:person)
+  def lines_by_person(lines = entry_lines)
+    lines.includes(:person).group_by(&:person)
+  end
+
+  def paid_lines_by_person
+    lines_by_person(entry_lines.paid)
   end
 
   # What's still to be paid. An entry isn't finished until it's paid for.

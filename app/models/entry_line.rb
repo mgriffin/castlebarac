@@ -22,10 +22,6 @@ class EntryLine < ApplicationRecord
     paid_at.present?
   end
 
-  def unpaid?
-    !paid?
-  end
-
   # Lines for this person in this competition, whoever entered them
   scope :for_person_in, lambda { |person, competition|
     joins(:competition_event).where(person:, competition_events: { competition_id: competition.id })

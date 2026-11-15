@@ -24,6 +24,7 @@ class Competition < ApplicationRecord
                                 reject_if: ->(attributes) { attributes[:name].blank? }
 
   scope :upcoming, -> { where(date: Date.current..).order(:date) }
+  scope :published, -> { where.not(status: :draft) }
 
   validates :name, :date, :entries_close_at, presence: true
   validates :max_events_per_athlete, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true

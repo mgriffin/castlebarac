@@ -8,7 +8,7 @@ class CompetitionMailer < ApplicationMailer
     @payment = params[:payment]
     @entry = @payment.entry
     @competition = @entry.competition
-    @lines_by_person = @entry.entry_lines.paid.includes(:person).group_by(&:person)
+    @lines_by_person = @entry.paid_lines_by_person
 
     mail(to: @entry.user.email, subject: t(".subject", name: @competition.name))
   end
@@ -17,7 +17,7 @@ class CompetitionMailer < ApplicationMailer
   def reminder
     @entry = params[:entry]
     @competition = @entry.competition
-    @lines_by_person = @entry.entry_lines.paid.includes(:person).group_by(&:person)
+    @lines_by_person = @entry.paid_lines_by_person
 
     mail(to: @entry.user.email,
          subject: t(".subject", name: @competition.name, date: l(@competition.date, format: :long)))

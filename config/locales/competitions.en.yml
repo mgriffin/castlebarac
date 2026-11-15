@@ -30,7 +30,6 @@ en:
                 other: "%{name} can only be entered into %{count} events"
             competition_event:
               not_in_competition: "isn't part of this competition"
-              taken: "has already been entered"
             competition_event_id:
               taken: "already has this person entered"
             person:

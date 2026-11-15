@@ -12,6 +12,11 @@ module CompetitionsHelper
     "#{last} or earlier" if last
   end
 
+  # e.g. "14:30", or nil if the event has no start time yet
+  def event_time(event)
+    event.start_time&.strftime("%H:%M")
+  end
+
   def euros(cents)
     number_to_currency(cents / 100.0, unit: "€")
   end

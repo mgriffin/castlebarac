@@ -12,6 +12,7 @@
   <%- end %>
 
   <%- lines_by_person = @entry.persisted? ? @entry.lines_by_person : {} %>
+  <%- amount_due = @entry.amount_due_cents %>
   <%- if lines_by_person.empty? %>
     <p>You haven't entered anyone yet.</p>
   <%- else %>
@@ -48,8 +49,8 @@
       </section>
     <%- end %>
 
-    <%- if @entry.amount_due_cents.positive? %>
-      <p class="fs-5 mb-1">To pay: <strong><%= euros @entry.amount_due_cents %></strong></p>
+    <%- if amount_due.positive? %>
+      <p class="fs-5 mb-1">To pay: <strong><%= euros amount_due %></strong></p>
       <%- if @competition.accepting_entries? %>
         <p>Your entry isn't finished until it's paid for.</p>
       <%- else %>
@@ -62,8 +63,8 @@
 
   <%- if @competition.accepting_entries? %>
     <div class="d-flex flex-wrap gap-2">
-      <%- if @entry.persisted? && @entry.amount_due_cents.positive? %>
-        <%= button_to "Pay #{euros @entry.amount_due_cents} and finish",
+      <%- if @entry.persisted? && amount_due.positive? %>
+        <%= button_to "Pay #{euros amount_due} and finish",
                       competition_entry_payment_path(@competition),
                       class: "btn btn-success", form: { data: { turbo: false } } %>
       <%- end %>

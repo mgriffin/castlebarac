@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CompetitionEvent < ApplicationRecord
-  GENDERS = %w[female male].freeze
+  GENDERS = Competitor::GENDERS
 
   belongs_to :competition
   has_many :entry_lines, dependent: :restrict_with_error

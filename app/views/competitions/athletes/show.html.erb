@@ -47,7 +47,7 @@
             <label class="form-check-label" for="event_<%= event.id %>">
               <%= event.name %>
               <%- if event.start_time %>
-                <span class="subtle"><%= event.start_time.strftime("%H:%M") %></span>
+                <span class="subtle"><%= event_time(event) %></span>
               <%- end %>
             </label>
           <%- end %>
@@ -55,7 +55,7 @@
       <%- end %>
 
       <p class="mt-3">
-        <%= number_to_currency @competition.fee_per_event, unit: "€" %> for each event.
+        <%= euros @competition.fee_per_event_cents %> for each event.
       </p>
 
       <%= form.submit "Save", class: "btn btn-primary" %>

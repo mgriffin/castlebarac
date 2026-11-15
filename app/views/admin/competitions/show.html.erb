@@ -16,7 +16,7 @@
     <dt class="col-sm-4">Entries close</dt>
     <dd class="col-sm-8"><%= l @competition.entries_close_at, format: :long %></dd>
     <dt class="col-sm-4">Fee per event</dt>
-    <dd class="col-sm-8"><%= number_to_currency @competition.fee_per_event, unit: "€" %></dd>
+    <dd class="col-sm-8"><%= euros @competition.fee_per_event_cents %></dd>
     <dt class="col-sm-4">Events per athlete</dt>
     <dd class="col-sm-8"><%= @competition.max_events_per_athlete || "No limit" %></dd>
     <dt class="col-sm-4">Results</dt>

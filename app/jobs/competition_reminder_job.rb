@@ -9,7 +9,7 @@ class CompetitionReminderJob < ApplicationJob
   def perform(today = Date.current)
     Entry.joins(:competition)
          .where(reminder_sent_at: nil, competitions: { date: today..(today + DAYS_BEFORE) })
-         .where.not(competitions: { status: :draft })
+         .merge(Competition.published)
          .where(id: EntryLine.paid.select(:entry_id))
          .find_each { EntryReminderJob.perform_later(it) }
   end
