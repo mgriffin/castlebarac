@@ -1,0 +1,28 @@
+connacht:
+  name: Connacht Juvenile Championships
+  slug: connacht-juvenile-championships
+  venue: Dangan, Galway
+  level: provincial
+  date: <%= (Date.current + 30).to_fs(:db) %>
+  entries_close_at: <%= (Time.current + 20.days).to_fs(:db) %>
+  status: open
+  max_events_per_athlete: 2
+  fee_per_event_cents: 500
+
+county:
+  name: Mayo County Championships
+  slug: mayo-county-championships
+  level: regional
+  date: <%= (Date.current + 60).to_fs(:db) %>
+  entries_close_at: <%= (Time.current + 50.days).to_fs(:db) %>
+  status: draft
+  fee_per_event_cents: 0
+
+nationals:
+  name: National Juvenile Championships
+  slug: national-juvenile-championships
+  level: national
+  date: <%= (Date.current + 2).to_fs(:db) %>
+  entries_close_at: <%= (Time.current - 1.day).to_fs(:db) %>
+  status: open
+  fee_per_event_cents: 800

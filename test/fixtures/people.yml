@@ -27,3 +27,10 @@ gabby:
   firstname: Gabby
   surname: Gabby
   slug: gabby-gabby
+
+secretary:
+  firstname: Sec
+  surname: Retary
+  slug: sec-retary
+  user: secretary
+  teams: [committee]

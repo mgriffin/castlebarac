@@ -82,6 +82,38 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
     t.integer "user_id"
   end
 
+  create_table "competition_events", force: :cascade do |t|
+    t.string "age_group"
+    t.integer "competition_id", null: false
+    t.datetime "created_at", null: false
+    t.string "distance"
+    t.string "gender"
+    t.integer "max_age"
+    t.integer "min_age"
+    t.string "name", null: false
+    t.integer "position", default: 0, null: false
+    t.time "start_time"
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_competition_events_on_competition_id"
+  end
+
+  create_table "competitions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.datetime "entries_close_at", null: false
+    t.integer "event_id"
+    t.integer "fee_per_event_cents", default: 0, null: false
+    t.string "level", null: false
+    t.integer "max_events_per_athlete"
+    t.string "name", limit: 256, null: false
+    t.string "slug", null: false
+    t.string "status", default: "draft", null: false
+    t.datetime "updated_at", null: false
+    t.string "venue"
+    t.index ["event_id"], name: "index_competitions_on_event_id"
+    t.index ["slug"], name: "index_competitions_on_slug", unique: true
+  end
+
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "start_time", null: false
@@ -254,6 +286,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
   add_foreign_key "child_claims", "users"
   add_foreign_key "child_claims", "users", column: "reviewed_by_id"
   add_foreign_key "coach_posts", "users"
+  add_foreign_key "competition_events", "competitions"
+  add_foreign_key "competitions", "events"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "people", "users"
