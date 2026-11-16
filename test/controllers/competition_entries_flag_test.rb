@@ -17,13 +17,16 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "competition links are hidden while the flag is off" do
+  test "competitions are hidden while the flag is off" do
     sign_in users(:admin)
     get admin_root_path
 
     assert_response :success
-    assert_select "a[href='#{competitions_path}']", count: 0
     assert_select "a[href='#{admin_competitions_path}']", count: 0
+
+    get root_path
+
+    assert_select ".competition-card", count: 0
   end
 
   test "the flag can be turned on for one user" do
@@ -34,9 +37,12 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
     assert_response :not_found
 
     sign_in users(:admin)
+    get root_path
+
+    assert_select ".competition-card h2 a", competitions(:connacht).name
+
     get admin_root_path
 
-    assert_select "a[href='#{competitions_path}']", "Competitions"
     assert_select "a[href='#{admin_competitions_path}']", "Competitions"
 
     get competitions_path

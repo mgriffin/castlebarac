@@ -19,7 +19,8 @@ class ApplicationHelperTest < ActionView::TestCase
     travel_to Time.zone.local(2026, 11, 11, 12, 0) do
       tag = time_ago_tag(Time.zone.local(2026, 11, 8, 9, 30))
 
-      assert_dom_equal %(<time datetime="2026-11-08T09:30:00Z" title="November 08, 2026 09:30">3 days ago</time>), tag
+      assert_dom_equal %(<time datetime="2026-11-08T09:30:00Z" title="November 8, 2026 at 9:30am">3 days ago</time>),
+                       tag
     end
   end
 
