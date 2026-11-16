@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   resources :events, except: :destroy
 
   constraints competition_entries do
-    resources :competitions, only: %i[index show] do
+    resources :competitions, only: :show do
       scope module: :competitions do
         resource :entry, only: :show do
           resource :payment, only: %i[show create]

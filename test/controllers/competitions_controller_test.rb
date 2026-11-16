@@ -6,14 +6,6 @@ class CompetitionsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   include CompetitionEntriesFlag
 
-  test "lists upcoming competitions that aren't drafts" do
-    get competitions_url
-
-    assert_response :success
-    assert_select "h2 a", competitions(:connacht).name
-    assert_select "h2 a", text: competitions(:county).name, count: 0
-  end
-
   test "shows a competition with a link to enter" do
     get competition_url(competitions(:connacht))
 
@@ -38,14 +30,5 @@ class CompetitionsControllerTest < ActionDispatch::IntegrationTest
     get competition_url(competitions(:county))
 
     assert_response :success
-  end
-
-  test "links the committee to managing competitions" do
-    get competitions_url
-    assert_select "a[href=?]", admin_competitions_path, count: 0
-
-    sign_in users(:secretary)
-    get competitions_url
-    assert_select "a[href=?]", admin_competitions_path
   end
 end

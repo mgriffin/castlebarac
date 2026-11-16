@@ -18,7 +18,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
 
   def public_pages
     [root_path, events_path, event_path(@event), rss_path, training_times_path, training_little_athletics_path,
-     competitions_path, competition_path(competitions(:connacht))]
+     competition_path(competitions(:connacht))]
   end
 
   def staff_pages

@@ -24,6 +24,18 @@ module Admin
       assert_select "a", competitions(:connacht).name
     end
 
+    test "links the committee to managing competitions from the menu" do
+      sign_in users(:bugs)
+      get root_url
+
+      assert_select "#main-nav a[href=?]", admin_competitions_path, count: 0
+
+      sign_in users(:secretary)
+      get root_url
+
+      assert_select "#main-nav a[href=?]", admin_competitions_path, "Manage competitions"
+    end
+
     test "adds a competition with its events" do
       sign_in users(:secretary)
 
