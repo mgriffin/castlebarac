@@ -28,6 +28,13 @@
 #       enabled: "ON"
 
 en:
+  # e.g. "December 6, 2026" and "December 6, 2026 at 11:59pm"
+  date:
+    formats:
+      long: "%B %-d, %Y"
+  time:
+    formats:
+      long: "%B %-d, %Y at %-l:%M%P"
   activerecord:
     errors:
       models:
