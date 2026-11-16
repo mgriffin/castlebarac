@@ -50,7 +50,7 @@ module Admin
 
       assert_redirected_to admin_child_claims_url
       assert @claim.reload.rejected?
-      assert_empty people(:bugsbunny).children
+      assert_not_includes people(:bugsbunny).children, people(:snori)
     end
   end
 end

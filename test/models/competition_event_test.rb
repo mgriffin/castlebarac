@@ -22,4 +22,32 @@ class CompetitionEventTest < ActiveSupport::TestCase
     assert_not event.valid?
     assert_includes event.errors[:max_age], "must be at least the minimum age"
   end
+
+  test "an athlete of the right age and gender is eligible" do
+    assert competition_events(:u12_girls_600m).eligible?(people(:ciara))
+  end
+
+  test "an athlete of the wrong gender isn't eligible" do
+    assert_equal :gender, competition_events(:u12_girls_600m).ineligibility_reason(people(:liam))
+  end
+
+  test "mixed events are open to everyone of the right age" do
+    event = competition_events(:u10_mixed_relay)
+    event.update!(min_age: 11, max_age: 11)
+
+    assert event.eligible?(people(:ciara))
+    assert event.eligible?(people(:liam))
+  end
+
+  test "an athlete outside the age group isn't eligible" do
+    assert_equal :too_old, competition_events(:u10_mixed_relay).ineligibility_reason(people(:ciara))
+
+    people(:ciara).year = people(:ciara).birth_year + 2
+
+    assert_equal :too_young, competition_events(:u12_girls_600m).ineligibility_reason(people(:ciara))
+  end
+
+  test "an athlete without a year of birth or gender needs those first" do
+    assert_equal :missing_details, competition_events(:u10_mixed_relay).ineligibility_reason(people(:aoife))
+  end
 end

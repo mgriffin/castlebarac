@@ -1,0 +1,58 @@
+<% content_for :title, "Events for #{@athlete.firstname}" %>
+<div class="content">
+  <h1>Events for <%= @athlete.fullname %></h1>
+  <p class="subtle"><%= @competition.name %></p>
+
+  <%- if @events.empty? %>
+    <p>There aren't any events <%= @athlete.firstname %> can enter in this competition.</p>
+    <%= link_to "Back to your entry", competition_entry_path(@competition) %>
+  <%- else %>
+    <%= form_with url: competition_entry_athlete_path(@competition, @athlete.id), method: :patch do |form| %>
+      <%- if @errors.present? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <%- @errors.each do |message| %>
+              <li><%= message %></li>
+            <%- end %>
+          </ul>
+        </div>
+      <%- end %>
+
+      <%- if @competition.max_events_per_athlete %>
+        <p>
+          Each athlete can be entered into up to
+          <strong><%= pluralize @competition.max_events_per_athlete, "event" %></strong>.
+        </p>
+      <%- end %>
+
+      <%= hidden_field_tag "competition_event_ids[]", "", id: nil %>
+      <%- @events.each do |event| %>
+        <div class="form-check mb-2">
+          <%- if @entered_by_others.include?(event.id) %>
+            <%= check_box_tag "competition_event_ids[]", event.id, true, id: "event_#{event.id}",
+                              class: "form-check-input", disabled: true %>
+            <label class="form-check-label" for="event_<%= event.id %>">
+              <%= event.name %> <span class="subtle">(already entered by someone else)</span>
+            </label>
+          <%- else %>
+            <%= check_box_tag "competition_event_ids[]", event.id, @selected_ids.include?(event.id),
+                              id: "event_#{event.id}", class: "form-check-input" %>
+            <label class="form-check-label" for="event_<%= event.id %>">
+              <%= event.name %>
+              <%- if event.start_time %>
+                <span class="subtle"><%= event_time(event) %></span>
+              <%- end %>
+            </label>
+          <%- end %>
+        </div>
+      <%- end %>
+
+      <p class="mt-3">
+        <%= euros @competition.fee_per_event_cents %> for each event.
+      </p>
+
+      <%= form.submit "Save", class: "btn btn-primary" %>
+      <%= link_to "Cancel", competition_entry_path(@competition), class: "btn btn-link" %>
+    <%- end %>
+  <%- end %>
+</div>

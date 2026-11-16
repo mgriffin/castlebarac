@@ -114,6 +114,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
     t.index ["slug"], name: "index_competitions_on_slug", unique: true
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.integer "competition_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["competition_id", "user_id"], name: "index_entries_on_competition_id_and_user_id", unique: true
+    t.index ["competition_id"], name: "index_entries_on_competition_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "entry_lines", force: :cascade do |t|
+    t.integer "competition_event_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "entry_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_event_id"], name: "index_entry_lines_on_competition_event_id"
+    t.index ["entry_id"], name: "index_entry_lines_on_entry_id"
+    t.index ["person_id", "competition_event_id"], name: "index_entry_lines_on_person_id_and_competition_event_id", unique: true
+    t.index ["person_id"], name: "index_entry_lines_on_person_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "start_time", null: false
@@ -288,6 +310,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_230000) do
   add_foreign_key "coach_posts", "users"
   add_foreign_key "competition_events", "competitions"
   add_foreign_key "competitions", "events"
+  add_foreign_key "entries", "competitions"
+  add_foreign_key "entries", "users"
+  add_foreign_key "entry_lines", "competition_events"
+  add_foreign_key "entry_lines", "entries"
+  add_foreign_key "entry_lines", "people"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "people", "users"

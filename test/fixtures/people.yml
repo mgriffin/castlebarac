@@ -28,6 +28,26 @@ gabby:
   surname: Gabby
   slug: gabby-gabby
 
+# Entered into competitions; ages are relative to the Connacht competition
+ciara:
+  firstname: Ciara
+  surname: Walsh
+  slug: ciara-walsh
+  gender: female
+  year: "<%= (Date.current + 30).year - 11 %>"
+
+liam:
+  firstname: Liam
+  surname: Walsh
+  slug: liam-walsh
+  gender: male
+  year: "<%= (Date.current + 30).year - 11 %>"
+
+aoife:
+  firstname: Aoife
+  surname: Moran
+  slug: aoife-moran
+
 secretary:
   firstname: Sec
   surname: Retary

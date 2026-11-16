@@ -9,7 +9,7 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
   test "competition pages are not found while the flag is off" do
     sign_in users(:admin)
 
-    [competitions_path, competition_path(competitions(:connacht)),
+    [competitions_path, competition_path(competitions(:connacht)), competition_entry_path(competitions(:connacht)),
      admin_competitions_path, admin_competition_path(competitions(:connacht))].each do |path|
       get path
 

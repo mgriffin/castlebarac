@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   has_many :posts, dependent: :nullify
+  has_many :entries, dependent: :destroy
   # A user's person is only ever one they created themselves or one an admin
   # linked them to. It's never matched up by name, as anyone can type a name.
   has_one :person, dependent: :nullify

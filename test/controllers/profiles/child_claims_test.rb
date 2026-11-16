@@ -33,7 +33,7 @@ class ProfileChildClaimsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to profile_url
     assert_equal people(:snori), users(:bugs).child_claims.sole.child
-    assert_empty people(:bugsbunny).children
+    assert_not_includes people(:bugsbunny).children, people(:snori)
 
     follow_redirect!
     assert_select "##{dom_id(users(:bugs).child_claims.sole)}", /Snörí/

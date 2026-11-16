@@ -20,7 +20,7 @@ class ChildClaimTest < ActiveSupport::TestCase
     claim.reject!(users(:admin))
 
     assert claim.rejected?
-    assert_empty people(:bugsbunny).children
+    assert_not_includes people(:bugsbunny).children, people(:snori)
   end
 
   test "approving a child who's been linked since is fine" do

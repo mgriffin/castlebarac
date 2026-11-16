@@ -1,0 +1,38 @@
+<% content_for :title, "About #{@athlete.firstname}" %>
+<div class="content">
+  <h1>About <%= @athlete.fullname %></h1>
+  <p>We need to know <%= @athlete.firstname %>'s year of birth and gender to work out which events they can enter.</p>
+
+  <%= form_with model: @athlete, url: competition_entry_athlete_details_path(@competition, @athlete.id),
+                method: :patch, scope: :person do |form| %>
+    <%- if @athlete.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <%- @athlete.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <%- end %>
+        </ul>
+      </div>
+    <%- end %>
+
+    <div class="mb-3">
+      <%= form.label :year, class: "form-label" %>
+      <%= form.number_field :year, min: 1900, max: Date.current.year, required: true, class: "form-control",
+                                   placeholder: "e.g. #{Date.current.year - 10}" %>
+    </div>
+
+    <fieldset class="mb-3">
+      <legend class="form-label fs-6">Gender</legend>
+      <div class="form-check form-check-inline">
+        <%= form.radio_button :gender, "female", class: "form-check-input", required: true %>
+        <%= form.label :gender_female, "Girl", class: "form-check-label" %>
+      </div>
+      <div class="form-check form-check-inline">
+        <%= form.radio_button :gender, "male", class: "form-check-input" %>
+        <%= form.label :gender_male, "Boy", class: "form-check-label" %>
+      </div>
+    </fieldset>
+
+    <%= form.submit "Continue", class: "btn btn-primary" %>
+  <%- end %>
+</div>
