@@ -1,0 +1,55 @@
+u12_girls_600m:
+  competition: connacht
+  name: U12 Girls 600m
+  distance: 600m
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: female
+  position: 1
+
+u12_girls_long_jump:
+  competition: connacht
+  name: U12 Girls Long Jump
+  distance: Long Jump
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: female
+  position: 2
+
+u12_girls_80m:
+  competition: connacht
+  name: U12 Girls 80m
+  distance: 80m
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: female
+  position: 3
+
+u12_boys_600m:
+  competition: connacht
+  name: U12 Boys 600m
+  distance: 600m
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: male
+  position: 4
+
+u10_mixed_relay:
+  competition: connacht
+  name: U10 Relay
+  age_group: U10
+  min_age: 9
+  max_age: 9
+  position: 5
+
+nationals_u12_girls_600m:
+  competition: nationals
+  name: U12 Girls 600m
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: female

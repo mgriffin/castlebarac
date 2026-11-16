@@ -1,0 +1,36 @@
+<fieldset class="row g-2 align-items-end mb-3 competition-event-fields">
+  <div class="col-md-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "U12 Girls 600m" %>
+  </div>
+  <div class="col-md-2">
+    <%= form.label :distance, class: "form-label" %>
+    <%= form.text_field :distance, class: "form-control", placeholder: "600m" %>
+  </div>
+  <div class="col-md-1">
+    <%= form.label :age_group, class: "form-label" %>
+    <%= form.text_field :age_group, class: "form-control", placeholder: "U12" %>
+  </div>
+  <div class="col-md-1">
+    <%= form.label :min_age, "Min age", class: "form-label" %>
+    <%= form.number_field :min_age, min: 0, class: "form-control" %>
+  </div>
+  <div class="col-md-1">
+    <%= form.label :max_age, "Max age", class: "form-label" %>
+    <%= form.number_field :max_age, min: 0, class: "form-control" %>
+  </div>
+  <div class="col-md-2">
+    <%= form.label :gender, class: "form-label" %>
+    <%= form.select :gender, [%w[Girls female], %w[Boys male]], { include_blank: "Mixed" }, class: "form-select" %>
+  </div>
+  <div class="col-md-1">
+    <%= form.label :start_time, "Time", class: "form-label" %>
+    <%= form.time_field :start_time, class: "form-control" %>
+  </div>
+  <%- if form.object.persisted? %>
+    <div class="col-md-1 form-check">
+      <%= form.check_box :_destroy, class: "form-check-input" %>
+      <%= form.label :_destroy, "Remove", class: "form-check-label" %>
+    </div>
+  <%- end %>
+</fieldset>

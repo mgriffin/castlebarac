@@ -38,4 +38,10 @@ module Castlebarac
   def self.truncate_post?(user = nil)
     Flipper.enabled?(:truncate_post, user)
   end
+
+  # Competition entries and payments. Turn on for individual users in
+  # Flipper to try them out before opening them to everyone.
+  def self.competition_entries?(user = nil)
+    Flipper.enabled?("comp-entries", user)
+  end
 end

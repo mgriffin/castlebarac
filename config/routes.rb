@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Competition pages don't exist unless the comp-entries flag is on
+  competition_entries = ->(request) { Castlebarac.competition_entries?(request.env["warden"].user) }
+
   devise_for :users
   root "site#index"
   resources :training_times, only: :index
@@ -70,6 +73,13 @@ Rails.application.routes.draw do
     resources :posts, only: %i[index new create edit update]
     resources :teams, only: %i[index show new create] do
       resources :memberships, only: %i[create destroy], module: :teams
+    end
+    constraints competition_entries do
+      resources :competitions do
+        scope module: :competitions do
+          resource :opening, only: %i[create destroy]
+        end
+      end
     end
   end
 
