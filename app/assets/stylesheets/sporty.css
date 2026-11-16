@@ -195,6 +195,22 @@ div.impersonate-bar {
     }
   }
 }
+/* A competition taking entries, on the home page */
+.competition-card {
+  border-color: var(--background-color);
+
+  .btn {
+    --bs-btn-color: var(--header-text-color);
+    --bs-btn-bg: var(--background-color);
+    --bs-btn-border-color: var(--background-color);
+    --bs-btn-hover-color: var(--header-text-color);
+    --bs-btn-hover-bg: hsl(from var(--background-color) h s calc(l - 8));
+    --bs-btn-hover-border-color: hsl(from var(--background-color) h s calc(l - 8));
+    --bs-btn-active-color: var(--header-text-color);
+    --bs-btn-active-bg: hsl(from var(--background-color) h s calc(l - 12));
+    --bs-btn-active-border-color: hsl(from var(--background-color) h s calc(l - 12));
+  }
+}
 .post-meta {
   margin-bottom: 1.25rem;
   color: #727272;
