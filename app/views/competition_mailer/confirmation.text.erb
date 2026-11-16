@@ -1,0 +1,11 @@
+Thanks, your entry is in
+========================
+
+<%= render "details", competition: @competition %>
+
+We've received your payment of <%= euros @payment.amount_cents %>. You've entered:
+
+<%= render "athletes", lines_by_person: @lines_by_person -%>
+You can make changes until <%= l @competition.entries_close_at, format: :long %> at
+<%= competition_entry_url(@competition) %>.
+We'll send you a reminder a few days before the competition.

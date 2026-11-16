@@ -52,6 +52,7 @@ en:
           notice: "Entries are closed"
   competitions:
     entries_closed: "Entries for this competition are closed"
+    payment_in_progress: "Your last payment is still going through. You can change your entry once it has."
     athletes:
       create:
         choose: "Choose someone from the list"
@@ -59,3 +60,15 @@ en:
         notice: "Saved %{name}'s events"
       destroy:
         notice: "Removed %{name} from your entry"
+    payments:
+      show:
+        paid: "Thanks, your entry is paid for and finished. We've emailed you a confirmation."
+        waiting: "We're waiting for Stripe to confirm your payment. We'll email you when it's done."
+      create:
+        failed: "Sorry, we couldn't start the payment. Please try again."
+        paid: "Your entry is already paid for. We've emailed you a confirmation."
+  entry_lines:
+    paid: "%{name} is already paid for in %{event}. Please contact the club to change this."
+  competition_mailer:
+    confirmation:
+      subject: "Your entry for %{name}"

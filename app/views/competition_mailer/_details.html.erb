@@ -1,0 +1,4 @@
+<p>
+  <strong><%= competition.name %></strong><br>
+  <%= l competition.date, format: :long %><%- if competition.venue.present? %>, <%= competition.venue %><% end %>
+</p>

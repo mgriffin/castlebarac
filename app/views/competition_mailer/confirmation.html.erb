@@ -1,0 +1,13 @@
+<h1>Thanks, your entry is in</h1>
+
+<%= render "details", competition: @competition %>
+
+<p>We've received your payment of <%= euros @payment.amount_cents %>. You've entered:</p>
+
+<%= render "athletes", lines_by_person: @lines_by_person %>
+
+<p>
+  You can make changes until <%= l @competition.entries_close_at, format: :long %> at
+  <%= link_to competition_entry_url(@competition), competition_entry_url(@competition) %>.
+  We'll send you a reminder a few days before the competition.
+</p>

@@ -23,7 +23,7 @@ module Competitions
       assert_select "a", "Add an athlete"
     end
 
-    test "shows who you've entered" do
+    test "shows who you've entered and the total" do
       sign_in users(:bugs)
       entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
       entry.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m))
@@ -32,7 +32,8 @@ module Competitions
       get competition_entry_url(competitions(:connacht))
 
       assert_equal(["Ciara Walsh", "Liam Walsh"], css_select(".entry-athlete h2").map { it.text.strip })
-      assert_select "li", "U12 Boys 600m"
+      assert_select "li", /U12 Boys 600m\s+Not paid/
+      assert_select "p", "To pay: €10.00"
       assert_select "a", "Add another athlete"
     end
 
