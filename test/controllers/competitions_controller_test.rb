@@ -4,6 +4,7 @@ require "test_helper"
 
 class CompetitionsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  include CompetitionEntriesFlag
 
   test "lists upcoming competitions that aren't drafts" do
     get competitions_url

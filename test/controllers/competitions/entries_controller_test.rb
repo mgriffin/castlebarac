@@ -5,6 +5,7 @@ require "test_helper"
 module Competitions
   class EntriesControllerTest < ActionDispatch::IntegrationTest
     include Devise::Test::IntegrationHelpers
+    include CompetitionEntriesFlag
 
     test "you have to log in to enter" do
       get competition_entry_url(competitions(:connacht))

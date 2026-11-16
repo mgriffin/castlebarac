@@ -5,6 +5,7 @@ require "test_helper"
 module Competitions
   class AthletesControllerTest < ActionDispatch::IntegrationTest
     include Devise::Test::IntegrationHelpers
+    include CompetitionEntriesFlag
 
     setup do
       @competition = competitions(:connacht)

@@ -8,6 +8,7 @@ require "test_helper"
 # visitors. Add new pages to these lists.
 class AuthorizationTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  include CompetitionEntriesFlag
 
   setup do
     @event = events(:first)

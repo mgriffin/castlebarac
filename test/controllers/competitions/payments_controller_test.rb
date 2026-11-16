@@ -5,6 +5,7 @@ require "test_helper"
 module Competitions
   class PaymentsControllerTest < ActionDispatch::IntegrationTest
     include Devise::Test::IntegrationHelpers
+    include CompetitionEntriesFlag
     include StripeHelpers
 
     setup do

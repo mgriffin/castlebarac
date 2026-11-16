@@ -6,6 +6,7 @@ module Admin
   module Competitions
     class EntriesControllerTest < ActionDispatch::IntegrationTest
       include Devise::Test::IntegrationHelpers
+      include CompetitionEntriesFlag
 
       test "lists the entries and downloads the paid ones" do
         sign_in users(:secretary)

@@ -5,6 +5,7 @@ require "test_helper"
 module Admin
   class CompetitionsControllerTest < ActionDispatch::IntegrationTest
     include Devise::Test::IntegrationHelpers
+    include CompetitionEntriesFlag
 
     test "only admins and committee members can manage competitions" do
       get admin_competitions_url

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Competition pages don't exist unless the comp-entries flag is on
+  competition_entries = ->(request) { Castlebarac.competition_entries?(request.env["warden"].user) }
+
   devise_for :users
   root "site#index"
   resources :training_times, only: :index
@@ -28,12 +31,14 @@ Rails.application.routes.draw do
   end
   resources :events, except: :destroy
 
-  resources :competitions, only: %i[index show] do
-    scope module: :competitions do
-      resource :entry, only: :show do
-        resource :payment, only: %i[show create]
-        resources :athletes, only: %i[new create show update destroy] do
-          resource :details, only: :update
+  constraints competition_entries do
+    resources :competitions, only: %i[index show] do
+      scope module: :competitions do
+        resource :entry, only: :show do
+          resource :payment, only: %i[show create]
+          resources :athletes, only: %i[new create show update destroy] do
+            resource :details, only: :update
+          end
         end
       end
     end
@@ -82,15 +87,19 @@ Rails.application.routes.draw do
     resources :teams, only: %i[index show new create] do
       resources :memberships, only: %i[create destroy], module: :teams
     end
-    resources :competitions do
-      scope module: :competitions do
-        resource :opening, only: %i[create destroy]
-        resources :entries, only: :index
-        resources :entry_lines, only: :destroy
+    constraints competition_entries do
+      resources :competitions do
+        scope module: :competitions do
+          resource :opening, only: %i[create destroy]
+          resources :entries, only: :index
+          resources :entry_lines, only: :destroy
+        end
       end
     end
   end
 
+  # Not behind the comp-entries flag, so checkouts started while it was on
+  # are still recorded if it's turned off
   post "stripe/webhooks", to: "stripe_webhooks#create"
 
   get "404", to: "errors#not_found"
