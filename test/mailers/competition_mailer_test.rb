@@ -21,4 +21,17 @@ class CompetitionMailerTest < ActionMailer::TestCase
     assert_no_match "Liam", email.text_part.body.to_s
     assert_match "<li>U12 Girls 600m</li>", email.html_part.body.to_s
   end
+
+  test "reminder" do
+    competitions(:connacht).update!(description: "<p>Bring a <strong>club singlet</strong></p>")
+    email = CompetitionMailer.with(entry: @entry).reminder
+
+    assert_equal ["bugs@acme.fake"], email.to
+    assert_match "Reminder: Connacht Juvenile Championships on", email.subject
+    assert_match "Dangan, Galway", email.text_part.body.to_s
+    assert_match "Ciara Walsh\n  - U12 Girls 600m", email.text_part.body.to_s
+    assert_no_match "Liam", email.text_part.body.to_s
+    assert_match "Bring a club singlet", email.text_part.body.to_s
+    assert_match "<strong>club singlet</strong>", email.html_part.body.to_s
+  end
 end

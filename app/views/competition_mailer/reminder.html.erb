@@ -1,0 +1,11 @@
+<h1><%= @competition.name %> is coming up</h1>
+
+<%= render "details", competition: @competition %>
+
+<p>You've entered:</p>
+
+<%= render "athletes", lines_by_person: @lines_by_person %>
+
+<%= @competition.description %>
+
+<p>Good luck to everyone competing!</p>

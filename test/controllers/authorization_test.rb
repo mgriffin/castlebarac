@@ -32,7 +32,7 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
      new_admin_person_path, edit_admin_result_path(@result), admin_teams_path, new_admin_team_path,
      admin_user_path(users(:bugs)), admin_person_claims_path, admin_child_claims_path,
      admin_competitions_path, admin_competition_path(competitions(:connacht)), new_admin_competition_path,
-     edit_admin_competition_path(competitions(:connacht))]
+     edit_admin_competition_path(competitions(:connacht)), admin_competition_entries_path(competitions(:connacht))]
   end
 
   test "admins can open every page" do

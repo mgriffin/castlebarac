@@ -6,4 +6,8 @@ class CompetitionMailerPreview < ActionMailer::Preview
     CompetitionMailer.with(payment: Payment.paid.last || Payment.new(entry: Entry.last, amount_cents: 1000))
                      .confirmation
   end
+
+  def reminder
+    CompetitionMailer.with(entry: Entry.last).reminder
+  end
 end

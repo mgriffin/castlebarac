@@ -1,0 +1,13 @@
+<%= @competition.name %> is coming up
+<%= "=" * "#{@competition.name} is coming up".length %>
+
+<%= render "details", competition: @competition %>
+
+You've entered:
+
+<%= render "athletes", lines_by_person: @lines_by_person -%>
+<%- if @competition.description.present? -%>
+<%= @competition.description.to_plain_text %>
+
+<%- end -%>
+Good luck to everyone competing!
