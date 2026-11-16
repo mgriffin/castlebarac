@@ -11,6 +11,7 @@ class EntryLineTest < ActiveSupport::TestCase
     line = @entry.entry_lines.create(person: people(:ciara), competition_event: competition_events(:u12_girls_600m))
 
     assert_predicate line, :persisted?
+    assert_equal 500, @entry.reload.amount_due_cents
   end
 
   test "can't enter an ineligible athlete" do

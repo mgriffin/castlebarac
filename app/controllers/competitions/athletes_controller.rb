@@ -57,6 +57,7 @@ module Competitions
       lines = EntryLine.for_person_in(@athlete, @competition)
       @entered_by_others = lines.where.not(entry: @entry).pluck(:competition_event_id)
       @selected_ids = selected_ids || lines.where(entry: @entry).pluck(:competition_event_id)
+      @paid_ids = lines.where(entry: @entry).paid.pluck(:competition_event_id)
     end
   end
 end

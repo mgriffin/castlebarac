@@ -28,7 +28,14 @@
       <%= hidden_field_tag "competition_event_ids[]", "", id: nil %>
       <%- @events.each do |event| %>
         <div class="form-check mb-2">
-          <%- if @entered_by_others.include?(event.id) %>
+          <%- if @paid_ids.include?(event.id) %>
+            <%= hidden_field_tag "competition_event_ids[]", event.id, id: nil %>
+            <%= check_box_tag "competition_event_ids[]", event.id, true, id: "event_#{event.id}",
+                              class: "form-check-input", disabled: true %>
+            <label class="form-check-label" for="event_<%= event.id %>">
+              <%= event.name %> <span class="badge text-bg-success">Paid</span>
+            </label>
+          <%- elsif @entered_by_others.include?(event.id) %>
             <%= check_box_tag "competition_event_ids[]", event.id, true, id: "event_#{event.id}",
                               class: "form-check-input", disabled: true %>
             <label class="form-check-label" for="event_<%= event.id %>">

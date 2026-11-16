@@ -1,0 +1,7 @@
+<%- lines_by_person.each do |person, lines| -%>
+<%= person.fullname %>
+<%- lines.each do |line| -%>
+  - <%= line.competition_event.name %><%= " at #{event_time(line.competition_event)}" if line.competition_event.start_time %>
+<%- end -%>
+
+<%- end -%>
