@@ -31,6 +31,10 @@ Rails.application.routes.draw do
   end
   resources :events, except: :destroy
 
+  constraints competition_entries do
+    resources :competitions, only: %i[index show]
+  end
+
   resources :time_trials, only: %i[index show new create update] do
     resources :tt_times, only: :new, module: :time_trials
   end
