@@ -1,0 +1,7 @@
+<%- if competition.accepting_entries? %>
+  <p class="mb-1">Entries close <strong><%= l competition.entries_close_at, format: :long %></strong></p>
+<%- elsif competition.entries_draft? %>
+  <p class="mb-1">Entries aren't open yet</p>
+<%- else %>
+  <p class="mb-1">Entries are closed</p>
+<%- end %>

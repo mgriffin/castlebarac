@@ -1,0 +1,22 @@
+<% content_for :title, @competition.name %>
+<div class="content">
+  <h1><%= @competition.name %></h1>
+  <p class="subtle">
+    <%= l @competition.date, format: :long %><%= " at #{@competition.venue}" if @competition.venue.present? %>
+  </p>
+
+  <%= render "entries_status", competition: @competition %>
+  <%- if @competition.accepting_entries? %>
+    <p>
+      <%= euros @competition.fee_per_event_cents %> per athlete for each event.
+      <%- if @competition.max_events_per_athlete %>
+        Each athlete can be entered into up to <%= pluralize @competition.max_events_per_athlete, "event" %>.
+      <%- end %>
+    </p>
+  <%- end %>
+
+  <%= @competition.description %>
+
+  <h2 class="h4 mt-4">Events</h2>
+  <%= render "events_table", competition: @competition %>
+</div>
