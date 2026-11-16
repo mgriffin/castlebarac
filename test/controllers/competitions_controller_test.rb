@@ -14,18 +14,19 @@ class CompetitionsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2 a", text: competitions(:county).name, count: 0
   end
 
-  test "shows a competition" do
+  test "shows a competition with a link to enter" do
     get competition_url(competitions(:connacht))
 
     assert_response :success
-    assert_select "p", /€5.00 per athlete for each event/
+    assert_select "a[href='#{competition_entry_path(competitions(:connacht))}']", "Enter athletes"
     assert_select "td", "U12 Girls 600m"
   end
 
-  test "says when entries have closed" do
+  test "doesn't link to enter once entries close" do
     get competition_url(competitions(:nationals))
 
     assert_select "p", "Entries are closed"
+    assert_select "a", text: "Enter athletes", count: 0
   end
 
   test "only the committee can see a draft competition" do

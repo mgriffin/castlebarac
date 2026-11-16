@@ -13,6 +13,9 @@
         Each athlete can be entered into up to <%= pluralize @competition.max_events_per_athlete, "event" %>.
       <%- end %>
     </p>
+    <%= link_to "Enter athletes", competition_entry_path(@competition), class: "btn btn-primary mb-3" %>
+  <%- elsif user_signed_in? && current_user.entries.exists?(competition: @competition) %>
+    <p><%= link_to "See who you've entered", competition_entry_path(@competition) %></p>
   <%- end %>
 
   <%= @competition.description %>

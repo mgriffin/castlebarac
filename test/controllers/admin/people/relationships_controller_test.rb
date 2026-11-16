@@ -15,7 +15,7 @@ module Admin
         link(people(:bugsbunny), people(:snori))
 
         assert_response :not_found
-        assert_empty people(:bugsbunny).children
+        assert_not_includes people(:bugsbunny).children, people(:snori)
       end
 
       test "users who aren't staff can't link people" do
@@ -24,7 +24,7 @@ module Admin
         link(people(:bugsbunny), people(:snori))
 
         assert_response :not_found
-        assert_empty people(:bugsbunny).children
+        assert_not_includes people(:bugsbunny).children, people(:snori)
       end
 
       test "admins can link a parent to their child" do
