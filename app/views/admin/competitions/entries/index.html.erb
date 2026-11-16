@@ -1,0 +1,51 @@
+<div class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">
+      Entries for <%= link_to @competition.name, admin_competition_path(@competition) %>
+      <span class="fs-6 fw-normal text-body-secondary"><%= @entry_lines.count(&:paid?) %> paid</span>
+    </h1>
+    <%= link_to "Download paid entries (CSV)", admin_competition_entries_path(@competition, format: :csv),
+                class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+
+  <%- if @entry_lines.empty? %>
+    <p>No one has been entered yet.</p>
+  <%- else %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Athlete</th>
+            <th scope="col">Year of birth</th>
+            <th scope="col">Entered by</th>
+            <th scope="col">Paid</th>
+            <th scope="col"><span class="visually-hidden">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @entry_lines.each do |line| %>
+            <tr>
+              <td><%= line.competition_event.name %></td>
+              <td><%= link_to line.person.fullname, person_path(line.person) %></td>
+              <td><%= line.person.year %></td>
+              <td><%= line.entry.user.email %></td>
+              <td>
+                <%- if line.paid? %>
+                  <span class="badge text-bg-success"><%= l line.paid_at, format: :short %></span>
+                <%- else %>
+                  <span class="badge text-bg-warning">Not paid</span>
+                <%- end %>
+              </td>
+              <td class="text-end">
+                <%= button_to "Remove", admin_competition_entry_line_path(@competition, line), method: :delete,
+                              class: "btn btn-sm btn-outline-danger",
+                              form: { data: { turbo_confirm: line.paid? ? "#{line.person.firstname} has paid for this. Refund them in Stripe as well. Remove?" : "Remove?" } } %>
+              </td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
+</div>
