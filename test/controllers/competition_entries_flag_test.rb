@@ -9,7 +9,7 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
   test "competition pages are not found while the flag is off" do
     sign_in users(:admin)
 
-    [competitions_path, competition_path(competitions(:connacht)), competition_entry_path(competitions(:connacht)),
+    [competition_path(competitions(:connacht)), competition_entry_path(competitions(:connacht)),
      admin_competitions_path, admin_competition_path(competitions(:connacht))].each do |path|
       get path
 
@@ -32,7 +32,7 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
   test "the flag can be turned on for one user" do
     Flipper.enable_actor("comp-entries", users(:admin))
 
-    get competitions_path
+    get competition_path(competitions(:connacht))
 
     assert_response :not_found
 
@@ -45,7 +45,7 @@ class CompetitionEntriesFlagTest < ActionDispatch::IntegrationTest
 
     assert_select "a[href='#{admin_competitions_path}']", "Competitions"
 
-    get competitions_path
+    get competition_path(competitions(:connacht))
 
     assert_response :success
   end
