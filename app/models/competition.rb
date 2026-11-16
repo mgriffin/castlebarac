@@ -25,6 +25,8 @@ class Competition < ApplicationRecord
 
   scope :upcoming, -> { where(date: Date.current..).order(:date) }
   scope :published, -> { where.not(status: :draft) }
+  # Open, with the closing date still to come. See accepting_entries?
+  scope :accepting_entries, -> { entries_open.where(arel_table[:entries_close_at].gt(Time.current)) }
 
   validates :name, :date, :entries_close_at, presence: true
   validates :max_events_per_athlete, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true

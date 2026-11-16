@@ -1,5 +1,17 @@
 <%- content_for :title, "Home" %>
 <section class="content col-md-8">
+  <%- @competitions.each do |competition| %>
+    <article class="card mb-3 border-primary competition-card">
+      <div class="card-body">
+        <h2 class="card-title"><%= link_to competition.name, competition_path(competition) %></h2>
+        <div class="card-subtitle mb-2 text-body-tertiary">
+          <%= l competition.date, format: :long %><%= " at #{competition.venue}" if competition.venue.present? %>
+        </div>
+        <p class="card-text">Entries are open until <strong><%= l competition.entries_close_at, format: :long %></strong>.</p>
+        <%= link_to "Enter athletes", competition_entry_path(competition), class: "btn btn-primary" %>
+      </div>
+    </article>
+  <%- end %>
   <%- if Castlebarac.show_about?(current_user) %>
     <article class="card mb-3">
       <div class="card-body">
