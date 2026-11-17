@@ -7,12 +7,12 @@ module Admin
     class EntriesControllerTest < ActionDispatch::IntegrationTest
       include Devise::Test::IntegrationHelpers
       include CompetitionEntriesFlag
+      include StripeHelpers
 
       test "lists the entries and downloads the paid ones" do
         sign_in users(:secretary)
         entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
-        entry.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m),
-                                  paid_at: Time.current)
+        paid_entry_line(entry, people(:ciara), competition_events(:u12_girls_600m))
         entry.entry_lines.create!(person: people(:liam), competition_event: competition_events(:u12_boys_600m))
 
         get admin_competition_entries_url(competitions(:connacht))
@@ -36,8 +36,7 @@ module Admin
         entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
         [%i[liam u12_boys_600m], %i[ciara u12_girls_80m], %i[aoife u12_girls_80m], %i[ciara u12_girls_600m]]
           .each do |person, event|
-          entry.entry_lines.create!(person: people(person), competition_event: competition_events(event),
-                                    paid_at: Time.current)
+          paid_entry_line(entry, people(person), competition_events(event))
         end
 
         get admin_competition_entries_url(competitions(:connacht), format: :csv)

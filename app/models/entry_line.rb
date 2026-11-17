@@ -15,11 +15,14 @@ class EntryLine < ApplicationRecord
 
   delegate :competition, to: :entry
 
-  scope :paid, -> { where.not(paid_at: nil) }
-  scope :unpaid, -> { where(paid_at: nil) }
+  # A line is paid for when its payment is
+  scope :paid, -> { where(payment_id: Payment.paid.select(:id)) }
+  scope :unpaid, -> { where(payment_id: nil).or(where.not(payment_id: Payment.paid.select(:id))) }
+
+  delegate :paid_at, to: :payment, allow_nil: true
 
   def paid?
-    paid_at.present?
+    payment.present? && payment.paid?
   end
 
   # Lines for this person in this competition, whoever entered them

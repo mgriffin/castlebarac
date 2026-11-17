@@ -12,7 +12,7 @@ module Admin
         authorize [:admin, @competition], :entries?
 
         @entry_lines = @competition.entry_lines
-                                   .includes(:person, :competition_event, entry: :user)
+                                   .includes(:person, :competition_event, :payment, entry: :user)
                                    .reorder("competition_events.position, competition_events.id, people.surname")
                                    .references(:competition_events, :people)
 
