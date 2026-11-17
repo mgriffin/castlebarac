@@ -24,7 +24,7 @@ class StripeCheckoutTest < ActiveSupport::TestCase
 
     assert_equal "https://checkout.stripe.com/c/pay/cs_test_123", @checkout.start
 
-    payment = @entry.payments.sole
+    payment = @entry.payments.pending.sole
 
     assert_equal 1000, payment.amount_cents
     assert_equal "cs_test_123", payment.stripe_checkout_session_id

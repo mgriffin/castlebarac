@@ -85,7 +85,7 @@ module Competitions
     end
 
     test "can't take someone out of an event they've paid for" do
-      @entry.entry_lines.update_all(paid_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
+      pay_for(@entry.entry_lines)
 
       patch competition_entry_athlete_url(@competition, people(:ciara).id), params: { competition_event_ids: [""] }
 

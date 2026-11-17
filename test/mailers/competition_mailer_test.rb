@@ -3,10 +3,11 @@
 require "test_helper"
 
 class CompetitionMailerTest < ActionMailer::TestCase
+  include StripeHelpers
+
   setup do
     @entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
-    @entry.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m),
-                               paid_at: Time.current)
+    paid_entry_line(@entry, people(:ciara), competition_events(:u12_girls_600m))
     @entry.entry_lines.create!(person: people(:liam), competition_event: competition_events(:u12_boys_600m))
   end
 

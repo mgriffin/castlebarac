@@ -16,7 +16,7 @@ class Payment < ApplicationRecord
 
   validates :amount_cents, numericality: { only_integer: true, greater_than: 0 }
 
-  # Marks the payment and its lines as paid and sends a confirmation. This can
+  # Marks the payment, and so its lines, as paid and sends a confirmation. This can
   # be called more than once for the same payment, e.g. by a webhook and when
   # the user comes back from Stripe.
   def complete!(payment_intent: nil)
@@ -24,7 +24,6 @@ class Payment < ApplicationRecord
       next false unless pending?
 
       update!(status: :paid, paid_at: Time.current, stripe_payment_intent_id: payment_intent)
-      entry_lines.update_all(paid_at: paid_at) # rubocop:disable Rails/SkipsModelValidations
       true
     end
 
@@ -43,7 +42,7 @@ class Payment < ApplicationRecord
       next unless pending?
 
       expired!
-      entry_lines.where(paid_at: nil).update_all(payment_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      entry_lines.update_all(payment_id: nil) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 

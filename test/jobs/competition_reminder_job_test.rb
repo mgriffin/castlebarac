@@ -4,12 +4,12 @@ require "test_helper"
 
 class CompetitionReminderJobTest < ActiveJob::TestCase
   include ActionMailer::TestHelper
+  include StripeHelpers
 
   setup do
     @competition = competitions(:connacht)
     @paid = Entry.create!(competition: @competition, user: users(:bugs))
-    @paid.entry_lines.create!(person: people(:ciara), competition_event: competition_events(:u12_girls_600m),
-                              paid_at: Time.current)
+    paid_entry_line(@paid, people(:ciara), competition_events(:u12_girls_600m))
     @unpaid = Entry.create!(competition: @competition, user: users(:gabby))
     @unpaid.entry_lines.create!(person: people(:liam), competition_event: competition_events(:u12_boys_600m))
     @three_days_before = @competition.date - 3
@@ -51,7 +51,7 @@ class CompetitionReminderJobTest < ActiveJob::TestCase
 
   test "reminds people who pay after the first reminders went out" do
     perform_enqueued_jobs { CompetitionReminderJob.perform_now(@three_days_before) }
-    @unpaid.entry_lines.update_all(paid_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
+    pay_for(@unpaid.entry_lines)
 
     assert_enqueued_with(job: EntryReminderJob, args: [@unpaid]) do
       CompetitionReminderJob.perform_now(@three_days_before + 1)
