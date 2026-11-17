@@ -6,9 +6,8 @@ module Admin
   module Competitions
     # Everyone entered into a competition, to send on to the organisers. Only
     # paid entries count.
-    class EntriesController < ApplicationController
+    class EntriesController < BaseController
       def index
-        @competition = Competition.friendly.find(params.expect(:competition_id))
         authorize [:admin, @competition], :entries?
 
         @entry_lines = @competition.entry_lines

@@ -3,9 +3,7 @@
 module Admin
   module Competitions
     # Opening and closing entries for a competition
-    class OpeningsController < ApplicationController
-      before_action :set_competition
-
+    class OpeningsController < BaseController
       def create
         authorize [:admin, @competition], :open_entries?
 
@@ -21,12 +19,6 @@ module Admin
 
         @competition.close_entries
         redirect_to admin_competition_path(@competition), notice: t(".notice")
-      end
-
-      private
-
-      def set_competition
-        @competition = Competition.friendly.find(params.expect(:competition_id))
       end
     end
   end
