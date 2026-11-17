@@ -8,7 +8,7 @@ module Admin
 
     def show
       @team = Team.find_by!(slug: params.expect(:id))
-      @memberships = @team.memberships.includes(:person)
+      @memberships = @team.memberships.includes(:person).order("people.surname", "people.firstname").references(:people)
     end
 
     def new

@@ -1,23 +1,41 @@
 <div class="content">
-  <h1><%= @team.name %></h1>
+  <div class="d-flex align-items-baseline justify-content-between mb-3">
+    <h1 class="h3 mb-0"><%= @team.name %></h1>
+    <span class="text-body-secondary"><%= pluralize(@memberships.size, "member") %></span>
+  </div>
+
   <%= render "admin/teams/memberships/form", team: @team %>
+
   <%- if @memberships.empty? %>
-    <p>There are no members of this team</p>
+    <p>There are no members of this team.</p>
   <%- else %>
-    <h3>Members</h3>
-    <ul>
-      <%- @memberships.each do |membership| %>
-        <li>
-          <%= membership.person.fullname %>
-          <%- if @team.name == "Admins" && membership.person == current_user.person %>
-            <span class="small text-body-secondary ms-1">(you)</span>
-          <%- else %>
-            <%= button_to "Remove", admin_team_membership_path(@team, membership), method: :delete,
-                          form_class: "d-inline ms-1", class: "btn btn-sm btn-outline-danger",
-                          data: { turbo_confirm: "Remove #{membership.person.fullname} from #{@team.name}?" } %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Added</th>
+            <th scope="col"><span class="visually-hidden">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @memberships.each do |membership| %>
+            <tr id="<%= dom_id membership %>">
+              <td><%= link_to membership.person.fullname, person_path(membership.person) %></td>
+              <td class="text-nowrap"><%= time_ago_tag(membership.created_at) %></td>
+              <td class="text-end">
+                <%- if @team.name == "Admins" && membership.person == current_user.person %>
+                  <span class="small text-body-secondary">(you)</span>
+                <%- else %>
+                  <%= button_to "Remove", admin_team_membership_path(@team, membership), method: :delete,
+                                class: "btn btn-sm btn-outline-danger",
+                                data: { turbo_confirm: "Remove #{membership.person.fullname} from #{@team.name}?" } %>
+                <%- end %>
+              </td>
+            </tr>
           <%- end %>
-        </li>
-      <%- end %>
-    </ul>
+        </tbody>
+      </table>
+    </div>
   <%- end %>
 </div>
