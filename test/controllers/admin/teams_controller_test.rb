@@ -26,7 +26,20 @@ module Admin
 
       membership = Membership.find_by(person: people(:admin), team: teams(:admins))
       assert_select "form[action='#{admin_team_membership_path(teams(:admins), membership)}']", count: 0
-      assert_select "li", text: /Ad Min\s+\(you\)/
+      assert_select "tr", text: /Ad Min.*\(you\)/m
+    end
+
+    test "lists the members by surname, linked to their pages" do
+      sign_in users(:admin)
+      [people(:liam), people(:aoife)].each { teams(:coaches).memberships.create!(person: it) }
+
+      get admin_team_url(teams(:coaches))
+
+      assert_select "tbody tr td:first-child a", count: 3 do |links|
+        assert_equal ["Aoife Moran", "Liam Walsh", people(:coach).fullname], links.map(&:text)
+        assert_equal person_path(people(:aoife)), links.first["href"]
+      end
+      assert_select "h1 + span", "3 members"
     end
 
     test "unknown teams are not found" do

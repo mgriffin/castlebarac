@@ -265,3 +265,8 @@ table.admin-table {
     white-space: nowrap;
   }
 }
+
+/* The name search and its button on an admin team page */
+.team-member-form {
+  max-width: 32rem;
+}
