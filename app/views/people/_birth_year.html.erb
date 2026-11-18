@@ -1,0 +1,5 @@
+<%- if person.birth_year %>
+  <%= person.birth_year %> <span class="small text-body-secondary">· <%= person.age_group %></span>
+<%- else %>
+  <span class="badge text-bg-warning">Not set</span>
+<%- end %>

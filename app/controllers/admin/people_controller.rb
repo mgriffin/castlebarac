@@ -7,6 +7,7 @@ module Admin
     # GET /admin/people
     def index
       @people = Person.includes(:user).order(:surname, :firstname)
+      @people = @people.without_birth_year if params[:missing] == "year"
     end
 
     # GET /admin/people/new
