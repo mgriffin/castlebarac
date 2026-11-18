@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def flipper_id
-    person.slug
+    person&.slug
   end
 
   private
