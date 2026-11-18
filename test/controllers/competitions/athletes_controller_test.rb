@@ -17,7 +17,7 @@ module Competitions
 
       assert_response :success
       assert_select "input[name=person_search]", count: 0
-      assert_equal(["Bugs Bunny", "Aoife Moran", "Ciara Walsh"], css_select("a.btn").map { it.text.strip })
+      assert_equal(["Bugs Bunny", "Aoife Moran", "Ciara Walsh"], css_select(".content a.btn").map { it.text.strip })
       assert_select "a[href=?]", new_profile_child_claim_path
     end
 
@@ -26,7 +26,7 @@ module Competitions
 
       get new_competition_entry_athlete_url(@competition)
 
-      assert_select "a.btn", count: 0
+      assert_select ".content a.btn", count: 0
       assert_select "a[href=?]", new_profile_path
     end
 
