@@ -25,4 +25,24 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
 
     assert_select ".competition-card", count: 0
   end
+
+  test "lists upcoming events with their dates" do
+    event = Event.create!(title: "Connacht Juvenile Cross Country", start_time: Time.zone.local(2099, 11, 23, 11))
+
+    get root_url
+
+    assert_select ".upcoming-events a.upcoming-event[href=?]", event_path(event) do
+      assert_select ".date-tile__month", "Nov"
+      assert_select ".date-tile__day", "23"
+      assert_select ".upcoming-event__title", "Connacht Juvenile Cross Country"
+      assert_select ".upcoming-event__when", "Monday, 11:00am"
+    end
+  end
+
+  test "says when there are no upcoming events" do
+    get root_url
+
+    assert_select ".upcoming-events", count: 0
+    assert_select "p", "There are no events coming up"
+  end
 end
