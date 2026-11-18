@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   namespace :people do
     resources :search, only: :index
   end
-  resources :people, only: :show
+  resources :people, only: :show do
+    resource :birth_year, only: :update, module: :people
+  end
   resource :impersonation, only: :destroy
 
   resources :posts, except: :destroy do
@@ -51,6 +53,7 @@ Rails.application.routes.draw do
   resources :coaches, only: :index
   namespace :coaches do
     resources :posts, only: %i[show new create]
+    resources :athletes, only: :index
   end
 
   namespace :admin do

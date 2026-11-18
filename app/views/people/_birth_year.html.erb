@@ -1,5 +1,27 @@
-<%- if person.birth_year %>
-  <%= person.birth_year %> <span class="small text-body-secondary">· <%= person.age_group %></span>
-<%- else %>
-  <span class="badge text-bg-warning">Not set</span>
+<%= turbo_frame_tag dom_id(person, :birth_year) do %>
+  <%- if person.birth_year %>
+    <%= person.birth_year %> <span class="small text-body-secondary">· <%= person.age_group %></span>
+  <%- end %>
+
+  <%- if policy(person).complete_details? %>
+    <%= form_with model: person, url: person_birth_year_path(person), method: :patch,
+                  class: "d-flex flex-wrap gap-1 align-items-center" do |form| %>
+      <%- if person.birth_year.nil? %>
+        <%= form.number_field :year, min: 1900, max: Date.current.year, required: true,
+                                     placeholder: "Year", "aria-label": "Year of birth for #{person.fullname}",
+                                     class: "form-control form-control-sm", style: "width: 6rem" %>
+      <%- end %>
+      <%- if Competitor::GENDERS.exclude?(person.gender) %>
+        <%= form.select :gender, gender_options(person), { include_blank: "Gender" },
+                        required: true, "aria-label": "Gender for #{person.fullname}",
+                        class: "form-select form-select-sm", style: "width: auto" %>
+      <%- end %>
+      <%= form.submit "Save", class: "btn btn-sm btn-outline-primary" %>
+      <%- if person.errors.any? %>
+        <div class="small text-danger w-100"><%= person.errors.full_messages.to_sentence %></div>
+      <%- end %>
+    <%- end %>
+  <%- elsif person.birth_year.nil? %>
+    <span class="badge text-bg-warning">Not set</span>
+  <%- end %>
 <%- end %>

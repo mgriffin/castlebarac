@@ -1,0 +1,48 @@
+<% content_for :title, "Athletes' ages" %>
+<div class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">
+      Athletes' ages <span class="fs-6 fw-normal text-body-secondary"><%= @people.size %></span>
+    </h1>
+    <%- if params[:missing] == "year" %>
+      <%= link_to "Show everyone", coaches_athletes_path, class: "btn btn-sm btn-outline-secondary" %>
+    <%- else %>
+      <%= link_to "Missing a year of birth", coaches_athletes_path(missing: "year"),
+                  class: "btn btn-sm btn-outline-secondary" %>
+    <%- end %>
+  </div>
+
+  <p class="text-body-secondary">
+    Age groups go by age on 31 December. Adults with an account on the website aren't listed.
+  </p>
+
+  <%= form_with url: coaches_athletes_path, method: :get, class: "d-flex gap-2 mb-3" do |form| %>
+    <%= form.hidden_field :missing, value: params[:missing] if params[:missing].present? %>
+    <%= form.search_field :q, value: params[:q], placeholder: "Search by name", "aria-label": "Search by name",
+                              class: "form-control form-control-sm", style: "max-width: 20rem" %>
+    <%= form.submit "Search", name: nil, class: "btn btn-sm btn-outline-secondary" %>
+  <%- end %>
+
+  <%- if @people.empty? %>
+    <p>No one to show.</p>
+  <%- else %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Year of birth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @people.each do |person| %>
+            <tr>
+              <td><%= link_to person.fullname, person_path(person) %></td>
+              <td><%= render "people/birth_year", person: %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
+</div>

@@ -10,4 +10,10 @@ class PersonPolicy < ApplicationPolicy
   def search?
     staff?
   end
+
+  # Staff can fill in a year of birth or gender we don't have, but only
+  # admins can change them once they're set
+  def complete_details?
+    staff? && !record.entry_details_complete?
+  end
 end

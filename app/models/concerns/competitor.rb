@@ -16,6 +16,11 @@ module Competitor
   included do
     has_many :entry_lines, dependent: :restrict_with_error
 
+    # Everyone who isn't a senior, including people whose age we don't know
+    scope :juniors, lambda {
+      where("people.year IS NULL OR NOT people.year GLOB :glob OR CAST(people.year AS INTEGER) > :year",
+            glob: BIRTH_YEAR_GLOB, year: Date.current.year - SENIOR_AGE)
+    }
     scope :without_birth_year, -> { where.not("people.year GLOB ?", BIRTH_YEAR_GLOB).or(where(year: nil)) }
 
     normalizes :year, :gender, with: -> { it.strip.presence }

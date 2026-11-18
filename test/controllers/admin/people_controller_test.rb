@@ -48,7 +48,7 @@ module Admin
         assert_select "td", /#{people(:ciara).year}\s+· #{people(:ciara).age_group}/
       end
       assert_select "tr", text: /Aoife Moran/ do
-        assert_select ".badge", "Not set"
+        assert_select "form[action='#{person_birth_year_path(people(:aoife))}'] input[name='person[year]']"
       end
     end
 
