@@ -236,6 +236,62 @@ div.impersonate-bar {
     color: #444;
   }
 }
+/* The upcoming events on the home page, each with a date tile */
+.upcoming-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li + li {
+    border-top: 1px solid #e9ecef;
+  }
+}
+.main .upcoming-events a.upcoming-event {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.6rem 0;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover .upcoming-event__title {
+    text-decoration: underline;
+  }
+}
+.date-tile {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.9rem;
+  border-radius: 8px;
+  background-color: hsl(from var(--background-color) h s 94);
+  color: var(--background-color);
+  line-height: 1;
+}
+.date-tile__month {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.date-tile__day {
+  margin-top: 2px;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.upcoming-event__title {
+  display: block;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.upcoming-event__when {
+  display: block;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
 .post-meta {
   margin-bottom: 1.25rem;
   color: #727272;
