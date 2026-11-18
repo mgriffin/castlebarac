@@ -1,7 +1,10 @@
-<div class="profile-banner">
-  <div>
-    <strong>Finish setting up your account</strong>
-    <p>Tell us your name so we know who you are.</p>
+<%# The outer div takes the page's gutter, like the column holding the news %>
+<div>
+  <div class="profile-banner">
+    <div>
+      <strong>Finish setting up your account</strong>
+      <p>Tell us your name so we know who you are.</p>
+    </div>
+    <%= link_to "Fill out your details", new_profile_path, class: "btn btn-sm" %>
   </div>
-  <%= link_to "Fill out your details", new_profile_path, class: "btn btn-sm" %>
 </div>
