@@ -7,6 +7,7 @@ module Admin
     # GET /admin/people
     def index
       @people = Person.includes(:user).order(:surname, :firstname)
+      @people = @people.without_birth_year if params[:missing] == "year"
     end
 
     # GET /admin/people/new
@@ -21,7 +22,7 @@ module Admin
     def create
       @person = Person.new(person_params)
 
-      if @person.save
+      if @person.save(context: :birth_year)
         redirect_to admin_people_path, notice: "Added #{@person.firstname} #{@person.surname}"
       else
         render :new, status: :unprocessable_content
@@ -30,7 +31,9 @@ module Admin
 
     # PATCH/PUT /admin/people/1
     def update
-      if @person.update(person_params)
+      @person.assign_attributes(person_params)
+
+      if @person.save(context: :birth_year)
         redirect_to admin_people_path, notice: "Edited #{@person.firstname} #{@person.surname}", status: :see_other
       else
         render :edit, status: :unprocessable_content
@@ -46,7 +49,7 @@ module Admin
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.expect(person: %i[firstname surname])
+      params.expect(person: %i[firstname surname year gender])
     end
   end
 end

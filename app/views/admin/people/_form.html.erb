@@ -21,5 +21,19 @@
     <%= form.text_field :surname, class: "form-control" %>
   </div>
 
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :year, class: "form-label" %>
+      <%= form.number_field :year, min: 1900, max: Date.current.year, class: "form-control" %>
+      <%- if person.age_group %>
+        <div class="form-text"><%= person.age_group %> this year</div>
+      <%- end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= form.label :gender, class: "form-label" %>
+      <%= form.select :gender, gender_options(person), { include_blank: "Not set" }, class: "form-select" %>
+    </div>
+  </div>
+
   <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>

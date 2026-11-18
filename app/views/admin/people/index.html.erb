@@ -3,6 +3,12 @@
     <h1 class="h3 mb-0">
       People <span class="fs-6 fw-normal text-body-secondary"><%= @people.size %></span>
     </h1>
+    <%- if params[:missing] == "year" %>
+      <%= link_to "Show everyone", admin_people_path, class: "btn btn-sm btn-outline-secondary ms-auto me-2" %>
+    <%- else %>
+      <%= link_to "Missing a year of birth (#{Person.without_birth_year.count})", admin_people_path(missing: "year"),
+                  class: "btn btn-sm btn-outline-secondary ms-auto me-2" %>
+    <%- end %>
     <%= link_to "New person", new_admin_person_path, class: "btn btn-sm btn-primary" %>
   </div>
 
@@ -11,6 +17,7 @@
       <thead class="table-light">
         <tr>
           <th scope="col">Name</th>
+          <th scope="col">Year of birth</th>
           <th scope="col">Linked user</th>
           <th scope="col"><span class="visually-hidden">Actions</span></th>
         </tr>
@@ -22,6 +29,7 @@
               <div><%= link_to person.fullname, person_path(person) %></div>
               <div class="small text-body-secondary">#<%= person.id %></div>
             </td>
+            <td><%= render "people/birth_year", person: %></td>
             <td><%= render "user", user: person.user %></td>
             <td class="text-end">
               <%- if person.user.present? && person.user == current_user %>

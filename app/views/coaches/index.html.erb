@@ -1,6 +1,7 @@
 <h1>Hi Coaches</h1>
 
-<%= link_to "Time Trials", time_trials_url %>
+<%= link_to "Time Trials", time_trials_url %> |
+<%= link_to "Athletes' ages", coaches_athletes_path %>
 
 <h3>Info</h3>
 <%- if policy(Coach::Post.new).new? %>
