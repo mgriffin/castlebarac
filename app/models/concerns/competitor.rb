@@ -18,6 +18,14 @@ module Competitor
 
     scope :without_birth_year, -> { where.not("people.year GLOB ?", BIRTH_YEAR_GLOB).or(where(year: nil)) }
 
+    normalizes :year, :gender, with: -> { it.strip.presence }
+
+    # When admins edit someone, these can be left blank
+    with_options on: :birth_year do
+      validates :gender, inclusion: { in: GENDERS }, allow_nil: true
+      validates :year, format: { with: /\A(19|20)\d\d\z/ }, allow_nil: true
+    end
+
     # Asked for the first time someone is entered into a competition
     with_options on: :entry_details do
       validates :gender, inclusion: { in: GENDERS }

@@ -63,5 +63,36 @@ module Admin
       assert_not_includes names, "Ciara Walsh"
       assert_select "a", "Show everyone"
     end
+
+    test "sets someone's year of birth and gender" do
+      sign_in users(:admin)
+
+      patch admin_person_url(people(:aoife)), params: { person: { year: "2016", gender: "female" } }
+
+      assert_redirected_to admin_people_url
+      assert_equal %w[2016 female], people(:aoife).reload.slice(:year, :gender).values
+    end
+
+    test "a year of birth can be cleared but has to look right" do
+      sign_in users(:admin)
+
+      patch admin_person_url(people(:ciara)), params: { person: { year: "", gender: "" } }
+
+      assert_nil people(:ciara).reload.year
+      assert_nil people(:ciara).gender
+
+      patch admin_person_url(people(:ciara)), params: { person: { year: "15" } }
+
+      assert_response :unprocessable_content
+    end
+
+    test "keeps a gender it doesn't know" do
+      people(:aoife).update!(gender: "M")
+      sign_in users(:admin)
+
+      get edit_admin_person_url(people(:aoife))
+
+      assert_select "select#person_gender option[selected]", "M"
+    end
   end
 end
