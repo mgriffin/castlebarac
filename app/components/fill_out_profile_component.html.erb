@@ -1,3 +1,7 @@
-<div class="banner">
-  <p>Please <%= link_to "fill out your details", new_profile_path %></p>
+<div class="profile-banner">
+  <div>
+    <strong>Finish setting up your account</strong>
+    <p>Tell us your name so we know who you are.</p>
+  </div>
+  <%= link_to "Fill out your details", new_profile_path, class: "btn btn-sm" %>
 </div>

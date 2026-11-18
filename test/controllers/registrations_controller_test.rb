@@ -25,6 +25,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     assert_response :success
-    assert_select "a[href='#{new_profile_path}']", "fill out your details"
+    assert_select ".profile-banner p", "Tell us your name so we know who you are."
+    assert_select ".profile-banner a[href='#{new_profile_path}']", "Fill out your details"
   end
 end

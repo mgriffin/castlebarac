@@ -198,7 +198,10 @@ div.impersonate-bar {
 /* A competition taking entries, on the home page */
 .competition-card {
   border-color: var(--background-color);
-
+}
+/* Club-green buttons */
+.competition-card,
+.profile-banner {
   .btn {
     --bs-btn-color: var(--header-text-color);
     --bs-btn-bg: var(--background-color);
@@ -209,6 +212,28 @@ div.impersonate-bar {
     --bs-btn-active-color: var(--header-text-color);
     --bs-btn-active-bg: hsl(from var(--background-color) h s calc(l - 12));
     --bs-btn-active-border-color: hsl(from var(--background-color) h s calc(l - 12));
+  }
+}
+/* Asks people who've signed up to tell us their name */
+.profile-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--background-color);
+  border-radius: 8px;
+  background-color: hsl(from var(--background-color) h s 96);
+
+  strong {
+    display: block;
+  }
+
+  p {
+    margin: 0;
+    color: #444;
   }
 }
 .post-meta {
