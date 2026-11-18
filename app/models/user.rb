@@ -51,6 +51,10 @@ class User < ApplicationRecord
     super
   end
 
+  def flipper_id
+    person.slug
+  end
+
   private
 
   # Pages check these roles many times, e.g. once for each result, so the
