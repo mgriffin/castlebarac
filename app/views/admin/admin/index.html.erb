@@ -13,6 +13,9 @@
       <%= link_to "Add a new person", new_admin_person_path %>
     </li>
     <li>
+      <%= link_to "Club members", admin_members_path %>
+    </li>
+    <li>
       <%= link_to "Claims waiting for approval (#{PersonClaim.pending.count})", admin_person_claims_path %>
     </li>
     <li>

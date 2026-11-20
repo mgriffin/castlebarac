@@ -1,0 +1,45 @@
+<div class="content">
+  <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+    <h1 class="h3 mb-0 me-auto">
+      Members in <%= @year %>
+      <span class="fs-6 fw-normal text-body-secondary"><%= @people.size %></span>
+    </h1>
+    <%= link_to "Upload the member list", new_admin_member_list_path(year: @year), class: "btn btn-sm btn-primary" %>
+    <nav class="btn-group btn-group-sm" aria-label="Year">
+      <%- @years.each do |year| %>
+        <%= link_to year, admin_members_path(year:),
+                    class: class_names("btn btn-outline-secondary", active: year == @year),
+                    aria: { current: ("page" if year == @year) } %>
+      <%- end %>
+    </nav>
+  </div>
+
+  <%- if @people.empty? %>
+    <p>Nobody is on the member list for <%= @year %> yet.</p>
+  <%- else %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle admin-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">AAI number</th>
+            <th scope="col">Year of birth</th>
+            <th scope="col">Age group</th>
+            <th scope="col">Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- @people.each do |person| %>
+            <tr>
+              <td><%= link_to person.fullname, person_path(person) %></td>
+              <td><%= person.aai_number || "–" %></td>
+              <td><%= person.birth_year || "–" %></td>
+              <td><%= person.age_group(on: Date.new(@year, 12, 31)) || "–" %></td>
+              <td><%= person.gender&.capitalize || "–" %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
+</div>

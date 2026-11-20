@@ -1,0 +1,129 @@
+<%- year = @import.year %>
+<%- to_choose = @import.entries_with(:choose) %>
+<%- added = @import.entries_with(:new) %>
+<%- updated = @import.entries_with(:update) %>
+<%- problems = @import.entries_with(:problem) %>
+<div class="content">
+  <h1>Check the <%= year %> member list</h1>
+  <p>
+    <%= member_list_summary(@import) %>
+    <%- if @import.leavers.any? %>
+      <%= pluralize(@import.leavers.size, "person") %> will be taken off the <%= year %> list.
+    <%- end %>
+  </p>
+
+  <%= form_with url: admin_member_lists_path, data: { turbo: false } do |form| %>
+    <%= hidden_field_tag :upload, @upload %>
+
+    <%- if to_choose.any? %>
+      <h2 class="h4 mt-4">Who are these?</h2>
+      <p>
+        More than one person has these names, or the year of birth on the site is different. Choose who each
+        one is. If you're not sure, leave them out for now: they can be added the next time the list is uploaded.
+      </p>
+      <table class="table align-middle admin-table">
+        <thead class="table-light">
+          <tr><th scope="col">On the list</th><th scope="col">On the site</th></tr>
+        </thead>
+        <tbody>
+          <%- to_choose.each do |entry| %>
+            <tr>
+              <td>
+                <div><%= entry.row.fullname %></div>
+                <div class="small text-body-secondary">Born <%= entry.row.year %>, AAI <%= entry.row.aai_number %></div>
+              </td>
+              <td>
+                <%= label_tag "choices_#{entry.row.aai_number}", "Who is #{entry.row.fullname}?", class: "visually-hidden" %>
+                <%= select_tag "choices[#{entry.row.aai_number}]",
+                               options_for_select(
+                                 [["Leave out for now", MemberListImport::LEAVE_OUT]] +
+                                 entry.candidates.map { |person| [member_candidate(person), person.id] } +
+                                 [["Someone new: add them", MemberListImport::NEW]],
+                                 MemberListImport::LEAVE_OUT
+                               ),
+                               id: "choices_#{entry.row.aai_number}", class: "form-select form-select-sm" %>
+                <div class="small mt-1">
+                  <%- entry.candidates.each do |person| %>
+                    <%= link_to member_candidate(person), person_path(person), target: "_blank", rel: "noopener" %><br>
+                  <%- end %>
+                </div>
+              </td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    <%- end %>
+
+    <%- if updated.any? %>
+      <h2 class="h4 mt-4">To update</h2>
+      <table class="table align-middle admin-table">
+        <thead class="table-light">
+          <tr><th scope="col">On the site</th><th scope="col">Changes</th></tr>
+        </thead>
+        <tbody>
+          <%- updated.each do |entry| %>
+            <tr>
+              <td>
+                <%= link_to entry.person.fullname, person_path(entry.person) %>
+                <%- if entry.person.fullname != entry.row.fullname %>
+                  <div class="small text-body-secondary">On the list as <%= entry.row.fullname %></div>
+                <%- end %>
+              </td>
+              <td><%= entry.changes.to_sentence %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    <%- end %>
+
+    <%- if added.any? %>
+      <h2 class="h4 mt-4">To add</h2>
+      <p>Nobody on the site has these names, so they'll be added.</p>
+      <table class="table align-middle admin-table">
+        <thead class="table-light">
+          <tr><th scope="col">Name</th><th scope="col">Year of birth</th><th scope="col">Gender</th><th scope="col">AAI number</th></tr>
+        </thead>
+        <tbody>
+          <%- added.each do |entry| %>
+            <tr>
+              <td><%= entry.row.fullname %></td>
+              <td><%= entry.row.year %></td>
+              <td><%= entry.row.gender.capitalize %></td>
+              <td><%= entry.row.aai_number %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    <%- end %>
+
+    <%- if @import.leavers.any? %>
+      <h2 class="h4 mt-4">To take off the <%= year %> list</h2>
+      <p>These people are on the site's <%= year %> list but not on this one. They won't be deleted.</p>
+      <ul>
+        <%- @import.leavers.each do |person| %>
+          <li><%= link_to person.fullname, person_path(person) %></li>
+        <%- end %>
+      </ul>
+    <%- end %>
+
+    <%- if problems.any? %>
+      <h2 class="h4 mt-4">Rows that can't be used</h2>
+      <p>These will be left out. Fix them in the member list and upload it again.</p>
+      <ul>
+        <%- problems.each do |entry| %>
+          <li><%= entry.row.fullname.presence || "A row" %>: <%= entry.problem %></li>
+        <%- end %>
+      </ul>
+    <%- end %>
+
+    <%- if @import.changes? || to_choose.any? %>
+      <div class="d-flex gap-2 mt-4">
+        <%= form.submit "Update the #{year} member list", class: "btn btn-primary" %>
+        <%= link_to "Cancel", new_admin_member_list_path(year:), class: "btn btn-outline-secondary" %>
+      </div>
+    <%- else %>
+      <div class="alert alert-success mt-4">The <%= year %> member list is already up to date.</div>
+      <%= link_to "Back to the members", admin_members_path(year:), class: "btn btn-outline-secondary" %>
+    <%- end %>
+  <% end %>
+</div>

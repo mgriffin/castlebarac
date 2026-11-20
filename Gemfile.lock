@@ -380,6 +380,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
+    rubyzip (3.7.0)
     sanitize (7.0.1)
       crass (~> 1.0.8)
       nokogiri (>= 1.16.8)
@@ -501,6 +502,7 @@ DEPENDENCIES
   rubocop
   rubocop-capybara
   rubocop-rails
+  rubyzip (~> 3.7)
   solid_queue (~> 1.7)
   sprockets-rails
   sqlite3 (~> 2.6)

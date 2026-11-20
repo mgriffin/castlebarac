@@ -1,0 +1,27 @@
+<div class="content">
+  <h1>Update the member list</h1>
+  <p>
+    Upload the club's member list from Athletics Ireland. It needs the columns Reg Life ID, First Name,
+    Last Name, Date Of Birth and M/F, and can be a document or spreadsheet (.odt or .ods) or a .csv file.
+  </p>
+  <p>
+    Upload the whole list for the year. Anyone who isn't on it is taken off that year's list. Nothing
+    changes until you've checked what will happen on the next page.
+  </p>
+
+  <%# A file upload, and the next page isn't a redirect, so not through Turbo %>
+  <%= form_with url: preview_admin_member_lists_path, multipart: true, data: { turbo: false } do |form| %>
+    <div class="mb-3">
+      <%= form.label :file, "Member list", class: "form-label" %>
+      <%= form.file_field :file, required: true, accept: ".odt,.ods,.csv", class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :year, "Membership year", class: "form-label" %>
+      <%= form.select :year, (Date.current.year - 1)..(Date.current.year + 1), { selected: @year },
+                      class: "form-select w-auto" %>
+      <div class="form-text">Membership years run from January to December.</div>
+    </div>
+
+    <%= form.submit "Check the list", class: "btn btn-primary" %>
+  <% end %>
+</div>

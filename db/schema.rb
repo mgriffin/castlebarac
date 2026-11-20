@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_17_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_20_120000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -61,6 +61,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_120000) do
     t.index ["reviewed_by_id"], name: "index_child_claims_on_reviewed_by_id"
     t.index ["user_id", "child_id"], name: "index_child_claims_on_pending_user_id_and_child_id", unique: true, where: "status = 'pending'"
     t.index ["user_id"], name: "index_child_claims_on_user_id"
+  end
+
+  create_table "club_memberships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "person_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "year", null: false
+    t.index ["person_id"], name: "index_club_memberships_on_person_id"
+    t.index ["year", "person_id"], name: "index_club_memberships_on_year_and_person_id", unique: true
   end
 
   create_table "coach_posts", force: :cascade do |t|
@@ -203,6 +212,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_120000) do
   end
 
   create_table "people", force: :cascade do |t|
+    t.string "aai_number"
     t.datetime "created_at", null: false
     t.string "firstname", limit: 256, null: false
     t.string "gender"
@@ -211,6 +221,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_120000) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "year"
+    t.index ["aai_number"], name: "index_people_on_aai_number", unique: true
     t.index ["slug"], name: "index_people_on_slug", unique: true
     t.index ["user_id"], name: "index_people_on_user_id", unique: true
   end
@@ -323,6 +334,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_17_120000) do
   add_foreign_key "child_claims", "people", column: "child_id"
   add_foreign_key "child_claims", "users"
   add_foreign_key "child_claims", "users", column: "reviewed_by_id"
+  add_foreign_key "club_memberships", "people"
   add_foreign_key "coach_posts", "users"
   add_foreign_key "competition_events", "competitions"
   add_foreign_key "competitions", "events"

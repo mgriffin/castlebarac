@@ -27,6 +27,7 @@ class Person < ApplicationRecord
            source: :child
 
   include Competitor
+  include ClubMember
 
   validates :user_id, uniqueness: true, allow_nil: true
 
@@ -72,9 +73,9 @@ class Person < ApplicationRecord
   end
 
   # Nothing hangs off this person: no results, time trial times, teams,
-  # parents or children
+  # club memberships, parents or children
   def unused?
-    [results, tt_times, memberships, parents, children].none?(&:exists?)
+    [results, tt_times, memberships, club_memberships, parents, children].none?(&:exists?)
   end
 
   def fullname

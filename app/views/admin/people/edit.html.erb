@@ -1,5 +1,12 @@
 <div class="content">
   <h1>Editing person</h1>
+  <%- member_years = @person.member_years %>
+  <%- if @person.aai_number || member_years.any? %>
+    <p class="text-body-secondary">
+      <%- if @person.aai_number %>AAI number <%= @person.aai_number %>.<%- end %>
+      <%- if member_years.any? %>Member in <%= member_years.to_sentence %>.<%- end %>
+    </p>
+  <%- end %>
 
   <%= render "form", person: @person %>
   <%= render "admin/people/relationships/form", parent: @person %>
