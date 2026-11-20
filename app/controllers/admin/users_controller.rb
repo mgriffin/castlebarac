@@ -14,6 +14,7 @@ module Admin
     def impersonate
       user = User.find(params.expect(:id))
       impersonate_user(user)
+      SiteActivity.note("🎭 #{true_user.username} is now acting as #{user.username}")
       redirect_to root_path
     end
   end
