@@ -1,7 +1,6 @@
 <tr<%= " class=cbac" if result.castlebarac? %> id="<%= dom_id(result) %>">
   <td class="position">
-    <%= tag.a(id: dom_id(result)) if result.castlebarac? %>
-    <%= result.position %>
+    <%= medal? ? tag.span(result.position, class: "medal medal--#{result.position}") : result.position %>
   </td>
   <%- if result.bib_numbers_included? %>
     <td class="bib">

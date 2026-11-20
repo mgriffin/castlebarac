@@ -15,3 +15,6 @@ import { Autocomplete } from 'stimulus-autocomplete'
 application.register('autocomplete', Autocomplete)
 
 import "rhino-editor"
+
+import ResultsFilterController from "./results_filter_controller"
+application.register("results-filter", ResultsFilterController)

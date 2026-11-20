@@ -2,11 +2,13 @@
   <thead>
     <tr>
       <%- headers.each do |header| %>
-        <th class="<%= header %>"><%= header.humanize %></th>
+        <th class="<%= header %>"><%= label(header) %></th>
       <%- end %>
     </tr>
   </thead>
-  <%- results.each do |result| %>
-    <%= result %>
-  <%- end %>
+  <tbody>
+    <%- results.each do |result| %>
+      <%= result %>
+    <%- end %>
+  </tbody>
 </table>

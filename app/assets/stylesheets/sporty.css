@@ -10,6 +10,9 @@
   --footer-text-color: var(--header-text-color);
   --banner-info-fg: #055160;
   --banner-info-bg: #cff4fc;
+  --club-tint: hsl(from var(--background-color) h s 94);
+  --muted-text-color: #6c757d;
+  --rule-color: #e9ecef;
 }
 
 .navbar-nav {
@@ -94,33 +97,165 @@ thead {
 }
 
 table.results {
-  .position {
-    width: 1.5em;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+
+  thead {
+    border-bottom: 2px solid var(--rule-color);
   }
-  .bib {
-    width: 1.5em;
+  th abbr {
+    text-decoration: none;
   }
-  .name {
-    width: 5em;
+  th {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted-text-color);
   }
-  .club {
-    width: 5em;
+  td {
+    vertical-align: middle;
   }
-  .county {
-    width: 5em;
+  tbody tr {
+    border-bottom: 1px solid var(--rule-color);
   }
-  .time {
-    width: 2em;
-  }
-  td.time {
-    text-align: right;
-    font-family: monospace;
+  tbody tr:nth-child(even):not(.cbac) {
+    background-color: #fafbfa;
   }
 
-  .cbac {
-    background-color: #ada;
+  /* Name, club and county share what's left */
+  .position {
+    width: 3rem;
+  }
+  .bib {
+    width: 3.5rem;
+    color: var(--muted-text-color);
+  }
+  .time {
+    width: 5.5rem;
+  }
+  th.time,
+  td.result {
+    text-align: right;
+  }
+
+  @media (max-width: 576px) {
+    .bib,
+    .county {
+      display: none;
+    }
+  }
+
+  tr.cbac {
+    background-color: var(--club-tint);
+    box-shadow: inset 3px 0 0 var(--background-color);
+
+    .name {
+      font-weight: 600;
+    }
   }
 }
+.medal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.medal--1 {
+  background-color: #f6e3a1;
+}
+.medal--2 {
+  background-color: #e3e6ea;
+}
+.medal--3 {
+  background-color: #efd2b8;
+}
+
+/* An event's page: a header, a list of its races, then each race's results */
+.event-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule-color);
+
+  h2,
+  p {
+    margin: 0;
+  }
+  p {
+    color: var(--muted-text-color);
+  }
+}
+.race-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+/* Beats the link colour from .main a:not(.btn) by coming later */
+.main a.race-chip {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid #dee2e6;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #212529;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--background-color);
+  }
+  &.race-chip--club {
+    border-color: var(--background-color);
+    color: var(--background-color);
+    font-weight: 600;
+  }
+  &.race-chip--club::before {
+    content: "● ";
+    font-size: 0.6rem;
+    vertical-align: middle;
+  }
+}
+.race {
+  margin-bottom: 1.75rem;
+}
+.race__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+/* "Castlebar only" hides everyone else, and races we weren't in */
+.castlebar-only {
+  .race:not(.race--club),
+  .race-chip:not(.race-chip--club),
+  table.results tbody tr:not(.cbac) {
+    display: none;
+  }
+}
+.race__club-count {
+  margin-left: 0.4rem;
+  background-color: var(--club-tint);
+  color: var(--background-color);
+}
+.race__count {
+  flex: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--muted-text-color);
+}
+.race__permalink svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
 input[type="datetime-local"] {
   width: 22rem;
 }
@@ -201,7 +336,8 @@ div.impersonate-bar {
 }
 /* Club-green buttons */
 .competition-card,
-.profile-banner {
+.profile-banner,
+.results-switch {
   .btn {
     --bs-btn-color: var(--header-text-color);
     --bs-btn-bg: var(--background-color);
@@ -212,6 +348,19 @@ div.impersonate-bar {
     --bs-btn-active-color: var(--header-text-color);
     --bs-btn-active-bg: hsl(from var(--background-color) h s calc(l - 12));
     --bs-btn-active-border-color: hsl(from var(--background-color) h s calc(l - 12));
+  }
+}
+/* All results or Castlebar only, on an event page: outlined until pressed */
+.results-switch {
+  margin-bottom: 1rem;
+
+  .btn {
+    --bs-btn-color: var(--background-color);
+    --bs-btn-bg: transparent;
+    --bs-btn-hover-color: var(--background-color);
+    --bs-btn-hover-bg: var(--club-tint);
+    --bs-btn-active-bg: var(--background-color);
+    --bs-btn-active-border-color: var(--background-color);
   }
 }
 /* Asks people who've signed up to tell us their name */
@@ -243,7 +392,7 @@ div.impersonate-bar {
   padding: 0;
 
   li + li {
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid var(--rule-color);
   }
 }
 .main .upcoming-events a.upcoming-event {
@@ -267,7 +416,7 @@ div.impersonate-bar {
   width: 2.75rem;
   height: 2.9rem;
   border-radius: 8px;
-  background-color: hsl(from var(--background-color) h s 94);
+  background-color: var(--club-tint);
   color: var(--background-color);
   line-height: 1;
 }
@@ -282,6 +431,18 @@ div.impersonate-bar {
   font-size: 1.25rem;
   font-weight: 800;
 }
+.date-tile--large {
+  width: 3.6rem;
+  height: 3.8rem;
+  border-radius: 10px;
+
+  .date-tile__month {
+    font-size: 0.75rem;
+  }
+  .date-tile__day {
+    font-size: 1.7rem;
+  }
+}
 .upcoming-event__title {
   display: block;
   font-weight: 600;
@@ -290,7 +451,7 @@ div.impersonate-bar {
 .upcoming-event__when {
   display: block;
   font-size: 0.8rem;
-  color: #6c757d;
+  color: var(--muted-text-color);
 }
 .post-meta {
   margin-bottom: 1.25rem;
