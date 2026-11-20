@@ -85,7 +85,7 @@ class MemberListImportTest < ActiveSupport::TestCase
 
     assert_equal [:update, people(:ciara)], [chosen.status, chosen.person]
     assert_equal :new, added.status
-    assert_equal :left_out, left_out.status
+    assert_equal :choose, left_out.status
     assert_equal :choose, someone_else.status
   end
 

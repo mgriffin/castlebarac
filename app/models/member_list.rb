@@ -21,10 +21,15 @@ class MemberList
     gender: %w[mf gender sex]
   }.freeze
 
-  GENDERS = { "m" => "male", "f" => "female" }.freeze
+  # M or F on the list, e.g. "f" => "female"
+  GENDERS = Competitor::GENDERS.index_by(&:first).freeze
 
   # Only content.xml is read, and a member list's is well under this
   MAX_CONTENT_SIZE = 20.megabytes
+
+  MISSING_COLUMNS = "The member list needs a table with the columns Reg Life ID, First Name, Last Name, " \
+                    "Date Of Birth and M/F"
+  UNREADABLE = "That file couldn't be read. Check it's the member list."
 
   OPEN_DOCUMENT_TABLE = "urn:oasis:names:tc:opendocument:xmlns:table:1.0"
   OPEN_DOCUMENT_TEXT = "urn:oasis:names:tc:opendocument:xmlns:text:1.0"
@@ -38,13 +43,13 @@ class MemberList
             end
     new(table).rows
   rescue CSV::MalformedCSVError, Zip::Error, Nokogiri::XML::SyntaxError
-    raise Error, "That file couldn't be read. Check it's the member list."
+    raise Error, UNREADABLE
   end
 
   # The cells of every table row in an OpenDocument file
   def self.open_document_table(data)
     entry = Zip::File.open_buffer(StringIO.new(data)).find_entry("content.xml")
-    raise Error, "That file couldn't be read. Check it's the member list." if entry.nil?
+    raise Error, UNREADABLE if entry.nil?
     raise Error, "That file is too big to be a member list" if entry.size > MAX_CONTENT_SIZE
 
     xml = entry.get_input_stream.read
@@ -69,7 +74,7 @@ class MemberList
 
   def rows
     header_index = @table.index { header?(it) }
-    raise Error, missing_columns_message if header_index.nil?
+    raise Error, MISSING_COLUMNS if header_index.nil?
 
     columns = column_positions(@table[header_index])
     @table.drop(header_index + 1)
@@ -81,18 +86,11 @@ class MemberList
 
   def heading(text) = text.downcase.gsub(/[^a-z0-9]/, "")
 
-  def header?(cells)
-    headings = cells.map { heading(it) }
-    COLUMNS.values.all? { headings.intersect?(it) }
-  end
+  def header?(cells) = column_positions(cells).values.none?(&:nil?)
 
   def column_positions(cells)
     headings = cells.map { heading(it) }
     COLUMNS.transform_values { |names| headings.index { names.include?(it) } }
-  end
-
-  def missing_columns_message
-    "The member list needs a table with the columns Reg Life ID, First Name, Last Name, Date Of Birth and M/F"
   end
 
   def row(values)

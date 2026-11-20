@@ -15,8 +15,8 @@ class MemberListImport
   #   :up_to_date - nothing to change
   #   :update     - person needs the changes listed
   #   :new        - nobody matches, so a person will be added
-  #   :choose     - an admin needs to choose from the candidates
-  #   :left_out   - an admin chose to leave them out for now
+  #   :choose     - an admin needs to choose from the candidates, or chose to
+  #                 leave them out for now
   #   :problem    - the row can't be used, for the reason in problem
   Entry = Struct.new(:row, :status, :person, :candidates, :changes, :problem, keyword_init: true)
 
@@ -37,55 +37,53 @@ class MemberListImport
     @entries ||= build_entries
   end
 
-  def entries_with(status) = entries.select { it.status == status }
+  def entries_with(status)
+    (@by_status ||= entries.group_by(&:status)).fetch(status, [])
+  end
 
   # This year's members who aren't on the list
   def leavers
-    @leavers ||= Person.members_in(year).where.not(id: entries.filter_map { it.person&.id }).order(:surname, :firstname)
+    @leavers ||= Person.members_in(year).where.not(id: entries.filter_map { it.person&.id })
+                       .order(:surname, :firstname).to_a
   end
 
   def changes?
-    leavers.any? || entries.any? { %i[update new].include?(it.status) }
+    leavers.any? || entries_with(:update).any? || entries_with(:new).any?
   end
 
   # Returns the number of people added, updated and taken off the list
   def apply!
-    counts = { added: entries_with(:new).size, updated: entries_with(:update).size, removed: leavers.size }
+    added = entries_with(:new)
+    updated = entries_with(:update)
 
     ActiveRecord::Base.transaction do
-      ClubMembership.where(year:, person_id: leavers.select(:id)).delete_all
-      entries_with(:new).each { add(it) }
-      entries_with(:update).each { update(it) }
+      ClubMembership.where(year:, person: leavers).delete_all
+      added.each { add(it.row) }
+      updated.each { update(it.person, it.row) }
     end
-    counts
+    { added: added.size, updated: updated.size, removed: leavers.size }
   end
 
   private
 
   def build_entries
-    by_aai = Person.where(aai_number: @rows.map(&:aai_number).compact_blank).index_by(&:aai_number)
-    members = Person.members_in(year).pluck(:id).to_set
     seen = Set.new
     claimed = Set.new
 
     @rows.map do |row|
-      entry = entry_for(row, by_aai, seen, claimed)
+      entry = entry_for(row, seen, claimed)
       seen << row.aai_number
-      if entry.person
-        claimed << entry.person.id
-        entry.changes = changes(entry.person, row, members)
-        entry.status = entry.changes.any? ? :update : :up_to_date
-      end
+      claimed << entry.person.id if entry.person
       entry
     end
   end
 
-  def entry_for(row, by_aai, seen, claimed)
+  def entry_for(row, seen, claimed)
     return Entry.new(row:, status: :problem, problem: row.problem) if row.problem
     if seen.include?(row.aai_number)
       return Entry.new(row:, status: :problem, problem: "This Reg Life ID is on the list twice")
     end
-    return Entry.new(row:, person: by_aai[row.aai_number]) if by_aai[row.aai_number]
+    return found(row, by_aai[row.aai_number]) if by_aai[row.aai_number]
 
     candidates = Person.named(row.fullname).select { it.aai_number.nil? && claimed.exclude?(it.id) }
     chosen(row, candidates) || matched(row, candidates)
@@ -94,12 +92,11 @@ class MemberListImport
   # What an admin chose for this row, if anything
   def chosen(row, candidates)
     case (choice = @choices[row.aai_number])
-    when nil, "" then nil
+    when nil, "", LEAVE_OUT then nil
     when NEW then Entry.new(row:, status: :new)
-    when LEAVE_OUT then Entry.new(row:, status: :left_out, candidates:)
     else
       person = candidates.find { it.id.to_s == choice }
-      Entry.new(row:, person:) if person
+      found(row, person) if person
     end
   end
 
@@ -109,12 +106,25 @@ class MemberListImport
     return Entry.new(row:, status: :new) if candidates.empty?
 
     same_year = candidates.select { it.birth_year.nil? || it.birth_year == row.year }
-    return Entry.new(row:, person: same_year.first) if same_year.one?
+    return found(row, same_year.first) if same_year.one?
 
     Entry.new(row:, status: :choose, candidates:)
   end
 
-  def changes(person, row, members)
+  def found(row, person)
+    changes = changes(person, row)
+    Entry.new(row:, person:, changes:, status: changes.any? ? :update : :up_to_date)
+  end
+
+  def by_aai
+    @by_aai ||= Person.where(aai_number: @rows.map(&:aai_number).compact_blank).index_by(&:aai_number)
+  end
+
+  def members
+    @members ||= Person.members_in(year).pluck(:id).to_set
+  end
+
+  def changes(person, row)
     [
       ("Add to the #{year} list" unless members.include?(person.id)),
       ("Set the AAI number to #{row.aai_number}" if person.aai_number.nil?),
@@ -129,18 +139,14 @@ class MemberListImport
     from.nil? ? "Set the #{name} to #{to}" : "Change the #{name} from #{from} to #{to}"
   end
 
-  def add(entry)
-    row = entry.row
+  def add(row)
     person = Person.create!(firstname: Person.tidy_name(row.firstname), surname: Person.tidy_name(row.surname),
                             aai_number: row.aai_number, year: row.year.to_s, gender: row.gender)
     person.club_memberships.create!(year:)
   end
 
-  def update(entry)
-    row = entry.row
-    person = entry.person
-    person.aai_number ||= row.aai_number
-    person.update!(year: row.year.to_s, gender: row.gender)
+  def update(person, row)
+    person.update!(aai_number: person.aai_number || row.aai_number, year: row.year.to_s, gender: row.gender)
     person.club_memberships.find_or_create_by!(year:)
   end
 end

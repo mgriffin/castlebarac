@@ -15,10 +15,6 @@ module Admin
 
     private
 
-    def manage?
-      return false unless user
-
-      user.admin? || user.committee?
-    end
+    def manage? = admin_or_committee?
   end
 end

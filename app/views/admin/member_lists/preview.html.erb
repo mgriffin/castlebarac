@@ -3,16 +3,10 @@
 <%- added = @import.entries_with(:new) %>
 <%- updated = @import.entries_with(:update) %>
 <%- problems = @import.entries_with(:problem) %>
-<%- up_to_date = @import.entries_with(:up_to_date) %>
 <div class="content">
   <h1>Check the <%= year %> member list</h1>
   <p>
-    <%= pluralize(@import.entries.size, "person") %> on the list:
-    <%= [("#{up_to_date.size} already up to date" if up_to_date.any?),
-         ("#{updated.size} to update" if updated.any?),
-         ("#{added.size} to add" if added.any?),
-         ("#{to_choose.size} to choose" if to_choose.any?),
-         ("#{problems.size} that can't be used" if problems.any?)].compact.to_sentence %>.
+    <%= member_list_summary(@import) %>
     <%- if @import.leavers.any? %>
       <%= pluralize(@import.leavers.size, "person") %> will be taken off the <%= year %> list.
     <%- end %>

@@ -60,4 +60,8 @@ class ApplicationPolicy
   def staff?
     user.present? && user.staff?
   end
+
+  def admin_or_committee?
+    user.present? && (user.admin? || user.committee?)
+  end
 end

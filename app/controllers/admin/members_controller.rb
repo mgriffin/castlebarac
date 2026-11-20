@@ -9,8 +9,8 @@ module Admin
       authorize [:admin, ClubMembership]
 
       @years = ClubMembership.years
-      @year = params[:year].to_i.nonzero? || Date.current.year
-      @people = Person.members_in(@year).order(:surname, :firstname)
+      @year = ClubMembership.year_from(params[:year])
+      @people = Person.members_in(@year).order(:surname, :firstname).to_a
     end
   end
 end

@@ -39,7 +39,8 @@ module Admin
       rows = upload["rows"].map { MemberList::Row.new(**it.symbolize_keys) }
       import = MemberListImport.new(rows:, year: upload["year"], choices: params.permit(choices: {})[:choices])
       counts = import.apply!
-      linked = ResultLinker.new.link_matches.size
+      # Only people who've just been added can have results waiting for them
+      linked = counts[:added].positive? ? ResultLinker.new.link_matches.size : 0
 
       redirect_to admin_members_path(year: import.year), notice: notice(import.year, counts, linked)
     end
@@ -52,10 +53,7 @@ module Admin
 
     private
 
-    # Membership years run from January to December
-    def year
-      params[:year].to_i.nonzero? || Date.current.year
-    end
+    def year = ClubMembership.year_from(params[:year])
 
     def notice(year, counts, linked)
       parts = ["#{counts[:added]} added", "#{counts[:updated]} updated", "#{counts[:removed]} taken off the list"]

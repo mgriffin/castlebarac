@@ -4,9 +4,7 @@
       Members in <%= @year %>
       <span class="fs-6 fw-normal text-body-secondary"><%= @people.size %></span>
     </h1>
-    <%- if policy([:admin, ClubMembership]).create? %>
-      <%= link_to "Upload the member list", new_admin_member_list_path(year: @year), class: "btn btn-sm btn-primary" %>
-    <%- end %>
+    <%= link_to "Upload the member list", new_admin_member_list_path(year: @year), class: "btn btn-sm btn-primary" %>
     <nav class="btn-group btn-group-sm" aria-label="Year">
       <%- @years.each do |year| %>
         <%= link_to year, admin_members_path(year:),
