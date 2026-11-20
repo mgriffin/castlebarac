@@ -2,10 +2,43 @@
   <%- if policy(@event).update? %>
     <%= link_to "Update event", edit_event_path %>
   <%- end %>
-  <h2><%= @event.title %></h2>
-  <p class="subtle"><%= @event.start_time.strftime("%A %e %B %Y at %l:%M%P") %></p>
+  <header class="event-header">
+    <%= date_tile(@event.start_time, large: true) %>
+    <div>
+      <h2><%= @event.title %></h2>
+      <p>
+        <%= @event.start_time.strftime("%A %e %B %Y at %l:%M%P") %>
+        <%- if @event.races.any? %>
+          · <%= pluralize(@event.races.size, "race") %>
+        <%- end %>
+      </p>
+    </div>
+  </header>
 
   <p><%= @event.content %></p>
 
-  <%= render @event.races %>
+  <div data-controller="results-filter" data-results-filter-filtered-class="castlebar-only">
+    <%- if @event.races.size > 1 %>
+      <nav class="race-jump" aria-label="Races">
+        <%- @event.races.each do |race| %>
+          <%= link_to race.name, "##{dom_id(race)}",
+                      class: class_names("race-chip", "race-chip--club": race.club_result_count.positive?) %>
+        <%- end %>
+      </nav>
+    <%- end %>
+
+    <%- if @event.races.any? { |race| race.club_result_count.positive? } %>
+      <div class="results-switch btn-group btn-group-sm" role="group" aria-label="Which results to show"
+           data-results-filter-target="switch" hidden>
+        <%- [["All results", false], ["Castlebar only", true]].each do |label, club_only| %>
+          <button type="button" class="<%= class_names("btn", active: !club_only) %>" aria-pressed="<%= !club_only %>"
+                  data-results-filter-club-only-param="<%= club_only %>"
+                  data-results-filter-target="button"
+                  data-action="results-filter#show"><%= label %></button>
+        <%- end %>
+      </div>
+    <%- end %>
+
+    <%= render @event.races %>
+  </div>
 </div>

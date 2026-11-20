@@ -1,12 +1,22 @@
-<h3 id="<%= dom_id(race) %>">
-  <%= race.name %>
-  <%= link_to event_path(race.event, anchor: dom_id(race)) do
-    inline_svg_tag "link.svg"
-  end %>
-</h3>
-<%= render ResultsTableComponent.new(first_result: race.results.first) do |results_table_component| %>
-  <%- race.results.each do |result| %>
-    <%= results_table_component.with_result(result:, user: current_user) %>
+<%- club_count = race.club_result_count %>
+<section class="<%= class_names("race", "race--club": club_count.positive?) %>" id="<%= dom_id(race) %>">
+  <h3 class="race__heading">
+    <span>
+      <%= race.name %>
+      <%- if club_count.positive? %>
+        <span class="race__club-count badge rounded-pill"><%= club_count %> Castlebar</span>
+      <%- end %>
+    </span>
+    <span class="race__count">
+      <%= pluralize(race.results.size, "result") %>
+      <%= link_to event_path(race.event, anchor: dom_id(race)), class: "race__permalink", title: "Link to this race" do
+        inline_svg_tag "link.svg"
+      end %>
+    </span>
+  </h3>
+  <%= render ResultsTableComponent.new(first_result: race.results.first) do |results_table_component| %>
+    <%- race.results.each do |result| %>
+      <%= results_table_component.with_result(result:, user: current_user) %>
+    <%- end %>
   <%- end %>
-<%- end %>
-</table>
+</section>

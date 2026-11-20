@@ -17,4 +17,11 @@ class ResultsTableComponent < ViewComponent::Base
                   "time" => @first_result&.seconds.present?
                 }).split
   end
+
+  # "Position" is too wide for its column
+  def label(header)
+    return tag.abbr("Pos", title: "Position") if header == "position"
+
+    header.humanize
+  end
 end
