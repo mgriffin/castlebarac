@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       resources :relationships, only: :create, module: :people
       resource :account, only: %i[create destroy], module: :people
     end
+    resources :members, only: :index
     resources :child_claims, only: :index do
       member do
         patch :approve
