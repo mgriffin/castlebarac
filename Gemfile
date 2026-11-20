@@ -53,6 +53,8 @@ gem "pretender"
 gem "typhoeus"
 ### Need to include this now
 gem "csv"
+### Reads member lists saved as OpenDocument files, which are zip files
+gem "rubyzip", "~> 3.7", require: "zip"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

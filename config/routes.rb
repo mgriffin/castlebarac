@@ -68,6 +68,9 @@ Rails.application.routes.draw do
       resource :account, only: %i[create destroy], module: :people
     end
     resources :members, only: :index
+    resources :member_lists, only: %i[new create] do
+      post :preview, on: :collection
+    end
     resources :child_claims, only: :index do
       member do
         patch :approve

@@ -53,6 +53,14 @@ module Admin
       assert_select "a[href='#{person_path(people(:liam))}']"
     end
 
+    test "links to the upload for the year" do
+      sign_in users(:secretary)
+
+      get admin_members_url(year: 2025)
+
+      assert_select "a[href=?]", new_admin_member_list_path(year: 2025), text: "Upload the member list"
+    end
+
     test "says when nobody is on a year's list" do
       sign_in users(:admin)
 
