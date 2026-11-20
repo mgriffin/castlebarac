@@ -47,10 +47,7 @@
       <%- @events.each do |event| %>
         <li>
           <%= link_to event_path(event), class: "upcoming-event" do %>
-            <time class="date-tile" datetime="<%= event.start_time.to_date.iso8601 %>">
-              <span class="date-tile__month"><%= event.start_time.strftime("%b") %></span>
-              <span class="date-tile__day"><%= event.start_time.day %></span>
-            </time>
+            <%= date_tile(event.start_time) %>
             <span>
               <span class="upcoming-event__title"><%= event.title %></span>
               <span class="upcoming-event__when"><%= event_when(event) %></span>

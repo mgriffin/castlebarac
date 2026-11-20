@@ -9,4 +9,12 @@ module EventsHelper
 
     time.strftime("%A, %-l:%M%P")
   end
+
+  # A small calendar page showing the month and day
+  def date_tile(time, large: false)
+    tag.time(class: class_names("date-tile", "date-tile--large": large), datetime: time.to_date.iso8601) do
+      tag.span(time.strftime("%b"), class: "date-tile__month") +
+        tag.span(time.day, class: "date-tile__day")
+    end
+  end
 end
