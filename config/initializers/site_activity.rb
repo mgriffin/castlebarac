@@ -12,10 +12,12 @@ Warden::Manager.after_authentication do |user, auth, _options|
 end
 
 # Only the first failure from an address in a while is posted, so someone
-# guessing passwords doesn't flood the room
+# guessing passwords doesn't flood the room. Logging in is the only failure
+# that recalls a page; others are e.g. visiting a page that needs a login.
 Warden::Manager.before_failure do |env, options|
+  next unless options[:recall]
+
   request = ActionDispatch::Request.new(env)
-  next unless request.post? && options[:attempted_path] == "/users/sign_in"
   next unless Rails.cache.write("site_activity/failed_login/#{request.remote_ip}", true,
                                 unless_exist: true, expires_in: 10.minutes)
 

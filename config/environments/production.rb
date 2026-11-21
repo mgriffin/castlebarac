@@ -79,6 +79,10 @@ Rails.application.configure do
     authentication: :plain
   }
 
+  # Site activity is posted to the club's chat room (see SiteActivity). The
+  # credentials are shared with development, which shouldn't post there.
+  config.x.prosody_webhook_url = Rails.application.credentials.dig(:prosody, :webhook_url)
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

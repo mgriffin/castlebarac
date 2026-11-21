@@ -6,7 +6,7 @@ class StripeWebhooksController < ActionController::API
     return missing_secret if secret.blank?
 
     event = Stripe::Webhook.construct_event(request.raw_post, request.headers["Stripe-Signature"], secret)
-    SiteActivity.collect(actor: "Stripe") { handle(event.type, event.data.object) }
+    SiteActivity.collect(actor: -> { "Stripe" }) { handle(event.type, event.data.object) }
     head :ok
   rescue JSON::ParserError, Stripe::SignatureVerificationError
     head :bad_request

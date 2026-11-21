@@ -5,20 +5,16 @@
 class SiteActivityJob < ApplicationJob
   class Failed < StandardError; end
 
-  retry_on Failed, Timeout::Error, SystemCallError, SocketError, OpenSSL::SSL::SSLError,
-           wait: :polynomially_longer, attempts: 5
+  retry_on Failed, wait: :polynomially_longer, attempts: 5
 
   def perform(text)
     url = SiteActivity.webhook_url
     return if url.blank?
 
-    uri = URI(url)
     # mod_slack_webhooks only accepts exactly this content type
-    request = Net::HTTP::Post.new(uri, "Content-Type" => "application/json")
-    request.body = { text:, username: "castlebarac.ie" }.to_json
-
-    response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https",
-                                                   open_timeout: 5, read_timeout: 10) { it.request(request) }
-    raise Failed, "Prosody said #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+    response = Typhoeus.post(url, body: { text:, username: "castlebarac.ie" }.to_json,
+                                  headers: { "Content-Type" => "application/json" },
+                                  connecttimeout: 5, timeout: 10)
+    raise Failed, "Prosody said #{response.code} #{response.return_message}" unless response.success?
   end
 end

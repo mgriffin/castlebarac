@@ -51,7 +51,7 @@ class SiteActivityTest < ActiveSupport::TestCase
   test "lots of changes are counted instead of listed" do
     enable_site_activity
 
-    SiteActivity.collect(actor: "mike") do
+    SiteActivity.collect(actor: -> { "mike" }) do
       (SiteActivity::LIST_LIMIT + 1).times { Person.create!(firstname: "Runner", surname: it.to_s) }
       events(:first).update!(title: "Mayo Championships")
     end
