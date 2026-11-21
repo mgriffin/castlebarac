@@ -10,6 +10,9 @@ class Entry < ApplicationRecord
   has_many :people, -> { distinct }, through: :entry_lines
   has_many :payments, dependent: :restrict_with_error
 
+  # Sending reminders isn't a change worth posting
+  self.site_activity_ignored_fields += %w[reminder_sent_at]
+
   validates :user_id, uniqueness: { scope: :competition_id }
 
   delegate :accepting_entries?, to: :competition

@@ -7,6 +7,9 @@ class Event < ApplicationRecord
 
   validates :title, :start_time, presence: true
 
+  # It's made from the title, so isn't worth posting as well
+  self.site_activity_ignored_fields += %w[url]
+
   before_validation :create_url, if: -> { title_changed? && start_time.present? }
 
   after_find do |event|

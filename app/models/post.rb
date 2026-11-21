@@ -7,6 +7,9 @@ class Post < ApplicationRecord
 
   before_validation :create_url, if: :title_changed?
 
+  # It's made from the title, so isn't worth posting as well
+  self.site_activity_ignored_fields += %w[url]
+
   def create_url
     self.url = DateTime.now.strftime("%Y-%m-%d-") + title
                .gsub(/\s+/, "-")        # replace spaces with -

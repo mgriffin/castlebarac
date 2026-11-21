@@ -8,6 +8,12 @@ class User < ApplicationRecord
 
   validates :username, presence: true
 
+  # Logging in and resetting passwords aren't changes worth posting
+  self.site_activity_ignored_fields += %w[
+    sign_in_count current_sign_in_at last_sign_in_at current_sign_in_ip last_sign_in_ip
+    remember_created_at reset_password_token reset_password_sent_at
+  ]
+
   has_many :posts, dependent: :nullify
   has_many :entries, dependent: :destroy
   # A user's person is only ever one they created themselves or one an admin

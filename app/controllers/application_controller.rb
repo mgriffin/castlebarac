@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   # say it's public with skip_after_action. Devise's controllers are public.
   after_action :verify_authorized, unless: :devise_controller?
 
+  # Everything changed while handling a request is posted as one message
+  around_action :collect_site_activity
+
   layout "sporty"
 
   def admin?
@@ -19,6 +22,18 @@ class ApplicationController < ActionController::Base
   helper_method :admin?
 
   protected
+
+  def collect_site_activity(&)
+    SiteActivity.collect(actor: -> { site_activity_actor }, ip: request.remote_ip, &)
+  end
+
+  # Who's doing it, e.g. "mike", or "mike (as jbloggs)" while impersonating
+  def site_activity_actor
+    return unless current_user
+    return current_user.username if true_user == current_user
+
+    "#{true_user.username} (as #{current_user.username})"
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])

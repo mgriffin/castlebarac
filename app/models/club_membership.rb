@@ -5,6 +5,9 @@
 class ClubMembership < ApplicationRecord
   belongs_to :person
 
+  # How it's named in the site activity room, e.g. "Joe Bloggs, 2026"
+  def site_activity_name = "#{person.fullname}, #{year}"
+
   validates :year, numericality: { only_integer: true, in: 1900..2999 }
   validates :person_id, uniqueness: { scope: :year }
 
