@@ -8,8 +8,9 @@
 # e.g. in the console, each note is posted straight away.
 #
 # The room's webhook URL (from Prosody's mod_slack_webhooks) is a secret, as
-# anyone with it can post: it goes in the prosody.webhook_url credential or
-# PROSODY_WEBHOOK_URL. Without it nothing is posted.
+# anyone with it can post: it goes in the prosody.webhook_url credential,
+# which is only used in production, or PROSODY_WEBHOOK_URL. Without it
+# nothing is posted.
 class SiteActivity
   # Up to this many changes are listed one by one; any more are counted
   LIST_LIMIT = 5
@@ -32,8 +33,12 @@ class SiteActivity
   Change = Data.define(:action, :record, :fields)
 
   class << self
+    # The credentials are shared with development, which shouldn't post to
+    # the room, so they're only used in production
     def webhook_url
-      Rails.application.credentials.dig(:prosody, :webhook_url) || ENV.fetch("PROSODY_WEBHOOK_URL", nil)
+      ENV.fetch("PROSODY_WEBHOOK_URL") do
+        Rails.application.credentials.dig(:prosody, :webhook_url) if Rails.env.production?
+      end
     end
 
     def enabled? = webhook_url.present?
