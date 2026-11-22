@@ -31,9 +31,10 @@ class Result < ApplicationRecord
     seconds.to_s.match(/(\.\d+)/)&.captures&.first || ""
   end
 
+  # e.g. 9.85, 6:12.0 or 1:02:05.4, or else what the results say, like a
+  # distance jumped (stored as negative seconds) or DNF
   def net_time
-    return result.to_s if seconds.nil?
-    return "" if seconds.negative?
+    return result.to_s unless seconds.to_f.positive?
 
     if h.zero?
       hours = ""
@@ -44,7 +45,7 @@ class Result < ApplicationRecord
       mins = format("%02d:", m)
     end
 
-    secs = format("%02d", s) unless m == ""
+    secs = mins.empty? ? s.to_s : format("%02d", s)
 
     "#{hours}#{mins}#{secs}#{ms[0..2]}"
   end
@@ -53,9 +54,8 @@ class Result < ApplicationRecord
     club == "Castlebar A.C."
   end
 
-  def result_or_position
-    return result if result.present?
-
-    "#{position.ordinalize} place"
+  # 1st to 3rd
+  def medal?
+    (1..3).cover?(position)
   end
 end

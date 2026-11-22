@@ -19,10 +19,6 @@ class ResultComponent < ViewComponent::Base
     end
   end
 
-  def medal?
-    (1..3).cover?(result.position)
-  end
-
   def edit_name
     return unless render_edit_link?
 

@@ -33,6 +33,14 @@ class ResultTest < ActiveSupport::TestCase
     assert_equal "1:09.05", result.net_time
   end
 
+  test "doesn't pad seconds under a minute" do
+    assert_equal "9.85", Result.new(seconds: 9.85).net_time
+  end
+
+  test "shows the mark for field events, which have negative seconds" do
+    assert_equal "3.22", Result.new(seconds: -3.22, result: "3.22").net_time
+  end
+
   test "shows the result text when there's no time" do
     result = Result.new(result: "DSQ", seconds: nil)
 
