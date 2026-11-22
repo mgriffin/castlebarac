@@ -525,7 +525,7 @@ table.admin-table {
     margin: 0;
   }
 }
-.person-header__avatar {
+.person-avatar {
   flex: none;
   display: grid;
   place-items: center;
@@ -537,7 +537,7 @@ table.admin-table {
   font-size: 1.25rem;
   font-weight: 800;
 }
-.person-header__avatar--small {
+.person-avatar--small {
   width: 2.5rem;
   height: 2.5rem;
   font-size: 0.95rem;
@@ -593,14 +593,10 @@ table.admin-table {
   text-transform: uppercase;
   color: var(--muted-text-color);
 }
-.person-results table.results {
-  width: 100%;
-
-  .date {
-    width: 7rem;
-    color: var(--muted-text-color);
-    white-space: nowrap;
-  }
+.person-results .date {
+  width: 7rem;
+  color: var(--muted-text-color);
+  white-space: nowrap;
 }
 .person-results__race {
   color: var(--muted-text-color);

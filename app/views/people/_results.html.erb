@@ -14,7 +14,7 @@
       <%- results.each do |result| %>
         <%- event = result.race.event %>
         <tr id="<%= dom_id(result) %>">
-          <td class="date"><%= event.start_time.strftime("%-d %b %Y") %></td>
+          <td class="date"><%= l(event.start_time.to_date, format: :day_month_year) %></td>
           <td>
             <%= link_to event.title, event_path(event, anchor: dom_id(result)) %>
             <%- unless distance %>
@@ -23,7 +23,7 @@
           </td>
           <td class="position"><%= result_position(result) %></td>
           <td class="result<%= " person-results__best" if result == best %>">
-            <%= result_mark(result) %>
+            <%= result.net_time.presence || "–" %>
             <%= tag.abbr("PB", title: "Personal best", class: "person-results__pb") if result == best %>
           </td>
         </tr>

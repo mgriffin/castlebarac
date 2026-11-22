@@ -10,7 +10,8 @@ class PersonPolicy < ApplicationPolicy
     return false unless user
     return true if staff?
 
-    user.person.present? && (user.person == record || record.parents.include?(user.person))
+    # Loads the parents, as the page lists them too
+    user.person.present? && (user.person == record || record.parents.to_a.include?(user.person))
   end
 
   # Finding people by name when filling in forms. It lists children too, so

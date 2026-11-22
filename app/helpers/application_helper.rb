@@ -12,6 +12,11 @@ module ApplicationHelper
     end
   end
 
+  # A position in a circle coloured gold, silver or bronze
+  def medal(position)
+    tag.span(position, class: "medal medal--#{position}")
+  end
+
   # "3 days ago", with the full date and time when you hover over it
   def time_ago_tag(time)
     return if time.nil?

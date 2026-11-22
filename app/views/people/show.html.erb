@@ -1,27 +1,23 @@
 <%- results = @results_by_distance.values.flatten %>
 <div class="content person-page">
   <header class="person-header">
-    <div class="person-header__avatar" aria-hidden="true"><%= initials(@person) %></div>
+    <%= person_avatar(@person) %>
     <div>
       <h2><%= @person.fullname %></h2>
-      <%- age_group = @person.age_group if @private_details %>
-      <%- member = member_years_label(@person.member_years) %>
-      <%- if age_group || member %>
+      <%- chips = [(@person.age_group if @private_details), member_years_label(@person.member_years)].compact %>
+      <%- if chips.any? %>
         <div class="person-header__chips">
-          <%= tag.span(age_group, class: "person-chip") if age_group %>
-          <%= tag.span(member, class: "person-chip") if member %>
+          <%- chips.each do |chip| %>
+            <span class="person-chip"><%= chip %></span>
+          <%- end %>
         </div>
       <%- end %>
       <%- if @private_details %>
-        <%- if @person.parents.any? %>
-          <p class="person-header__family">
-            Child of <%= to_sentence(@person.parents.map { link_to(it.fullname, person_path(it)) }) %>
-          </p>
+        <%- if @person.parents.present? %>
+          <p class="person-header__family">Child of <%= people_links(@person.parents) %></p>
         <%- end %>
-        <%- if results.any? && @person.children.any? %>
-          <p class="person-header__family">
-            Parent of <%= to_sentence(@person.children.map { link_to(it.fullname, person_path(it)) }) %>
-          </p>
+        <%- if results.any? && @person.children.present? %>
+          <p class="person-header__family">Parent of <%= people_links(@person.children) %></p>
         <%- end %>
       <%- end %>
     </div>
@@ -31,7 +27,7 @@
     <dl class="person-stats">
       <div><dt>Results</dt><dd><%= results.size %></dd></div>
       <div><dt>Events</dt><dd><%= results.map { it.race.event_id }.uniq.size %></dd></div>
-      <div><dt>Podiums</dt><dd><%= results.count { (1..3).cover?(it.position) } %></dd></div>
+      <div><dt>Podiums</dt><dd><%= results.count(&:medal?) %></dd></div>
       <div><dt>First race</dt><dd><%= results.map { it.race.event.start_time }.min.strftime("%b %Y") %></dd></div>
     </dl>
 

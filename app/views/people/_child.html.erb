@@ -1,6 +1,6 @@
 <%- latest = child.results.max_by { it.race.event.start_time } %>
 <div class="person-child">
-  <div class="person-header__avatar person-header__avatar--small" aria-hidden="true"><%= initials(child) %></div>
+  <%= person_avatar(child, small: true) %>
   <div>
     <%= link_to child.fullname, person_path(child), class: "person-child__name" %>
     <%- age_group = child.age_group if policy(child).private_details? %>
@@ -8,7 +8,7 @@
     <p>
       <%- if latest %>
         <%= pluralize(child.results.size, "result") %>, most recently
-        <%= latest.race.event.title %> on <%= latest.race.event.start_time.strftime("%-d %b %Y") %>
+        <%= latest.race.event.title %> on <%= l(latest.race.event.start_time.to_date, format: :day_month_year) %>
       <%- else %>
         No results yet
       <%- end %>

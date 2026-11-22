@@ -4,6 +4,7 @@ require "test_helper"
 
 class PeopleControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  include ActionView::RecordIdentifier
 
   setup do
     @event = Event.create!(title: "Race day", start_time: Time.zone.local(2026, 6, 7, 10))
@@ -34,10 +35,10 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:gabby)
     get person_url(person)
 
-    assert_select "##{ActionView::RecordIdentifier.dom_id(fast)} .result", text: /9.62\s+PB/
-    assert_select "##{ActionView::RecordIdentifier.dom_id(fast)} .medal--2", text: "2"
-    assert_select "##{ActionView::RecordIdentifier.dom_id(slow)} .result", text: "9.85"
-    assert_select "##{ActionView::RecordIdentifier.dom_id(slow)} .position", text: "6th"
+    assert_select "##{dom_id(fast)} .result", text: /9.62\s+PB/
+    assert_select "##{dom_id(fast)} .medal--2", text: "2"
+    assert_select "##{dom_id(slow)} .result", text: "9.85"
+    assert_select "##{dom_id(slow)} .position", text: "6th"
   end
 
   test "shows the years someone was a member" do
