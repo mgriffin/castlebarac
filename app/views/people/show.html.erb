@@ -1,24 +1,49 @@
-<div class="content">
-  <h2><%= @person.fullname %></h2>
-  <%- if policy(PersonRelationship.new).show? %>
-    <%- if @person.children.any? %>
-      Parent of <%= @person.children.map(&:fullname).to_sentence %>
-    <%- end %>
-    <%- if @person.parents.any? %>
-      Child of <%= @person.parents.map(&:fullname).to_sentence %>
-    <%- end %>
-  <%- end %>
-  <ul>
-    <%- @person.results_by_distance.each do |distance, results| %>
-      <h3><%= distance ? distance_to_human(distance) : "Other races" %></h3>
-      <%- results.each do |result| %>
-        <li>
-          <%= result.result_or_position %> --
-          <%= link_to(result.race.name, event_path(result.race.event, anchor: dom_id(result))) %>
-          at <%= result.race.event.title %>
-        (<%= result.race.event.human_date %>)
-        </li>
+<%- results = @results_by_distance.values.flatten %>
+<div class="content person-page">
+  <header class="person-header">
+    <div class="person-header__avatar" aria-hidden="true"><%= initials(@person) %></div>
+    <div>
+      <h2><%= @person.fullname %></h2>
+      <%- age_group = @person.age_group if @private_details %>
+      <%- member = member_years_label(@person.member_years) %>
+      <%- if age_group || member %>
+        <div class="person-header__chips">
+          <%= tag.span(age_group, class: "person-chip") if age_group %>
+          <%= tag.span(member, class: "person-chip") if member %>
+        </div>
       <%- end %>
+      <%- if @private_details %>
+        <%- if @person.parents.any? %>
+          <p class="person-header__family">
+            Child of <%= to_sentence(@person.parents.map { link_to(it.fullname, person_path(it)) }) %>
+          </p>
+        <%- end %>
+        <%- if results.any? && @person.children.any? %>
+          <p class="person-header__family">
+            Parent of <%= to_sentence(@person.children.map { link_to(it.fullname, person_path(it)) }) %>
+          </p>
+        <%- end %>
+      <%- end %>
+    </div>
+  </header>
+
+  <%- if results.any? %>
+    <dl class="person-stats">
+      <div><dt>Results</dt><dd><%= results.size %></dd></div>
+      <div><dt>Events</dt><dd><%= results.map { it.race.event_id }.uniq.size %></dd></div>
+      <div><dt>Podiums</dt><dd><%= results.count { (1..3).cover?(it.position) } %></dd></div>
+      <div><dt>First race</dt><dd><%= results.map { it.race.event.start_time }.min.strftime("%b %Y") %></dd></div>
+    </dl>
+
+    <%- @results_by_distance.each do |distance, distance_results| %>
+      <%= render "people/results", distance:, results: distance_results %>
     <%- end %>
-  </ul>
+  <%- elsif @children.present? %>
+    <h3 class="person-section-heading">Children</h3>
+    <div class="person-children">
+      <%= render partial: "people/child", collection: @children %>
+    </div>
+  <%- else %>
+    <p class="person-empty">No results yet.</p>
+  <%- end %>
 </div>

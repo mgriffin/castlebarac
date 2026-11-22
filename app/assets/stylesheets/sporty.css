@@ -512,3 +512,137 @@ table.admin-table {
 .team-member-form {
   max-width: 32rem;
 }
+
+/* A person's page: who they are, then their results by distance */
+.person-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule-color);
+
+  h2 {
+    margin: 0;
+  }
+}
+.person-header__avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  color: var(--header-text-color);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.person-header__avatar--small {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.95rem;
+}
+.person-header__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+.person-chip {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background-color: var(--club-tint);
+  color: var(--background-color);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.person-header__family {
+  margin: 0.25rem 0 0;
+  color: var(--muted-text-color);
+  font-size: 0.9rem;
+}
+.person-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 0.9rem 0 0;
+
+  div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  dt {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted-text-color);
+  }
+  dd {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+}
+.person-section-heading {
+  margin: 1.5rem 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-text-color);
+}
+.person-results table.results {
+  width: 100%;
+
+  .date {
+    width: 7rem;
+    color: var(--muted-text-color);
+    white-space: nowrap;
+  }
+}
+.person-results__race {
+  color: var(--muted-text-color);
+}
+.person-results__best {
+  font-weight: 700;
+}
+abbr.person-results__pb {
+  margin-left: 0.3rem;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  background-color: #ffe58f;
+  color: #7a5b00;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  vertical-align: 1px;
+}
+.person-children {
+  display: grid;
+  gap: 0.5rem;
+}
+.person-child {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule-color);
+  border-radius: 8px;
+
+  p {
+    margin: 0.1rem 0 0;
+    color: var(--muted-text-color);
+    font-size: 0.85rem;
+  }
+}
+.person-child__name {
+  margin-right: 0.3rem;
+  font-weight: 600;
+}
+.person-empty {
+  margin-top: 1rem;
+  color: var(--muted-text-color);
+}

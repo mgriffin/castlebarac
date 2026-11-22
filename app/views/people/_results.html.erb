@@ -1,0 +1,33 @@
+<%- best = personal_best(results) if distance %>
+<section class="person-results">
+  <h3 class="person-section-heading"><%= distance ? distance_to_human(distance) : "Other events" %></h3>
+  <table class="results">
+    <thead>
+      <tr>
+        <th class="date">Date</th>
+        <th>Event</th>
+        <th class="position"><abbr title="Position">Pos</abbr></th>
+        <th class="time">Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- results.each do |result| %>
+        <%- event = result.race.event %>
+        <tr id="<%= dom_id(result) %>">
+          <td class="date"><%= event.start_time.strftime("%-d %b %Y") %></td>
+          <td>
+            <%= link_to event.title, event_path(event, anchor: dom_id(result)) %>
+            <%- unless distance %>
+              <span class="person-results__race">· <%= result.race.name %></span>
+            <%- end %>
+          </td>
+          <td class="position"><%= result_position(result) %></td>
+          <td class="result<%= " person-results__best" if result == best %>">
+            <%= result_mark(result) %>
+            <%= tag.abbr("PB", title: "Personal best", class: "person-results__pb") if result == best %>
+          </td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+</section>
