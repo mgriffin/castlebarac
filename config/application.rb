@@ -41,14 +41,6 @@ module Castlebarac
     config.action_dispatch.rescue_responses["Pundit::NotAuthorizedError"] = :not_found
   end
 
-  def self.show_about?(user = nil)
-    Flipper.enabled?(:about, user)
-  end
-
-  def self.truncate_post?(user = nil)
-    Flipper.enabled?(:truncate_post, user)
-  end
-
   # Competition entries and payments. Turn on for individual users in
   # Flipper to try them out before opening them to everyone.
   def self.competition_entries?(user = nil)
