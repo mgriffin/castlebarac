@@ -38,7 +38,7 @@ module Admin
           csv << ["Event", "First name", "Surname", "Gender", "Year of birth", "Entered by", "Coach's OK"]
           entry_lines.each do |line|
             csv << [line.competition_event.name, line.person.firstname, line.person.surname,
-                    line.person.gender, line.person.year, line.entry.user.email, coach_ok(line)]
+                    line.person.gender, line.person.year, line.entry.user.name, coach_ok(line)]
           end
         end
       end
