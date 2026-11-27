@@ -35,5 +35,21 @@ module Competitions
       assert_redirected_to new_competition_entry_athlete_url(@competition)
       assert_equal "Choose someone from the list", flash[:alert]
     end
+
+    test "staff aren't asked for a coach's OK, and are recorded as giving it" do
+      hurdles = competition_events(:u12_girls_60m_hurdles)
+      get competition_entry_athlete_url(@competition, people(:ciara).id)
+
+      assert_select "input[name='confirmed_event_ids[]']", count: 0
+      assert_select ".small", /As staff, you're recorded as giving it/
+
+      patch competition_entry_athlete_url(@competition, people(:ciara).id),
+            params: { competition_event_ids: [hurdles.id, competition_events(:u12_girls_600m).id] }
+
+      assert_redirected_to competition_entry_url(@competition)
+      lines = users(:coach).entries.find_by(competition: @competition).entry_lines.index_by(&:competition_event)
+      assert_equal users(:coach), lines[hurdles].confirmed_by
+      assert_not_predicate lines[competition_events(:u12_girls_600m)], :confirmed?
+    end
   end
 end

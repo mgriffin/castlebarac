@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_27_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_27_140000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -101,6 +101,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_27_130000) do
     t.integer "min_age"
     t.string "name", null: false
     t.integer "position", default: 0, null: false
+    t.boolean "requires_confirmation", default: false, null: false
     t.time "start_time"
     t.datetime "updated_at", null: false
     t.index ["competition_id"], name: "index_competition_events_on_competition_id"
@@ -136,12 +137,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_27_130000) do
 
   create_table "entry_lines", force: :cascade do |t|
     t.integer "competition_event_id", null: false
+    t.datetime "confirmed_at"
+    t.integer "confirmed_by_id"
     t.datetime "created_at", null: false
     t.integer "entry_id", null: false
     t.integer "payment_id"
     t.integer "person_id", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_event_id"], name: "index_entry_lines_on_competition_event_id"
+    t.index ["confirmed_by_id"], name: "index_entry_lines_on_confirmed_by_id"
     t.index ["entry_id"], name: "index_entry_lines_on_entry_id"
     t.index ["payment_id"], name: "index_entry_lines_on_payment_id"
     t.index ["person_id", "competition_event_id"], name: "index_entry_lines_on_person_id_and_competition_event_id", unique: true
@@ -344,6 +348,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_27_130000) do
   add_foreign_key "entry_lines", "entries"
   add_foreign_key "entry_lines", "payments"
   add_foreign_key "entry_lines", "people"
+  add_foreign_key "entry_lines", "users", column: "confirmed_by_id"
   add_foreign_key "memberships", "people"
   add_foreign_key "memberships", "teams"
   add_foreign_key "payments", "entries"

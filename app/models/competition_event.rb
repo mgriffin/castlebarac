@@ -3,6 +3,9 @@
 class CompetitionEvent < ApplicationRecord
   GENDERS = Competitor::GENDERS
 
+  # Hurdles, throws and jumps that need a club coach's OK, going by the name
+  CONFIRMATION_EVENTS = /hurdle|\d\s*mH\b|shot|discus|javelin|hammer|high\s*jump|\bHJ\b|pole\s*vault/i
+
   belongs_to :competition
   has_many :entry_lines, dependent: :restrict_with_error
 
@@ -13,6 +16,8 @@ class CompetitionEvent < ApplicationRecord
 
   before_validation :ages_from_age_group
   before_validation { self.gender = gender.presence }
+  # Admins can untick it afterwards if it doesn't apply
+  before_validation(on: :create) { self.requires_confirmation ||= confirmation_expected? }
 
   def eligible?(person)
     ineligibility_reason(person).nil?
@@ -24,6 +29,10 @@ class CompetitionEvent < ApplicationRecord
     return :gender if gender.present? && person.gender != gender
 
     age_reason(person.age_on(competition.age_reference_date))
+  end
+
+  def confirmation_expected?
+    name.to_s.match?(CONFIRMATION_EVENTS)
   end
 
   def earliest_birth_year

@@ -58,4 +58,30 @@ class EntryLineTest < ActiveSupport::TestCase
 
     assert_includes line.errors[:competition_event], "isn't part of this competition"
   end
+
+  test "an event that needs a coach's OK can't be entered without it" do
+    line = @entry.entry_lines.create(person: people(:ciara),
+                                     competition_event: competition_events(:u12_girls_60m_hurdles))
+
+    assert_includes line.errors[:base], "Confirm that Ciara has discussed U12 Girls 60m Hurdles with a club coach"
+  end
+
+  test "records who confirmed the coach's OK" do
+    line = @entry.entry_lines.build(person: people(:ciara),
+                                    competition_event: competition_events(:u12_girls_60m_hurdles))
+    line.confirm(users(:bugs))
+    line.save!
+
+    assert_equal users(:bugs), line.confirmed_by
+    assert_predicate line.confirmed_at, :present?
+  end
+
+  test "lines entered before an event needed a coach's OK are kept" do
+    event = competition_events(:u12_girls_600m)
+    line = @entry.entry_lines.create!(person: people(:ciara), competition_event: event)
+    event.update!(requires_confirmation: true)
+
+    assert_predicate line.reload, :valid?
+    assert_predicate line, :awaiting_confirmation?
+  end
 end

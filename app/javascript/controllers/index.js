@@ -18,3 +18,6 @@ import "rhino-editor"
 
 import ResultsFilterController from "./results_filter_controller"
 application.register("results-filter", ResultsFilterController)
+
+import EventConfirmationController from "./event_confirmation_controller"
+application.register("event-confirmation", EventConfirmationController)
