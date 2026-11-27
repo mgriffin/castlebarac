@@ -525,23 +525,6 @@ table.admin-table {
     margin: 0;
   }
 }
-.person-avatar {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 3.4rem;
-  height: 3.4rem;
-  border-radius: 50%;
-  background-color: var(--background-color);
-  color: var(--header-text-color);
-  font-size: 1.25rem;
-  font-weight: 800;
-}
-.person-avatar--small {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 0.95rem;
-}
 .person-header__chips {
   display: flex;
   flex-wrap: wrap;
@@ -556,7 +539,7 @@ table.admin-table {
   font-size: 0.78rem;
   font-weight: 600;
 }
-.person-header__family {
+.person-header__detail {
   margin: 0.25rem 0 0;
   color: var(--muted-text-color);
   font-size: 0.9rem;

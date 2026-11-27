@@ -1,6 +1,5 @@
 <%- latest = child.results.max_by { it.race.event.start_time } %>
 <div class="person-child">
-  <%= person_avatar(child, small: true) %>
   <div>
     <%= link_to child.fullname, person_path(child), class: "person-child__name" %>
     <%- age_group = child.age_group if policy(child).private_details? %>

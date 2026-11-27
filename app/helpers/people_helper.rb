@@ -10,12 +10,6 @@ module PeopleHelper
     options
   end
 
-  # Their initials in a circle, e.g. "AE" for Aoife Example
-  def person_avatar(person, small: false)
-    initials = [person.firstname, person.surname].filter_map { it.to_s[0] }.join.upcase
-    tag.div(initials, class: class_names("person-avatar", "person-avatar--small": small), aria: { hidden: true })
-  end
-
   # e.g. "Mary Example and John Example", linked to their pages
   def people_links(people)
     to_sentence(people.map { link_to(it.fullname, person_path(it)) })
