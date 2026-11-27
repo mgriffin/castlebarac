@@ -11,7 +11,7 @@ module Admin
         authorize [:admin, @competition], :entries?
 
         @entry_lines = @competition.entry_lines
-                                   .includes(:person, :competition_event, :payment, entry: :user)
+                                   .includes(:person, :competition_event, :payment, :confirmed_by, entry: :user)
                                    .reorder("competition_events.position, competition_events.id, people.surname")
                                    .references(:competition_events, :people)
 
@@ -25,12 +25,20 @@ module Admin
 
       private
 
+      def coach_ok(line)
+        if line.confirmed?
+          "#{line.confirmed_by&.email} #{l(line.confirmed_at, format: :short)}"
+        elsif line.awaiting_confirmation?
+          "Not confirmed"
+        end
+      end
+
       def to_csv(entry_lines)
         CSV.generate do |csv|
-          csv << ["Event", "First name", "Surname", "Gender", "Year of birth", "Entered by"]
+          csv << ["Event", "First name", "Surname", "Gender", "Year of birth", "Entered by", "Coach's OK"]
           entry_lines.each do |line|
             csv << [line.competition_event.name, line.person.firstname, line.person.surname,
-                    line.person.gender, line.person.year, line.entry.user.email]
+                    line.person.gender, line.person.year, line.entry.user.email, coach_ok(line)]
           end
         end
       end

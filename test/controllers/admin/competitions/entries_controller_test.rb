@@ -25,8 +25,8 @@ module Admin
         get admin_competition_entries_url(competitions(:connacht), format: :csv)
 
         assert_response :success
-        assert_equal ["Event,First name,Surname,Gender,Year of birth,Entered by",
-                      "U12 Girls 600m,Ciara,Walsh,female,#{people(:ciara).year},bugs@acme.fake"],
+        assert_equal ["Event,First name,Surname,Gender,Year of birth,Entered by,Coach's OK",
+                      "U12 Girls 600m,Ciara,Walsh,female,#{people(:ciara).year},bugs@acme.fake,"],
                      response.body.lines.map(&:chomp)
       end
 
@@ -54,6 +54,29 @@ module Admin
 
         assert_redirected_to admin_competition_entries_url(competitions(:connacht))
         assert_not EntryLine.exists?(line.id)
+      end
+
+      test "shows who confirmed a coach's OK, and who still needs one" do
+        sign_in users(:secretary)
+        entry = Entry.create!(competition: competitions(:connacht), user: users(:bugs))
+        hurdles = competition_events(:u12_girls_60m_hurdles)
+        line = entry.entry_lines.build(person: people(:ciara), competition_event: hurdles)
+        line.confirm(users(:bugs))
+        pay_for(line.tap(&:save!))
+        long_jump = competition_events(:u12_girls_long_jump)
+        pay_for(entry.entry_lines.create!(person: people(:ciara), competition_event: long_jump))
+        long_jump.update!(requires_confirmation: true)
+
+        get admin_competition_entries_url(competitions(:connacht))
+
+        assert_select "td", /bugs@acme.fake\s+#{Regexp.escape(I18n.l(line.reload.confirmed_at, format: :short))}/
+        assert_select ".badge", "Not confirmed"
+
+        get admin_competition_entries_url(competitions(:connacht), format: :csv)
+
+        rows = CSV.parse(response.body, headers: true).to_h { [it["Event"], it["Coach's OK"]] }
+        assert_match(/\Abugs@acme.fake /, rows["U12 Girls 60m Hurdles"])
+        assert_equal "Not confirmed", rows["U12 Girls Long Jump"]
       end
     end
   end

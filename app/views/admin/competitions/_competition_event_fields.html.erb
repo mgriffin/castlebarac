@@ -1,5 +1,5 @@
 <fieldset class="row g-2 align-items-end mb-3 competition-event-fields">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control", placeholder: "U12 Girls 600m" %>
   </div>
@@ -26,6 +26,11 @@
   <div class="col-md-1">
     <%= form.label :start_time, "Time", class: "form-label" %>
     <%= form.time_field :start_time, class: "form-control" %>
+  </div>
+  <div class="col-md-1 form-check">
+    <%= form.check_box :requires_confirmation, class: "form-check-input",
+                                               title: "Whoever enters them confirms they've discussed it with a club coach" %>
+    <%= form.label :requires_confirmation, "Coach's OK", class: "form-check-label" %>
   </div>
   <%- if form.object.persisted? %>
     <div class="col-md-1 form-check">
