@@ -21,6 +21,7 @@ module Admin
         assert_select "td a", "Ciara Walsh"
         assert_select "td a", "Liam Walsh"
         assert_select ".badge", "Not paid"
+        assert_select "td", "Bugs Bunny"
 
         get admin_competition_entries_url(competitions(:connacht), format: :csv)
 
@@ -43,6 +44,16 @@ module Admin
 
         rows = CSV.parse(response.body, headers: true).map { "#{it['Event']} #{it['Surname']}" }
         assert_equal ["U12 Girls 600m Walsh", "U12 Girls 80m Moran", "U12 Girls 80m Walsh", "U12 Boys 600m Walsh"], rows
+      end
+
+      test "shows the email of whoever entered them if they haven't given their name" do
+        sign_in users(:secretary)
+        entry = Entry.create!(competition: competitions(:connacht), user: users(:gabby))
+        paid_entry_line(entry, people(:ciara), competition_events(:u12_girls_600m))
+
+        get admin_competition_entries_url(competitions(:connacht))
+
+        assert_select "td", users(:gabby).email
       end
 
       test "takes someone out of an event" do
@@ -69,13 +80,13 @@ module Admin
 
         get admin_competition_entries_url(competitions(:connacht))
 
-        assert_select "td", /bugs@acme.fake\s+#{Regexp.escape(I18n.l(line.reload.confirmed_at, format: :short))}/
+        assert_select "td", /Bugs Bunny\s+#{Regexp.escape(I18n.l(line.reload.confirmed_at, format: :short))}/
         assert_select ".badge", "Not confirmed"
 
         get admin_competition_entries_url(competitions(:connacht), format: :csv)
 
         rows = CSV.parse(response.body, headers: true).to_h { [it["Event"], it["Coach's OK"]] }
-        assert_match(/\Abugs@acme.fake /, rows["U12 Girls 60m Hurdles"])
+        assert_match(/\ABugs Bunny /, rows["U12 Girls 60m Hurdles"])
         assert_equal "Not confirmed", rows["U12 Girls Long Jump"]
       end
     end
