@@ -2,15 +2,21 @@
 
 class AdminToolbarComponent < ViewComponent::Base
   include Pundit::Authorization
-  include Devise::Controllers::Helpers
 
   def initialize(user:)
-    @current_user = user
+    @user = user
   end
 
   def render?
-    return false if @current_user.nil?
+    return false if @user.nil?
 
     policy(:admin).access?
+  end
+
+  private
+
+  # Who Pundit checks the policy for
+  def pundit_user
+    @user
   end
 end
