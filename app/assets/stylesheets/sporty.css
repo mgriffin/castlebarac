@@ -533,6 +533,19 @@ table.admin-table {
   flex-direction: column;
   align-items: flex-end;
   gap: 0.4rem;
+
+  /* Outlined in club green, filling in when pressed */
+  .btn {
+    --bs-btn-color: var(--background-color);
+    --bs-btn-border-color: var(--background-color);
+    --bs-btn-bg: transparent;
+    --bs-btn-hover-color: var(--background-color);
+    --bs-btn-hover-bg: var(--club-tint);
+    --bs-btn-hover-border-color: var(--background-color);
+    --bs-btn-active-color: var(--header-text-color);
+    --bs-btn-active-bg: var(--background-color);
+    --bs-btn-active-border-color: var(--background-color);
+  }
 }
 .person-header__chips {
   display: flex;
