@@ -1,19 +1,19 @@
 admin:
   email: admin@acme.fake
-  encrypted_password: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, "carrots") %>
 
 bugs:
   email: bugs@acme.fake
-  encrypted_password: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, "carrots") %>
 
 coach:
   email: coach@acme.fake
-  encrypted_password: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, "carrots") %>
 
 gabby:
   email: gabbygabby@acme.fake
-  encrypted_password: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, "carrots") %>
 
 secretary:
   email: secretary@acme.fake
-  encrypted_password: <%= BCrypt::Password.create("carrots") %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, "carrots") %>
