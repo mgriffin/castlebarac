@@ -33,7 +33,7 @@
               <td><%= line.entry.user.email %></td>
               <td>
                 <%- if line.confirmed? %>
-                  <%= line.confirmed_by&.email %>
+                  <%= line.confirmed_by&.name %>
                   <span class="subtle small"><%= l line.confirmed_at, format: :short %></span>
                 <%- elsif line.awaiting_confirmation? %>
                   <span class="badge text-bg-warning">Not confirmed</span>
