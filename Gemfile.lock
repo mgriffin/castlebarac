@@ -104,8 +104,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.8)
-    cssbundling-rails (1.4.3)
-      railties (>= 6.0.0)
     csv (3.3.7)
     date (3.6.0)
     debug (1.11.1)
@@ -425,7 +423,6 @@ DEPENDENCIES
   bootsnap
   capybara
   capybara-playwright-driver
-  cssbundling-rails
   csv
   debug
   devise

@@ -12,8 +12,8 @@
 
     <%= stylesheet_link_tag "bootstrap.min", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "sporty", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "rhinoeditor", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= yield :editor %>
     <%= auto_discovery_link_tag(:rss, rss_url, {title: "RSS Feed"}) %>
   </head>
   <body>

@@ -5,15 +5,12 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
-    "@rails/actiontext": "^7.2.0",
     "esbuild": "^0.28.1",
     "rhino-editor": "^0.16.5",
-    "sass": "^1.86.0",
     "stimulus-autocomplete": "^3.1.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --minify --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "sass ./app/assets/stylesheets/rhinoeditor.sass.scss:./app/assets/builds/rhinoeditor.css --no-source-map --load-path=node_modules"
+    "build": "esbuild app/javascript/*.* --bundle --minify --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
   },
   "devDependencies": {
     "playwright": "1.55.1"
