@@ -46,4 +46,22 @@ class ResultTest < ActiveSupport::TestCase
 
     assert_equal "DSQ", result.net_time
   end
+
+  test "a place of 0 or a huge time is saved as no place or time" do
+    result = Result.new(position: 0, seconds: Float::MAX)
+
+    assert_nil result.position
+    assert_nil result.seconds
+  end
+
+  test "shows the result text rather than a placeholder time" do
+    race = Event.create!(title: "Race day", start_time: Time.current).races.create!(name: "60m")
+    result = race.results.create!(result: "DNS")
+    # Stored as older imports left them, without the model cleaning them up
+    Result.where(id: result).update_all("seconds = #{Float::MAX}") # rubocop:disable Rails/SkipsModelValidations
+    result.reload
+
+    assert_not result.time?
+    assert_equal "DNS", result.net_time
+  end
 end

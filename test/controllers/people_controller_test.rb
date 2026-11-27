@@ -41,6 +41,19 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
     assert_select "##{dom_id(slow)} .position", text: "6th"
   end
 
+  test "shows no place or time for placeholders left by older imports" do
+    person = people(:snori)
+    result = person.results.create!(race: @event.races.create!(name: "60m"), distance: 60, result: "DNS")
+    # Stored as older imports left them, without the model cleaning them up
+    Result.where(id: result).update_all("position = 0, seconds = #{Float::MAX}") # rubocop:disable Rails/SkipsModelValidations
+
+    sign_in users(:gabby)
+    get person_url(person)
+
+    assert_select "##{dom_id(result)} .position", text: ""
+    assert_select "##{dom_id(result)} .result", text: "DNS"
+  end
+
   test "shows the years someone was a member" do
     person = people(:snori)
     [2019, 2021, 2022, 2023].each { person.club_memberships.create!(year: it) }
