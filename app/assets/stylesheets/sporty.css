@@ -330,6 +330,20 @@ div.impersonate-bar {
     }
   }
 }
+/* Outlined buttons are club green, filling in when pressed */
+.btn-outline-primary {
+  --bs-btn-color: var(--background-color);
+  --bs-btn-border-color: var(--background-color);
+  --bs-btn-hover-color: var(--background-color);
+  --bs-btn-hover-bg: var(--club-tint);
+  --bs-btn-hover-border-color: var(--background-color);
+  --bs-btn-focus-shadow-rgb: 60, 125, 54;
+  --bs-btn-active-color: var(--header-text-color);
+  --bs-btn-active-bg: var(--background-color);
+  --bs-btn-active-border-color: var(--background-color);
+  --bs-btn-disabled-color: var(--background-color);
+  --bs-btn-disabled-border-color: var(--background-color);
+}
 /* A competition taking entries, on the home page */
 .competition-card {
   border-color: var(--background-color);
@@ -525,22 +539,14 @@ table.admin-table {
     margin: 0;
   }
 }
-.person-avatar {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 3.4rem;
-  height: 3.4rem;
-  border-radius: 50%;
-  background-color: var(--background-color);
-  color: var(--header-text-color);
-  font-size: 1.25rem;
-  font-weight: 800;
+.person-header__main {
+  flex: 1;
 }
-.person-avatar--small {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 0.95rem;
+.person-header__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
 }
 .person-header__chips {
   display: flex;
@@ -556,7 +562,7 @@ table.admin-table {
   font-size: 0.78rem;
   font-weight: 600;
 }
-.person-header__family {
+.person-header__detail {
   margin: 0.25rem 0 0;
   color: var(--muted-text-color);
   font-size: 0.9rem;
@@ -633,6 +639,21 @@ abbr.person-results__pb {
     color: var(--muted-text-color);
     font-size: 0.85rem;
   }
+}
+.person-children--grid {
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+.person-child--pending,
+.person-child--add {
+  border-style: dashed;
+}
+.person-child--add {
+  justify-content: center;
+  text-decoration: none;
+}
+.person-chip--waiting {
+  background-color: var(--bs-warning-bg-subtle);
+  color: var(--bs-warning-text-emphasis);
 }
 .person-child__name {
   margin-right: 0.3rem;

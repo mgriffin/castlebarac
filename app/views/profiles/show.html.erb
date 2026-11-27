@@ -1,43 +1,36 @@
-<div class="content">
-  <table>
-    <tbody>
-      <tr>
-        <td><strong>Name:</strong></td>
-        <td><%= [@profile.firstname, @profile.surname].join(" ") %></td>
-        <td>
-          <%= link_to edit_profile_path do
-            inline_svg_tag "pencil.svg"
-          end %>
-        </td>
-      </tr>
-      <tr>
-        <td><strong>Email:</strong></td>
-        <td><%= @profile.user.email %></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+<% content_for :title, "Your profile" %>
+<div class="content person-page">
+  <header class="person-header">
+    <div class="person-header__main">
+      <h2><%= @profile.fullname %></h2>
+      <p class="person-header__detail"><%= @profile.user.email %></p>
+      <%- if (member_years = member_years_label(@profile.member_years)) %>
+        <div class="person-header__chips">
+          <span class="person-chip"><%= member_years %></span>
+        </div>
+      <%- end %>
+    </div>
+    <div class="person-header__actions">
+      <%= link_to "Edit details", edit_profile_path, class: "btn btn-sm btn-outline-primary" %>
+      <%= link_to "View your public page →", person_path(@profile), class: "small" %>
+    </div>
+  </header>
 
-  <h2 class="h5 mt-4">Your children</h2>
-  <%- if @profile.children.any? %>
-    <ul>
-      <%- @profile.children.each do |child| %>
-        <li><%= link_to child.fullname, person_path(child) %></li>
-      <%- end %>
-    </ul>
-  <%- end %>
-  <%- pending = current_user.child_claims.pending.includes(:child) %>
-  <%- if pending.any? %>
-    <p class="mb-1">Waiting for an admin to check:</p>
-    <ul>
-      <%- pending.each do |claim| %>
-        <li id="<%= dom_id claim %>">
-          <%= claim.child.fullname %>
-          <%= button_to "Cancel", profile_child_claim_path(claim), method: :delete,
-                        class: "btn btn-sm btn-link p-0 align-baseline", form_class: "d-inline" %>
-        </li>
-      <%- end %>
-    </ul>
-  <%- end %>
-  <%= link_to "Link your child", new_profile_child_claim_path, class: "btn btn-outline-primary" %>
+  <h3 class="person-section-heading">Your children</h3>
+  <div class="person-children person-children--grid">
+    <%= render partial: "people/child", collection: @children %>
+    <%- @pending_claims.each do |claim| %>
+      <div class="person-child person-child--pending" id="<%= dom_id claim %>">
+        <div>
+          <span class="person-child__name"><%= claim.child.fullname %></span>
+          <span class="person-chip person-chip--waiting">Waiting for an admin</span>
+          <p>
+            <%= button_to "Cancel", profile_child_claim_path(claim), method: :delete,
+                          class: "btn btn-link btn-sm p-0 align-baseline", form_class: "d-inline" %>
+          </p>
+        </div>
+      </div>
+    <%- end %>
+    <%= link_to "+ Link your child", new_profile_child_claim_path, class: "person-child person-child--add" %>
+  </div>
 </div>

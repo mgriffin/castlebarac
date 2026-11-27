@@ -69,7 +69,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
     get person_url(people(:ciara))
 
     assert_select ".person-chip", text: people(:ciara).age_group
-    assert_select ".person-header__family", text: /Child of Bugs Bunny/
+    assert_select ".person-header__detail", text: /Child of Bugs Bunny/
   end
 
   test "hides someone's age group and family from everyone else" do
@@ -78,7 +78,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select ".person-chip", count: 0
-    assert_select ".person-header__family", count: 0
+    assert_select ".person-header__detail", count: 0
   end
 
   test "a parent without results sees their children instead" do

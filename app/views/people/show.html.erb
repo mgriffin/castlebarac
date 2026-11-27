@@ -1,7 +1,6 @@
 <%- results = @results_by_distance.values.flatten %>
 <div class="content person-page">
   <header class="person-header">
-    <%= person_avatar(@person) %>
     <div>
       <h2><%= @person.fullname %></h2>
       <%- chips = [(@person.age_group if @private_details), member_years_label(@person.member_years)].compact %>
@@ -14,10 +13,10 @@
       <%- end %>
       <%- if @private_details %>
         <%- if @person.parents.present? %>
-          <p class="person-header__family">Child of <%= people_links(@person.parents) %></p>
+          <p class="person-header__detail">Child of <%= people_links(@person.parents) %></p>
         <%- end %>
         <%- if results.any? && @person.children.present? %>
-          <p class="person-header__family">Parent of <%= people_links(@person.children) %></p>
+          <p class="person-header__detail">Parent of <%= people_links(@person.children) %></p>
         <%- end %>
       <%- end %>
     </div>
