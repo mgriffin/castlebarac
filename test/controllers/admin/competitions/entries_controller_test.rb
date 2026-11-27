@@ -26,7 +26,7 @@ module Admin
 
         assert_response :success
         assert_equal ["Event,First name,Surname,Gender,Year of birth,Entered by,Coach's OK",
-                      "U12 Girls 600m,Ciara,Walsh,female,#{people(:ciara).year},bugs@acme.fake,"],
+                      "U12 Girls 600m,Ciara,Walsh,female,#{people(:ciara).year},Bugs Bunny,"],
                      response.body.lines.map(&:chomp)
       end
 
