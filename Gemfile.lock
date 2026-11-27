@@ -422,7 +422,6 @@ PLATFORMS
   x86_64-openbsd
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
   bootsnap
   capybara
   capybara-playwright-driver

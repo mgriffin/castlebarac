@@ -2,8 +2,7 @@
 
 module Admin
   # Castlebar A.C. results on an event that aren't linked to anyone because
-  # the athlete isn't on the site yet. Admins can add them and link them, like
-  # the results:link rake task does.
+  # the athlete isn't on the site yet. Admins can add them and link them.
   class UnlinkedResultsController < BaseController
     before_action :load_event
 
