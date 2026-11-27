@@ -8,6 +8,17 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "links to the club's icons, and they're there" do
+    get root_url
+
+    assert_select "link[rel=icon][href='/favicon.ico']"
+    assert_select "link[rel=icon][href='/icon.svg'][type='image/svg+xml']"
+    assert_select "link[rel=apple-touch-icon][href='/apple-touch-icon.png']"
+    %w[favicon.ico icon.svg icon.png apple-touch-icon.png].each do |file|
+      assert_predicate Rails.public_path.join(file).size, :positive?, "#{file} is empty"
+    end
+  end
+
   test "shows competitions that are taking entries" do
     Flipper.enable("comp-entries")
 
