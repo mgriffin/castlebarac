@@ -23,6 +23,10 @@ module Castlebarac
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
+    # Lexxy would otherwise take over every rich text field. It's only used
+    # when the lexxy flag is on, see RichTextEditorHelper.
+    config.lexxy.override_action_text_defaults = false
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
@@ -45,5 +49,11 @@ module Castlebarac
   # Flipper to try them out before opening them to everyone.
   def self.competition_entries?(user = nil)
     Flipper.enabled?("comp-entries", user)
+  end
+
+  # The Lexxy rich text editor, being tried out in place of rhino-editor.
+  # Turn on for individual users in Flipper.
+  def self.lexxy?(user = nil)
+    Flipper.enabled?("lexxy", user)
   end
 end

@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 # The rich text editor for posts, events and competitions. Its JavaScript and
-# styles are only loaded on pages that have one.
+# styles are only loaded on pages that have one. Lexxy is being tried out in
+# place of rhino-editor for people with the lexxy flag on.
 module RichTextEditorHelper
   def rich_text_editor(form, method)
-    content_for(:editor, editor_assets("editor_rhino")) unless content_for?(:editor)
+    lexxy = Castlebarac.lexxy?(current_user)
+    content_for(:editor, editor_assets(lexxy ? "editor_lexxy" : "editor_rhino")) unless content_for?(:editor)
 
-    rhino_editor(form, method)
+    lexxy ? form.lexxy_rich_text_area(method) : rhino_editor(form, method)
   end
 
   private

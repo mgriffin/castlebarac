@@ -2,8 +2,8 @@
 
 require "test_helper"
 
-# Posts, events and competitions are written with rhino-editor, which is only
-# loaded on pages with one.
+# Posts, events and competitions are written with rhino-editor, or Lexxy for
+# people with the lexxy flag on. The editor is only loaded on pages with one.
 class RichTextEditorTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
@@ -13,7 +13,7 @@ class RichTextEditorTest < ActionDispatch::IntegrationTest
     @post.update!(content: "<p>Training is <strong>on</strong></p><hr>")
   end
 
-  test "has the post's content in the editor, and loads it" do
+  test "uses rhino-editor, with the post's content, and loads it" do
     get edit_admin_post_url(@post)
 
     input = css_select("input[type=hidden][name='post[content]']").first
@@ -22,6 +22,23 @@ class RichTextEditorTest < ActionDispatch::IntegrationTest
     assert_select "rhino-editor[data-direct-upload-url][data-blob-url-template]"
     assert_select "head script[src*=?]", "editor_rhino"
     assert_select "head link[href*=?]", "editor_rhino"
+    assert_select "lexxy-editor", false
+    assert_select "head script[src*=?]", "editor_lexxy", false
+  end
+
+  test "uses Lexxy for people with the lexxy flag on" do
+    Flipper.enable_actor("lexxy", users(:admin))
+
+    get edit_admin_post_url(@post)
+
+    assert_select "lexxy-editor[name=?][id=?]", "post[content]", "post_content" do |editor|
+      assert_includes editor.first["value"], "<strong>on</strong>"
+    end
+    assert_select "lexxy-editor[data-direct-upload-url][data-blob-url-template]"
+    assert_select "head script[src*=?]", "editor_lexxy"
+    assert_select "head link[href*=?]", "editor_lexxy"
+    assert_select "rhino-editor", false
+    assert_select "head script[src*=?]", "editor_rhino", false
   end
 
   test "every form with rich text has the editor" do
