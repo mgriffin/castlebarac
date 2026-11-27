@@ -19,13 +19,9 @@
       <%= result.county %>
     </td>
   <%- end %>
-  <%- unless result.timed? %>
+  <%- if result.times_included? %>
     <td class="result">
-      <%- if ["DNS", "DNF", "DQ", "NM", ""].include? result.result %>
-        <%= result.result %>
-      <%- else %>
-        <%= result.net_time %>
-      <%- end %>
+      <%= result.net_time %>
     </td>
   <%- end %>
 </tr>

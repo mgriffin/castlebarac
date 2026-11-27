@@ -18,7 +18,8 @@ class Race < ApplicationRecord
     results&.first&.county.present?
   end
 
-  def timed?
-    results&.first&.seconds.nil?
+  # Times, or marks for field events, rather than only places
+  def times_included?
+    results&.first&.seconds.present?
   end
 end

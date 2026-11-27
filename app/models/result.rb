@@ -6,7 +6,7 @@ class Result < ApplicationRecord
 
   delegate :bib_numbers_included?, to: :race
   delegate :county_included?, to: :race
-  delegate :timed?, to: :race
+  delegate :times_included?, to: :race
 
   # Nothing takes this long, so a time this big is a placeholder for no time
   MAX_SECONDS = 1.week.to_i
