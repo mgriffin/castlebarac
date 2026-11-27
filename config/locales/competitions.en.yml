@@ -25,6 +25,7 @@ en:
           attributes:
             base:
               entries_closed: "Entries for this competition are closed"
+              needs_confirmation: "Confirm that %{name} has discussed %{event} with a club coach"
               event_limit:
                 one: "%{name} can only be entered into 1 event"
                 other: "%{name} can only be entered into %{count} events"
@@ -57,6 +58,9 @@ en:
     entries_closed: "Entries for this competition are closed"
     payment_in_progress: "Your last payment is still going through. You can change your entry once it has."
     athletes:
+      show:
+        confirmation: "I confirm %{name} has discussed %{event} with a club coach and is ready to compete in it"
+        staff_confirmation: "This event needs a club coach's OK. You'll be recorded as giving it."
       create:
         choose: "Choose someone from the list"
       update:

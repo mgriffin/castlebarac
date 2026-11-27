@@ -6,12 +6,15 @@ class EntryLine < ApplicationRecord
   belongs_to :person
   belongs_to :competition_event
   belongs_to :payment, optional: true
+  # Who confirmed the athlete has discussed the event with a club coach
+  belongs_to :confirmed_by, class_name: "User", optional: true, inverse_of: :confirmed_entry_lines
 
   validates :competition_event_id, uniqueness: { scope: :person_id }
   validate :event_is_in_competition
   validate :competition_accepting_entries, on: :create
   validate :person_eligible
   validate :within_event_limit, on: :create
+  validate :confirmed_if_needed, on: :create
 
   delegate :competition, to: :entry
 
@@ -23,6 +26,20 @@ class EntryLine < ApplicationRecord
 
   def paid?
     payment.present? && payment.paid?
+  end
+
+  def confirm(user)
+    self.confirmed_at = Time.current
+    self.confirmed_by = user
+  end
+
+  def confirmed?
+    confirmed_at.present?
+  end
+
+  # Events flagged after someone was entered leave lines that need confirming
+  def awaiting_confirmation?
+    competition_event.requires_confirmation? && !confirmed?
   end
 
   # Lines for this person in this competition, whoever entered them
@@ -50,6 +67,12 @@ class EntryLine < ApplicationRecord
 
     reason = competition_event.ineligibility_reason(person)
     errors.add(:person, reason) if reason
+  end
+
+  def confirmed_if_needed
+    return if competition_event.nil? || person.nil? || !awaiting_confirmation?
+
+    errors.add(:base, :needs_confirmation, name: person.firstname, event: competition_event.name)
   end
 
   # Two parents entering the same child at once can't both get under the

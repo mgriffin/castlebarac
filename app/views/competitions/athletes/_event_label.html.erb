@@ -1,0 +1,6 @@
+<label class="form-check-label" for="event_<%= event.id %>">
+  <%= event.name %>
+  <%- if event.start_time %>
+    <span class="subtle"><%= event_time(event) %></span>
+  <%- end %>
+</label>

@@ -25,6 +25,9 @@ class User < ApplicationRecord
                                     inverse_of: :reviewed_by, dependent: :nullify
   has_many :reviewed_child_claims, class_name: "ChildClaim", foreign_key: :reviewed_by_id,
                                    inverse_of: :reviewed_by, dependent: :nullify
+  # Entry lines where they confirmed the athlete has discussed it with a coach
+  has_many :confirmed_entry_lines, class_name: "EntryLine", foreign_key: :confirmed_by_id,
+                                   inverse_of: :confirmed_by, dependent: :nullify
 
   def name
     person&.fullname

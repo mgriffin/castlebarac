@@ -65,7 +65,7 @@ module Admin
           :name, :level, :venue, :date, :entries_close_at, :fee_per_event, :max_events_per_athlete,
           :event_id, :description,
           { competition_events_attributes: [%i[id name distance age_group min_age max_age gender start_time
-                                               _destroy]] }
+                                               requires_confirmation _destroy]] }
         ]
       )
     end

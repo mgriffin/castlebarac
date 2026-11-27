@@ -50,4 +50,27 @@ class CompetitionEventTest < ActiveSupport::TestCase
   test "an athlete without a year of birth or gender needs those first" do
     assert_equal :missing_details, competition_events(:u10_mixed_relay).ineligibility_reason(people(:aoife))
   end
+
+  test "hurdles, throws, high jump and pole vault need a coach's OK, going by the name" do
+    needs = ["U12 Girls 60m Hurdles", "U14 Boys 75mH", "U13 Boys Shot Put", "U15 Girls Discus", "U17 Boys Javelin",
+             "U16 Girls Hammer", "U12 Girls High Jump", "U13 Boys HJ", "U17 Boys Pole Vault"]
+    doesnt = ["U12 Girls 600m", "U12 Girls 60m", "U13 Girls Long Jump", "U15 Girls Triple Jump",
+              "U17 Boys 2000m S/C", "U12 Boys 1000m Walk"]
+
+    needs.each { assert_predicate add_event(it), :requires_confirmation?, it }
+    doesnt.each { assert_not_predicate add_event(it), :requires_confirmation?, it }
+  end
+
+  test "an admin can say an event doesn't need a coach's OK after adding it" do
+    event = add_event("U12 Girls 60m Hurdles")
+    event.update!(requires_confirmation: false)
+
+    assert_not_predicate event.reload, :requires_confirmation?
+  end
+
+  private
+
+  def add_event(name)
+    competitions(:connacht).competition_events.create!(name:)
+  end
 end

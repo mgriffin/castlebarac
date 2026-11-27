@@ -53,3 +53,14 @@ nationals_u12_girls_600m:
   min_age: 11
   max_age: 11
   gender: female
+
+u12_girls_60m_hurdles:
+  competition: connacht
+  name: U12 Girls 60m Hurdles
+  distance: 60mH
+  age_group: U12
+  min_age: 11
+  max_age: 11
+  gender: female
+  requires_confirmation: true
+  position: 6

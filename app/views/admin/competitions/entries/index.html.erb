@@ -19,6 +19,7 @@
             <th scope="col">Athlete</th>
             <th scope="col">Year of birth</th>
             <th scope="col">Entered by</th>
+            <th scope="col">Coach's OK</th>
             <th scope="col">Paid</th>
             <th scope="col"><span class="visually-hidden">Actions</span></th>
           </tr>
@@ -29,7 +30,15 @@
               <td><%= line.competition_event.name %></td>
               <td><%= link_to line.person.fullname, person_path(line.person) %></td>
               <td><%= line.person.year %></td>
-              <td><%= line.entry.user.email %></td>
+              <td><%= user_name(line.entry.user) %></td>
+              <td>
+                <%- if line.confirmed? %>
+                  <%= user_name(line.confirmed_by) %>
+                  <span class="subtle small"><%= l line.confirmed_at, format: :short %></span>
+                <%- elsif line.awaiting_confirmation? %>
+                  <span class="badge text-bg-warning">Not confirmed</span>
+                <%- end %>
+              </td>
               <td>
                 <%- if line.paid? %>
                   <span class="badge text-bg-success"><%= l line.paid_at, format: :short %></span>

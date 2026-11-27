@@ -41,15 +41,28 @@
             <label class="form-check-label" for="event_<%= event.id %>">
               <%= event.name %> <span class="subtle">(already entered by someone else)</span>
             </label>
+          <%- elsif event.requires_confirmation? && !@staff_confirms %>
+            <div data-controller="event-confirmation">
+              <%= check_box_tag "competition_event_ids[]", event.id, @selected_ids.include?(event.id),
+                                id: "event_#{event.id}", class: "form-check-input",
+                                data: { event_confirmation_target: "event", action: "event-confirmation#toggle" } %>
+              <%= render "event_label", event: %>
+              <div class="form-check event-confirmation" data-event-confirmation-target="confirmation">
+                <%= check_box_tag "confirmed_event_ids[]", event.id, @confirmed_ids.include?(event.id),
+                                  id: "confirm_event_#{event.id}", class: "form-check-input",
+                                  data: { event_confirmation_target: "checkbox" } %>
+                <label class="form-check-label" for="confirm_event_<%= event.id %>">
+                  <%= t(".confirmation", name: @athlete.firstname, event: event.name) %>
+                </label>
+              </div>
+            </div>
           <%- else %>
             <%= check_box_tag "competition_event_ids[]", event.id, @selected_ids.include?(event.id),
                               id: "event_#{event.id}", class: "form-check-input" %>
-            <label class="form-check-label" for="event_<%= event.id %>">
-              <%= event.name %>
-              <%- if event.start_time %>
-                <span class="subtle"><%= event_time(event) %></span>
-              <%- end %>
-            </label>
+            <%= render "event_label", event: %>
+            <%- if event.requires_confirmation? %>
+              <div class="subtle small"><%= t(".staff_confirmation") %></div>
+            <%- end %>
           <%- end %>
         </div>
       <%- end %>
