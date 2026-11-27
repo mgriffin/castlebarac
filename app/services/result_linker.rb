@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Links Castlebar A.C. results to the people they belong to. Used by the
-# results:link rake task and when importing results.
+# Links Castlebar A.C. results to the people they belong to. Used when
+# importing results, loading member lists and on the unlinked results page.
 class ResultLinker
   attr_reader :results
 
