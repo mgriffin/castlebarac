@@ -11,7 +11,7 @@ class Person < ApplicationRecord
   has_many :parent_child_relationships,
            class_name: "PersonRelationship",
            foreign_key: :child_id,
-           inverse_of: :parent,
+           inverse_of: :child,
            dependent: :destroy
   has_many :parents,
            through: :parent_child_relationships,
@@ -20,7 +20,7 @@ class Person < ApplicationRecord
   has_many :child_parent_relationships,
            class_name: "PersonRelationship",
            foreign_key: :parent_id,
-           inverse_of: :child,
+           inverse_of: :parent,
            dependent: :destroy
   has_many :children,
            through: :child_parent_relationships,

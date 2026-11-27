@@ -32,6 +32,15 @@ module Admin
       assert_select "##{dom_id(@claim)}", /Bugs Bunny.*Snörí/m
     end
 
+    test "lists the child's other parents" do
+      claim = ChildClaim.create!(user: users(:coach), child: people(:ciara))
+      sign_in users(:admin)
+
+      get admin_child_claims_url
+
+      assert_select "##{dom_id(claim)} td", text: "Bugs Bunny"
+    end
+
     test "admins can approve a request" do
       sign_in users(:admin)
 

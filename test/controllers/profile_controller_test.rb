@@ -91,4 +91,11 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_select ".person-child--pending", /Snörí Snöríssøň\s+Waiting for an admin/
     assert_select ".person-child--add[href=?]", new_profile_child_claim_path
   end
+
+  test "loads all the children's parents at once" do
+    sign_in users(:bugs)
+
+    # One query for the children and one for all their parents, however many there are
+    assert_queries_match(/person_relationships/, count: 2) { get profile_url }
+  end
 end

@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
   before_action :redirect_if_claim_pending, only: :create
 
   def show
-    @children = @profile.children.includes(results: { race: :event }).order(:firstname)
+    @children = @profile.children.includes(:parents, results: { race: :event }).order(:firstname)
     @pending_claims = current_user.child_claims.pending.includes(:child)
   end
 
