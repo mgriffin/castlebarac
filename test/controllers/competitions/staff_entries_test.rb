@@ -41,7 +41,7 @@ module Competitions
       get competition_entry_athlete_url(@competition, people(:ciara).id)
 
       assert_select "input[name='confirmed_event_ids[]']", count: 0
-      assert_select ".small", /As staff, you're recorded as giving it/
+      assert_select ".small", /This event needs a club coach's OK. You'll be recorded as giving it./
 
       patch competition_entry_athlete_url(@competition, people(:ciara).id),
             params: { competition_event_ids: [hurdles.id, competition_events(:u12_girls_600m).id] }

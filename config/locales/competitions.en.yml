@@ -60,7 +60,7 @@ en:
     athletes:
       show:
         confirmation: "I confirm %{name} has discussed %{event} with a club coach and is ready to compete in it"
-        staff_confirmation: "Needs a club coach's OK. As staff, you're recorded as giving it."
+        staff_confirmation: "This event needs a club coach's OK. You'll be recorded as giving it."
       create:
         choose: "Choose someone from the list"
       update:
