@@ -467,10 +467,6 @@ div.impersonate-bar {
   font-size: 0.8rem;
   color: var(--muted-text-color);
 }
-.post-meta {
-  margin-bottom: 1.25rem;
-  color: #727272;
-}
 @keyframes appear-then-fade {
   0%, 100% {
     opacity:0
