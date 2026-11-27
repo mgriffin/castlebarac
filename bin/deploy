@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+
+if [[ $# -eq 0 ]] ; then
+  DIR=$(date "+%Y%m%dT%H%M")
+else
+  DIR=$1
+fi
+
+RELEASE="/var/castlebarac/releases/$DIR"
+
+ssh castlebarac "mkdir -p $RELEASE"
+git archive HEAD | ssh castlebarac "tar -xf - -C $RELEASE"
+ssh castlebarac "/var/castlebarac/bin/release $RELEASE"

@@ -12,28 +12,22 @@
       </div>
     </article>
   <%- end %>
-  <%- if Castlebarac.show_about?(current_user) %>
-    <article class="card mb-3">
-      <div class="card-body">
-        <span class="card-text">
-          Castlebar Athletic Club is based in Castlebar in Co Mayo and caters mainly to kids between 8 and 18 years of age.
-          We help athletes compete in track and field events as well as cross country races.
-        </span>
-      </div>
-    </article>
-  <%- end %>
+  <article class="card mb-3">
+    <div class="card-body">
+      <span class="card-text">
+        Castlebar Athletic Club is based in Castlebar in Co Mayo and caters mainly to kids between 8 and 18 years of age.
+        We help athletes compete in track and field events as well as cross country races.
+      </span>
+    </div>
+  </article>
   <%- @posts.each do |post| %>
     <article class="card mb-3">
       <div class="card-body">
         <h2 class="card-title"><%= link_to post.title, post_path(post) %></h2>
         <div class="card-subtitle mb-2 text-body-tertiary"><%= post.created_at.strftime("%b %-d, %Y") %></div>
         <span class="card-text">
-          <%- if Castlebarac.truncate_post?(current_user) %>
-            <%= post.content.to_plain_text.truncate(150) %>
-            <br /><%= link_to "Read more", post_path(post) %>
-          <%- else %>
-            <%= post.content %>
-          <%- end %>
+          <%= post.content.to_plain_text.truncate(150) %>
+          <br /><%= link_to "Read more", post_path(post) %>
         </span>
       </div>
     </article>

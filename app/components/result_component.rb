@@ -2,13 +2,12 @@
 
 class ResultComponent < ViewComponent::Base
   include Pundit::Authorization
-  include Devise::Controllers::Helpers
 
   attr_reader :result
 
   def initialize(result:, user:)
     @result = result
-    @current_user = user
+    @user = user
   end
 
   def name
@@ -33,5 +32,12 @@ class ResultComponent < ViewComponent::Base
 
   def render_edit_link?
     @render_edit_link ||= result.castlebarac? && policy([:admin, result]).edit?
+  end
+
+  private
+
+  # Who Pundit checks the policies for
+  def pundit_user
+    @user
   end
 end

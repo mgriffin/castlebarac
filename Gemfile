@@ -29,12 +29,6 @@ gem "stimulus-rails"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
 
-# Use Redis adapter to run Action Cable in production
-gem "redis", ">= 4.0.1"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 
@@ -76,14 +70,6 @@ group :development do
 
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 
-  gem "capistrano", "~> 3.10", require: false
-  gem "capistrano3-puma", github: "seuros/capistrano-puma"
-  gem "capistrano-bundler", "~> 2.0"
-  gem "capistrano-rails", "~> 1.3", require: false
-  gem "capistrano-rbenv", "~> 2.2"
-
-  gem "bcrypt_pbkdf", ">= 1.0", "< 2.0", require: false
-  gem "ed25519", ">= 1.2", "< 2.0", require: false
   gem "faker"
 end
 

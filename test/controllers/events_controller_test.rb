@@ -67,4 +67,26 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
 
     assert_select ".race-jump", 0
   end
+
+  test "shows times, and what the results say for anyone without one" do
+    race = Race.create!(event: events(:first), name: "U12 Girls 600m")
+    winner = race.results.create!(name: "Fast", position: 1, seconds: 105.4, result: "1:45.4")
+    dns = race.results.create!(name: "Absent", result: "DNS")
+
+    get event_path(events(:first))
+
+    assert_select "##{dom_id(race)} th.time", "Time"
+    assert_select "##{dom_id(winner)} td.result", "1:45.4"
+    assert_select "##{dom_id(dns)} td.result", "DNS"
+  end
+
+  test "leaves out the time column when a race only has places" do
+    race = Race.create!(event: events(:first), name: "U9 Girls XC")
+    result = race.results.create!(name: "Placed", position: 1)
+
+    get event_path(events(:first))
+
+    assert_select "##{dom_id(race)} th.time", count: 0
+    assert_select "##{dom_id(result)} td.result", count: 0
+  end
 end

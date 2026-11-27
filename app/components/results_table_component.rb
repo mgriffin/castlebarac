@@ -10,11 +10,11 @@ class ResultsTableComponent < ViewComponent::Base
   def headers
     class_names({
                   "position" => true,
-                  "bib" => @first_result&.bib.present?,
+                  "bib" => @first_result&.bib_numbers_included?,
                   "name" => true,
                   "club" => true,
-                  "county" => @first_result&.county.present?,
-                  "time" => @first_result&.seconds.present?
+                  "county" => @first_result&.county_included?,
+                  "time" => @first_result&.times_included?
                 }).split
   end
 
