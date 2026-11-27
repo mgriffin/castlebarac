@@ -1,6 +1,6 @@
 <tr<%= " class=cbac" if result.castlebarac? %> id="<%= dom_id(result) %>">
   <td class="position">
-    <%= result.medal? ? helpers.medal(result.position) : result.position %>
+    <%= result.medal? ? helpers.medal(result.position) : (result.position if result.placed?) %>
   </td>
   <%- if result.bib_numbers_included? %>
     <td class="bib">

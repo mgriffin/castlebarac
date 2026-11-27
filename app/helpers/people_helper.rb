@@ -31,12 +31,14 @@ module PeopleHelper
 
   # The fastest of the times, if there's more than one to compare
   def personal_best(results)
-    timed = results.select { it.seconds.to_f.positive? }
+    timed = results.select(&:time?)
     timed.min_by(&:seconds) if timed.many?
   end
 
   # 1st to 3rd get a medal, as on the event page
   def result_position(result)
-    result.medal? ? medal(result.position) : result.position&.ordinalize
+    return unless result.placed?
+
+    result.medal? ? medal(result.position) : result.position.ordinalize
   end
 end
