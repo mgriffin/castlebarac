@@ -71,4 +71,24 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_url
     assert_equal "Bugsy", people(:bugsbunny).reload.firstname
   end
+
+  test "shows your details, membership and children" do
+    sign_in users(:bugs)
+    people(:bugsbunny).club_memberships.create!(year: 2025)
+    event = Event.create!(title: "Mayo XC", start_time: Time.zone.local(2026, 10, 11, 11))
+    people(:ciara).results.create!(race: event.races.create!(name: "U12 Girls"), position: 4)
+    users(:bugs).child_claims.create!(child: people(:snori))
+
+    get profile_url
+
+    assert_select ".person-header h2", "Bugs Bunny"
+    assert_select ".person-header", /bugs@acme.fake/
+    assert_select ".person-chip", "Member 2025"
+    assert_select ".person-header a[href=?]", edit_profile_path
+    assert_select ".person-header a[href=?]", person_path(people(:bugsbunny))
+    assert_select ".person-child", /Ciara Walsh\s+#{people(:ciara).age_group}\s+1 result, most recently\s+Mayo XC/
+    assert_select ".person-child", /Aoife Moran\s+No results yet/
+    assert_select ".person-child--pending", /Snörí Snöríssøň\s+Waiting for an admin/
+    assert_select ".person-child--add[href=?]", new_profile_child_claim_path
+  end
 end

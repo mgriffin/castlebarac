@@ -525,6 +525,15 @@ table.admin-table {
     margin: 0;
   }
 }
+.person-header__main {
+  flex: 1;
+}
+.person-header__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
 .person-header__chips {
   display: flex;
   flex-wrap: wrap;
@@ -616,6 +625,21 @@ abbr.person-results__pb {
     color: var(--muted-text-color);
     font-size: 0.85rem;
   }
+}
+.person-children--grid {
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+.person-child--pending,
+.person-child--add {
+  border-style: dashed;
+}
+.person-child--add {
+  justify-content: center;
+  text-decoration: none;
+}
+.person-chip--waiting {
+  background-color: var(--bs-warning-bg-subtle);
+  color: var(--bs-warning-text-emphasis);
 }
 .person-child__name {
   margin-right: 0.3rem;
