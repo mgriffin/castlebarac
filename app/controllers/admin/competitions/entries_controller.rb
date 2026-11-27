@@ -27,7 +27,7 @@ module Admin
 
       def coach_ok(line)
         if line.confirmed?
-          "#{line.confirmed_by&.email} #{l(line.confirmed_at, format: :short)}"
+          "#{line.confirmed_by&.name} #{l(line.confirmed_at, format: :short)}"
         elsif line.awaiting_confirmation?
           "Not confirmed"
         end
