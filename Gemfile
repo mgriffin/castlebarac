@@ -26,9 +26,6 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
-# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails"
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
@@ -92,3 +89,5 @@ gem "friendly_id", "~> 5.7.0"
 gem "solid_queue", "~> 1.7"
 
 gem "stripe", "~> 21.0"
+
+gem "lexxy", "~> 1.0"
